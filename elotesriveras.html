@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elotes Rivera's — Sistema de Gestión</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --v:#1a5c2e; --vm:#2e7d32; --vc:#66bb6a; --vb:#e8f5e9;
+  --d:#f59f00; --db:#fff8e1;
+  --r:#e03131; --rb:#fff5f5;
+  --a:#1971c2; --ab:#e7f5ff;
+  --bg:#f0f4f0; --card:#ffffff;
+  --txt:#1a1a1a; --muted:#6b7280;
+  --border:#e5e7eb;
+  --shadow:0 4px 24px rgba(26,92,46,.10);
+  --radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(160deg,#0a2e16 0%,#1a5c2e 55%,#2d7a3a 100%);
+  padding:48px 20px 56px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';
+  position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(245,159,0,.2);border:1px solid rgba(245,159,0,.4);
+  color:var(--d);border-radius:999px;
+  padding:5px 16px;font-size:12px;font-weight:600;
+  margin-bottom:16px;letter-spacing:.5px;text-transform:uppercase;
+}
+.hero h1{
+  font-family:'Fraunces',serif;
+  font-size:clamp(32px,7vw,56px);
+  color:#fff;line-height:1.05;
+  margin-bottom:10px;
+}
+.hero h1 em{color:var(--d);font-style:normal}
+.hero p{color:rgba(255,255,255,.7);font-size:15px;margin-bottom:28px}
+.hero-stats{
+  display:flex;justify-content:center;gap:8px;flex-wrap:wrap;
+}
+.hstat{
+  background:rgba(255,255,255,.1);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:12px;padding:10px 18px;
+  color:#fff;
+}
+.hstat .n{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--d);display:block}
+.hstat .l{font-size:11px;opacity:.7;text-transform:uppercase;letter-spacing:.5px}
+
+/* ── NAV ── */
+.nav{
+  background:#fff;border-bottom:2px solid var(--border);
+  position:sticky;top:0;z-index:100;
+  padding:0 16px;
+  display:flex;gap:4px;overflow-x:auto;
+  scrollbar-width:none;
+}
+.nav::-webkit-scrollbar{display:none}
+.nav-btn{
+  padding:14px 18px;border:none;background:none;
+  font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;
+  color:var(--muted);cursor:pointer;white-space:nowrap;
+  border-bottom:3px solid transparent;transition:all .2s;
+  flex-shrink:0;
+}
+.nav-btn.active{color:var(--v);border-bottom-color:var(--v)}
+.nav-btn:hover{color:var(--v)}
+
+/* ── PANELS ── */
+.panel{display:none;max-width:880px;margin:0 auto;padding:24px 16px 60px}
+.panel.active{display:block}
+
+/* ── CARDS ── */
+.card{background:var(--card);border-radius:var(--radius);padding:22px;margin-bottom:16px;box-shadow:var(--shadow)}
+.card-title{font-family:'Fraunces',serif;font-size:18px;color:var(--v);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card-title::after{content:'';flex:1;height:2px;background:var(--vb)}
+.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin:16px 0 8px}
+
+/* ── INPUTS ── */
+.field{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f3f4f6;gap:12px}
+.field:last-child{border-bottom:none}
+.field label{font-size:13px;color:#374151;flex:1;line-height:1.4}
+.field .input-group{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.field input{
+  width:96px;padding:8px 10px;
+  border:2px solid var(--border);border-radius:10px;
+  font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;
+  color:var(--a);text-align:right;background:#f8faff;
+  transition:border-color .2s,box-shadow .2s;
+}
+.field input:focus{outline:none;border-color:var(--vc);box-shadow:0 0 0 3px rgba(102,187,106,.15)}
+.field .unit{font-size:11px;color:var(--muted);white-space:nowrap;min-width:36px}
+
+/* ── KPI GRID ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px}
+.kpi{border-radius:14px;padding:18px 16px;text-align:center;position:relative;overflow:hidden}
+.kpi.green{background:var(--v);color:#fff}
+.kpi.gold{background:var(--d);color:#1a1a1a}
+.kpi.red{background:var(--r);color:#fff}
+.kpi.blue{background:var(--a);color:#fff}
+.kpi.light{background:var(--vb);color:var(--v);border:2px solid var(--vc)}
+.kpi .kt{font-size:10px;font-weight:700;opacity:.8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.kpi .kv{font-family:'Fraunces',serif;font-size:clamp(20px,4vw,28px);font-weight:900;line-height:1}
+.kpi .ks{font-size:10px;opacity:.7;margin-top:4px}
+
+/* ── TABLA ── */
+.tabla-wrap{overflow-x:auto;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead tr{background:var(--v)}
+th{padding:11px 13px;color:#fff;font-weight:600;text-align:left;font-size:12px}
+td{padding:10px 13px;border-bottom:1px solid #f0f0f0}
+tr:nth-child(even) td{background:#fafafa}
+tr:last-child td{border-bottom:none}
+.tr-sub td{background:var(--db)!important;font-weight:700;color:#92400e}
+.tr-tot td{background:var(--v)!important;color:#fff!important;font-weight:700;font-size:13.5px}
+.tr-win td{background:var(--vb)!important;color:var(--v)!important;font-weight:700}
+.tr-lose td{background:var(--rb)!important;color:var(--r)!important;font-weight:700}
+.tr-blue td{background:var(--ab)!important;font-weight:700;color:var(--a)}
+td.num{text-align:right;font-weight:600}
+td.pos{color:var(--vm);font-weight:700}
+td.neg{color:var(--r);font-weight:700}
+
+/* ── ALERTAS ── */
+.alert{border-radius:12px;padding:14px 16px;margin:12px 0;font-size:13.5px;line-height:1.5}
+.alert.green{background:var(--vb);border-left:4px solid var(--vc);color:var(--v)}
+.alert.gold{background:var(--db);border-left:4px solid var(--d);color:#92400e}
+.alert.red{background:var(--rb);border-left:4px solid #fca5a5;color:var(--r)}
+.alert.blue{background:var(--ab);border-left:4px solid #74c0fc;color:var(--a)}
+.alert strong{display:block;margin-bottom:3px;font-size:14px}
+
+/* ── BTN ── */
+.btn{
+  background:var(--v);color:#fff;border:none;border-radius:999px;
+  padding:14px 32px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;
+  cursor:pointer;width:100%;margin-top:16px;
+  transition:transform .15s,box-shadow .15s,background .2s;
+  box-shadow:0 4px 14px rgba(26,92,46,.3);
+}
+.btn:hover{background:var(--vm);transform:translateY(-1px);box-shadow:0 6px 18px rgba(26,92,46,.35)}
+.btn:active{transform:translateY(0)}
+
+/* ── TIPO CAMBIO BADGE ── */
+.tc-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--ab);border:1.5px solid #74c0fc;
+  border-radius:999px;padding:6px 16px;font-size:13px;font-weight:600;color:var(--a);
+  margin-bottom:16px;
+}
+.tc-badge input{width:58px;border:none;background:transparent;font-weight:700;color:var(--a);font-size:13px;text-align:center;font-family:'Outfit',sans-serif}
+
+/* ── CLIENTES ── */
+.cliente-card{
+  background:#fff;border-radius:12px;padding:16px;margin-bottom:10px;
+  border-left:4px solid var(--vc);box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+.cliente-card.mayoreo{border-left-color:var(--d)}
+.cliente-card.publico{border-left-color:var(--r)}
+.cliente-card .cname{font-weight:700;font-size:15px;margin-bottom:2px}
+.cliente-card .ccontact{font-size:12px;color:var(--muted);margin-bottom:10px}
+.cliente-card .ctotal{font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:var(--v);text-align:right;margin-top:8px}
+
+/* ── MAYO STATS ── */
+.mayo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px}
+.mayo-stat{background:#fff;border-radius:14px;padding:20px;text-align:center;box-shadow:var(--shadow)}
+.mayo-stat .ms-icon{font-size:28px;margin-bottom:6px}
+.mayo-stat .ms-val{font-family:'Fraunces',serif;font-size:28px;font-weight:900;color:var(--v)}
+.mayo-stat .ms-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:4px}
+
+/* ── ROADMAP ── */
+.step{display:flex;gap:14px;margin-bottom:20px;align-items:flex-start}
+.step-num{width:36px;height:36px;border-radius:50%;background:var(--v);color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-body h4{font-size:15px;font-weight:700;margin-bottom:4px}
+.step-body p{font-size:13px;color:var(--muted);line-height:1.5}
+.step-tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 10px;border-radius:999px;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px}
+.step-tag.now{background:var(--rb);color:var(--r)}
+.step-tag.soon{background:var(--db);color:#92400e}
+.step-tag.future{background:var(--vb);color:var(--v)}
+
+.sep{height:3px;background:linear-gradient(90deg,var(--v),var(--d),var(--v));border-radius:999px;margin:20px 0;opacity:.4}
+
+/* ── PRECIO VISUAL ── */
+.precio-box{background:#fff;border-radius:14px;padding:20px;margin-bottom:14px;box-shadow:var(--shadow)}
+.precio-box h4{font-weight:700;font-size:14px;color:var(--v);margin-bottom:12px}
+.pline{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed #e5e7eb;font-size:13px}
+.pline:last-child{border-bottom:none}
+.pline.sub{font-weight:700;color:var(--r)}
+.pline.win{font-weight:700;color:var(--v);font-size:15px;border-top:2px solid var(--vc);padding-top:10px}
+.pline.final{background:var(--vb);padding:10px 12px;border-radius:8px;font-weight:700;font-size:15px;color:var(--v);margin-top:8px}
+
+@media(max-width:480px){
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .mayo-grid{grid-template-columns:repeat(2,1fr)}
+  .field input{width:80px}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🌽 Sistema de Gestión</div>
+  <h1>Elotes <em>Rivera's</em></h1>
+  <p>Nogales, Sonora 🇲🇽 &nbsp;↔&nbsp; Tucson, Arizona 🇺🇸</p>
+  <div class="hero-stats">
+    <div class="hstat"><span class="n">55</span><span class="l">Clientes Tucson</span></div>
+    <div class="hstat"><span class="n">$4,637</span><span class="l">Mayo USD</span></div>
+    <div class="hstat"><span class="n">2×/sem</span><span class="l">Viajes Tucson</span></div>
+    <div class="hstat"><span class="n">60</span><span class="l">Costales/semana</span></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <button class="nav-btn active" onclick="show('nogales',this)">🇲🇽 Nogales</button>
+  <button class="nav-btn" onclick="show('tucson',this)">🇺🇸 Tucson</button>
+  <button class="nav-btn" onclick="show('costos',this)">💰 Mis Costos</button>
+  <button class="nav-btn" onclick="show('clientes',this)">🤝 Clientes</button>
+  <button class="nav-btn" onclick="show('mayo',this)">📅 Mayo</button>
+  <button class="nav-btn" onclick="show('plan',this)">🚀 Mi Plan</button>
+</nav>
+
+<!-- ══════════ NOGALES ══════════ -->
+<div id="p-nogales" class="panel active">
+  <div class="card">
+    <div class="card-title">🇲🇽 Ventas Nogales — Diario</div>
+    <div class="tc-badge">💱 TC: <input type="number" id="tc" value="17.50" oninput="syncTC()"> MXN/USD</div>
+
+    <div class="section-label">📦 Volumen diario</div>
+    <div class="field"><label>Kg vendidos (masa + grano)</label><div class="input-group"><input id="n_kg" value="15"><span class="unit">kg/día</span></div></div>
+    <div class="field"><label>Docenas vendidas</label><div class="input-group"><input id="n_doc" value="2"><span class="unit">doc</span></div></div>
+    <div class="field"><label>Paquetes de hoja</label><div class="input-group"><input id="n_hoja" value="4"><span class="unit">paq</span></div></div>
+
+    <div class="section-label">💵 Precios — Negocios</div>
+    <div class="field"><label>Docena entera</label><div class="input-group"><input id="p_ent" value="60"><span class="unit">$/doc</span></div></div>
+    <div class="field"><label>Docena pelada</label><div class="input-group"><input id="p_pel" value="65"><span class="unit">$/doc</span></div></div>
+    <div class="field"><label>Docena jimada</label><div class="input-group"><input id="p_jim" value="70"><span class="unit">$/doc</span></div></div>
+    <div class="field"><label>Kg masa (negocios)</label><div class="input-group"><input id="p_masa_n" value="80"><span class="unit">$/kg</span></div></div>
+    <div class="field"><label>Paquete hoja (negocios)</label><div class="input-group"><input id="p_hoja_n" value="40"><span class="unit">$/paq</span></div></div>
+
+    <div class="section-label">💸 Costos</div>
+    <div class="field"><label>Costo materia prima / kg</label><div class="input-group"><input id="c_kg" value="35"><span class="unit">$/kg</span></div></div>
+    <div class="field"><label>Costo proceso / docena</label><div class="input-group"><input id="c_doc" value="30"><span class="unit">$/doc</span></div></div>
+    <div class="field"><label>Costo paquete hoja</label><div class="input-group"><input id="c_hoja" value="18"><span class="unit">$/paq</span></div></div>
+    <div class="field"><label>Renta mensual</label><div class="input-group"><input id="c_renta" value="4500"><span class="unit">$/mes</span></div></div>
+    <div class="field"><label>Luz mensual</label><div class="input-group"><input id="c_luz" value="1500"><span class="unit">$/mes</span></div></div>
+    <div class="field"><label>Sueldos semana</label><div class="input-group"><input id="c_suel" value="5400"><span class="unit">$/sem</span></div></div>
+
+    <button class="btn" onclick="calcNogales()">📊 Calcular Nogales</button>
+  </div>
+
+  <div id="r-nogales" style="display:none">
+    <div class="kpi-grid" id="k-nogales"></div>
+    <div class="card">
+      <div class="card-title">Desglose diario</div>
+      <div class="tabla-wrap"><table id="t-nogales"></table></div>
+      <div id="a-nogales"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ TUCSON ══════════ -->
+<div id="p-tucson" class="panel">
+  <div class="card">
+    <div class="card-title">🇺🇸 Exportación — Tucson, AZ</div>
+    <div class="tc-badge">💱 TC: <input type="number" id="tc2" value="17.50" oninput="syncTC2()"> MXN/USD</div>
+
+    <div class="section-label">📦 Volumen semanal (2 viajes: Lunes y Viernes)</div>
+    <div class="field"><label>Costales por semana</label><div class="input-group"><input id="u_cost" value="60"><span class="unit">costales</span></div></div>
+    <div class="field"><label>Docenas por costal</label><div class="input-group"><input id="u_doc_c" value="3"><span class="unit">doc</span></div></div>
+    <div class="field"><label>Bolsas 5 KG vendidas</label><div class="input-group"><input id="u_5kg" value="30"><span class="unit">bolsas</span></div></div>
+    <div class="field"><label>Bolsas 5 LB vendidas</label><div class="input-group"><input id="u_5lb" value="30"><span class="unit">bolsas</span></div></div>
+
+    <div class="section-label">💵 Precios Tucson</div>
+    <div class="field"><label>Docena — Mayoreo</label><div class="input-group"><input id="u_doc_may" value="6"><span class="unit">USD</span></div></div>
+    <div class="field"><label>Docena — Cliente</label><div class="input-group"><input id="u_doc_cli" value="7"><span class="unit">USD</span></div></div>
+    <div class="field"><label>Bolsa 5KG — Mayoreo</label><div class="input-group"><input id="u_5kg_may" value="20"><span class="unit">USD</span></div></div>
+    <div class="field"><label>Bolsa 5KG — Cliente</label><div class="input-group"><input id="u_5kg_cli" value="25"><span class="unit">USD</span></div></div>
+    <div class="field"><label>Bolsa 5LB — Mayoreo</label><div class="input-group"><input id="u_5lb_may" value="12"><span class="unit">USD</span></div></div>
+    <div class="field"><label>Bolsa 5LB — Cliente</label><div class="input-group"><input id="u_5lb_cli" value="15"><span class="unit">USD</span></div></div>
+    <div class="field"><label>% ventas a mayoreo</label><div class="input-group"><input id="u_pct_may" value="40"><span class="unit">%</span></div></div>
+
+    <div class="section-label">⛽ Gastos del viaje</div>
+    <div class="field"><label>Gasolina por viaje</label><div class="input-group"><input id="u_gas" value="60"><span class="unit">USD</span></div></div>
+    <div class="field"><label>Otros gastos por viaje</label><div class="input-group"><input id="u_otros" value="20"><span class="unit">USD</span></div></div>
+    <div class="field"><label>Mensualidad Sienna 2019</label><div class="input-group"><input id="u_carro" value="12000"><span class="unit">MXN/mes</span></div></div>
+    <div class="field"><label>Costo costal (3 doc × $55 MXN)</label><div class="input-group"><input id="u_c_cost" value="165"><span class="unit">MXN</span></div></div>
+    <div class="field"><label>Etiqueta por costal</label><div class="input-group"><input id="u_etiq" value="4.50"><span class="unit">MXN</span></div></div>
+
+    <button class="btn" onclick="calcTucson()">📊 Calcular Tucson</button>
+  </div>
+
+  <div id="r-tucson" style="display:none">
+    <div class="kpi-grid" id="k-tucson"></div>
+    <div class="card">
+      <div class="card-title">Desglose semanal EE.UU.</div>
+      <div class="tabla-wrap"><table id="t-tucson"></table></div>
+      <div id="a-tucson"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ COSTOS ══════════ -->
+<div id="p-costos" class="panel">
+  <div class="card">
+    <div class="card-title">💰 ¿Cuánto me cuesta cada producto?</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Así calculas el precio correcto para no perder dinero</p>
+
+    <div class="precio-box">
+      <h4>🌽 1 kg de Masa de Elote — Nogales</h4>
+      <div class="pline"><span>Materia prima (elote fresco)</span><span>~$18.00</span></div>
+      <div class="pline"><span>Gas y agua (proporcional)</span><span>~$5.00</span></div>
+      <div class="pline"><span>Mano de obra</span><span>~$8.00</span></div>
+      <div class="pline"><span>Empaque / bolsa</span><span>~$2.00</span></div>
+      <div class="pline"><span>Renta y fijos (prorrateado)</span><span>~$4.00</span></div>
+      <div class="pline sub"><span>COSTO REAL / KG</span><span>~$37.00</span></div>
+      <div class="pline win"><span>+ Ganancia 58% → precio negocios</span><span>$80.00 ✅</span></div>
+      <div class="pline final"><span>💰 Precio público: $90/kg → ganancia 59%</span></div>
+    </div>
+
+    <div class="precio-box">
+      <h4>🌽 1 Costal (3 docenas = 18 kg) — Tucson</h4>
+      <div class="pline"><span>Materia prima (3 doc × $55 MXN)</span><span>$165.00</span></div>
+      <div class="pline"><span>Etiqueta</span><span>$4.50</span></div>
+      <div class="pline"><span>Gasolina prorrateada (÷30 costales)</span><span>~$35.00</span></div>
+      <div class="pline"><span>Mensualidad carro prorrateada</span><span>~$23.08</span></div>
+      <div class="pline sub"><span>COSTO REAL / COSTAL</span><span>~$228.00</span></div>
+      <div class="pline"><span>= En dólares (÷17.50)</span><span>~$13.03 USD</span></div>
+      <div class="pline win"><span>Precio mayoreo $6/doc × 3 = $18 USD → margen 28%</span></div>
+      <div class="pline final"><span>💰 Precio cliente $7/doc × 3 = $21 USD → margen 38%</span></div>
+    </div>
+
+    <div class="precio-box">
+      <h4>📦 Bolsa 5 KG de Grano</h4>
+      <div class="pline"><span>Bolsa Great Value 2 gal ($2.93/10)</span><span>$0.293 USD = ~$5.13 MXN</span></div>
+      <div class="pline"><span>Grano (5 kg × ~$15 MXN)</span><span>$75.00 MXN</span></div>
+      <div class="pline"><span>Etiqueta</span><span>$4.50 MXN</span></div>
+      <div class="pline sub"><span>COSTO TOTAL</span><span>~$84.63 MXN = ~$4.84 USD</span></div>
+      <div class="pline win"><span>Precio cliente $25 USD → ganancia $20.16 USD 🔥</span></div>
+      <div class="pline final"><span>💰 Margen del 80% — TU PRODUCTO MÁS RENTABLE</span></div>
+    </div>
+
+    <div class="alert gold">
+      <strong>💡 La bolsa de 5 KG es tu mejor producto</strong>
+      Con un margen del ~80%, cada bolsa te deja $20 USD de ganancia. En mayo vendiste 33 bolsas de 5KG a clientes = $825 USD solo de ese producto. Hay que vender más de esas.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ CLIENTES ══════════ -->
+<div id="p-clientes" class="panel">
+
+  <div class="card">
+    <div class="card-title">🤝 Clientes Nogales</div>
+    <div class="cliente-card">
+      <div class="cname">🏪 La Michoacana San Miguel</div>
+      <div class="ccontact">📞 Contacto: Tencha</div>
+      <div class="field"><label>Docenas / semana</label><div class="input-group"><input id="c1_d" value="6" style="width:60px"><span class="unit">doc</span></div></div>
+      <div class="field"><label>Kg masa / semana</label><div class="input-group"><input id="c1_k" value="0" style="width:60px"><span class="unit">kg</span></div></div>
+    </div>
+    <div class="cliente-card">
+      <div class="cname">🍹 Snack Bar Nogales</div>
+      <div class="ccontact">📞 Contacto: Lluvia Villa</div>
+      <div class="field"><label>Docenas / semana</label><div class="input-group"><input id="c2_d" value="4" style="width:60px"><span class="unit">doc</span></div></div>
+      <div class="field"><label>Kg masa / semana</label><div class="input-group"><input id="c2_k" value="5" style="width:60px"><span class="unit">kg</span></div></div>
+    </div>
+    <div class="cliente-card">
+      <div class="cname">🍽️ Fondita Edith</div>
+      <div class="ccontact">📞 Contacto: Socorro y Gaby</div>
+      <div class="field"><label>Docenas / semana</label><div class="input-group"><input id="c3_d" value="4" style="width:60px"><span class="unit">doc</span></div></div>
+      <div class="field"><label>Kg masa / semana</label><div class="input-group"><input id="c3_k" value="10" style="width:60px"><span class="unit">kg</span></div></div>
+    </div>
+    <div class="cliente-card mayoreo">
+      <div class="cname">🫔 Tamales Don Rubén</div>
+      <div class="ccontact">📞 Contacto: Dulce o esposo</div>
+      <div class="field"><label>Kg masa / semana</label><div class="input-group"><input id="c4_k" value="20" style="width:60px"><span class="unit">kg</span></div></div>
+      <div class="field"><label>Paquetes hoja</label><div class="input-group"><input id="c4_h" value="4" style="width:60px"><span class="unit">paq</span></div></div>
+    </div>
+    <button class="btn" onclick="calcClientes()">📊 Ver resumen clientes</button>
+    <div id="r-clientes" style="display:none;margin-top:16px">
+      <div class="kpi-grid" id="k-clientes"></div>
+      <div class="tabla-wrap" style="margin-top:12px"><table id="t-clientes"></table></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🇺🇸 55 Clientes Tucson</div>
+    <div class="alert blue">
+      <strong>📍 Tus clientes en Tucson por tipo</strong>
+      🟢 Mayoreo: Rossy Michoacana, Don Javo/Rio Rico, Don Tavo/Rio Rico<br>
+      🔵 Clientes: 42 clientes regulares<br>
+      🔴 Público: Yese Herrero, Gabby Maldonado, Vecina Artemisa, Dilxia, Chayo, Maritza, Juana, Mirna, Krishna
+    </div>
+    <div class="alert green">
+      <strong>🏆 Top 3 clientes de mayo</strong>
+      1. Sra. Lupita — $855 USD (35 unidades)<br>
+      2. Del Cielo Tamal — $350 USD (50 unidades)<br>
+      3. Lupita Tamales — $270 USD (18 unidades)
+    </div>
+    <div class="alert gold">
+      <strong>💡 Oportunidad identificada</strong>
+      Tienes 3 clientes de mayoreo. Si los otros 42 clientes regulares te compraran aunque sea 1 docena más por semana = +42 docenas = +$294 USD/semana = +$1,176 USD/mes extra sin conseguir clientes nuevos.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ MAYO ══════════ -->
+<div id="p-mayo" class="panel">
+  <div class="card">
+    <div class="card-title">📅 Reporte Mayo 2025 — Tucson</div>
+    <div class="mayo-grid">
+      <div class="mayo-stat"><div class="ms-icon">💰</div><div class="ms-val">$4,637</div><div class="ms-label">Venta Total USD</div></div>
+      <div class="mayo-stat"><div class="ms-icon">🌽</div><div class="ms-val">305</div><div class="ms-label">Docenas vendidas</div></div>
+      <div class="mayo-stat"><div class="ms-icon">📦</div><div class="ms-val">77</div><div class="ms-label">Bolsas 5LB Cliente</div></div>
+      <div class="mayo-stat"><div class="ms-icon">📦</div><div class="ms-val">33</div><div class="ms-label">Bolsas 5KG Cliente</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🏆 Top Clientes — Mayo</div>
+    <div class="tabla-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Cliente</th><th>Unidades</th><th>Venta USD</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><strong>Sra. Lupita</strong></td><td class="num">35</td><td class="num pos">$855</td></tr>
+          <tr><td>2</td><td><strong>Del Cielo Tamal</strong></td><td class="num">50</td><td class="num pos">$350</td></tr>
+          <tr><td>3</td><td><strong>Lupita Tamales</strong></td><td class="num">18</td><td class="num pos">$270</td></tr>
+          <tr><td>4</td><td>Cristina</td><td class="num">12</td><td class="num pos">$180</td></tr>
+          <tr><td>5</td><td>Doña Rosa</td><td class="num">25</td><td class="num pos">$175</td></tr>
+          <tr><td>6</td><td>Jungle Fruits (Sahuarita)</td><td class="num">20</td><td class="num pos">$140</td></tr>
+          <tr><td>7</td><td>Josefina</td><td class="num">19</td><td class="num pos">$133</td></tr>
+          <tr><td>8</td><td>Rossy Michoacana</td><td class="num">6</td><td class="num pos">$120</td></tr>
+          <tr><td>9</td><td>Artemisa</td><td class="num">17</td><td class="num pos">$119</td></tr>
+          <tr><td>10</td><td>Antojin</td><td class="num">7</td><td class="num pos">$105</td></tr>
+          <tr><td>11</td><td>Don Tavo / Rio Rico</td><td class="num">5</td><td class="num pos">$100</td></tr>
+          <tr><td>12</td><td>Magda Delicias</td><td class="num">13</td><td class="num pos">$91</td></tr>
+          <tr><td>13</td><td>Judith / Rio Rico</td><td class="num">11</td><td class="num pos">$90</td></tr>
+          <tr><td>14</td><td>Maria</td><td class="num">4</td><td class="num pos">$80</td></tr>
+          <tr><td>15</td><td>Pina VIP (Carnería)</td><td class="num">10</td><td class="num pos">$70</td></tr>
+          <tr class="tr-tot"><td colspan="2"><strong>TOTAL MAYO</strong></td><td class="num"><strong>481+</strong></td><td class="num"><strong>$4,637</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📦 Productos Más Vendidos — Mayo</div>
+    <div class="tabla-wrap">
+      <table>
+        <thead><tr><th>Producto</th><th>Unidades</th><th>Venta USD</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Docenas de Elote</strong></td><td class="num">305</td><td class="num pos">$2,135</td></tr>
+          <tr><td>Bolsas 5LB Cliente</td><td class="num">77</td><td class="num pos">$1,155</td></tr>
+          <tr><td>Bolsas 5KG Cliente</td><td class="num">33</td><td class="num pos">$825</td></tr>
+          <tr><td>Bolsas 5KG Mayoreo</td><td class="num">11</td><td class="num pos">$220</td></tr>
+          <tr><td>Costal Hojas Cliente</td><td class="num">10</td><td class="num pos">$200</td></tr>
+          <tr><td>Bolsas 5LB Público</td><td class="num">4</td><td class="num pos">$68</td></tr>
+          <tr><td>Paquete Hojas 650g</td><td class="num">3</td><td class="num pos">$9</td></tr>
+          <tr><td>Costal Hojas Público</td><td class="num">1</td><td class="num pos">$25</td></tr>
+          <tr class="tr-tot"><td><strong>TOTAL</strong></td><td class="num"><strong>444</strong></td><td class="num"><strong>$4,637</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert green" style="margin-top:14px">
+      <strong>📈 Las docenas = 46% de tus ingresos</strong>
+      Son tu producto principal. Las bolsas 5LB son el #2 con $1,155 USD. Juntos = 71% de todo lo que vendiste en mayo.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PLAN ══════════ -->
+<div id="p-plan" class="panel">
+  <div class="card">
+    <div class="card-title">🚀 Tu Plan — De Nogales al Mundo</div>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <span class="step-tag now">🔴 Ahora — Esta semana</span>
+        <h4>Subir esta app a la nube (GitHub Pages)</h4>
+        <p>Sigue los 5 pasos de abajo y esta calculadora tendrá su propio link gratis. La abres desde cualquier cel en 2 segundos.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <span class="step-tag now">🔴 Esta semana</span>
+        <h4>Subir el Excel a Google Drive</h4>
+        <p>Para registros diarios: ventas, gastos, clientes. Tu esposa puede editarlo al mismo tiempo desde su cel.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <span class="step-tag soon">🟡 Este mes</span>
+        <h4>Google Sheets más bonito</h4>
+        <p>Le damos diseño colorido al Excel en Google Drive — colores, emojis, fórmulas automáticas. Igual de fácil pero más amigable.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <span class="step-tag soon">🟡 Próximo mes</span>
+        <h4>Página web elotesriveras.com</h4>
+        <p>Tu catálogo de productos, precios, zona de servicio y forma de contacto. Tus clientes de Tucson pueden verte en Google. Costo: ~$12 USD/año dominio.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <span class="step-tag future">🟢 3-6 meses</span>
+        <h4>Sistema de pedidos online</h4>
+        <p>Tus clientes hacen su pedido desde el cel, tú lo ves en el sistema y planeas la ruta. Menos llamadas, más organización.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <span class="step-tag future">🟢 6-18 meses</span>
+        <h4>Empresa exportadora formal</h4>
+        <p>Food Handler Permit, etiquetas FDA, distribuidores en más ciudades de Arizona. De 55 a 200+ clientes.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📲 Paso 1: Subir esta app GRATIS (GitHub Pages)</div>
+    <div class="step"><div class="step-num" style="background:var(--a)">1</div><div class="step-body"><h4>Entra a github.com</h4><p>Crea una cuenta gratis con tu Gmail. Solo tarda 2 minutos.</p></div></div>
+    <div class="step"><div class="step-num" style="background:var(--a)">2</div><div class="step-body"><h4>Crea un repositorio</h4><p>Click en "New repository" → nómbralo <strong>elotesriveras</strong> → marca "Public" → click "Create".</p></div></div>
+    <div class="step"><div class="step-num" style="background:var(--a)">3</div><div class="step-body"><h4>Sube este archivo</h4><p>Click "uploading an existing file" → sube el archivo <strong>elotesriveras.html</strong> → renómbralo a <strong>index.html</strong> → "Commit changes".</p></div></div>
+    <div class="step"><div class="step-num" style="background:var(--a)">4</div><div class="step-body"><h4>Activa GitHub Pages</h4><p>Ve a Settings → Pages → Source: "main branch" → Save. Espera 2 minutos.</p></div></div>
+    <div class="step"><div class="step-num" style="background:var(--a)">5</div><div class="step-body"><h4>¡Listo! Tu link:</h4><p><strong>tunombre.github.io/elotesriveras</strong> — funciona en cualquier cel o computadora, gratis para siempre.</p></div></div>
+
+    <div class="alert green" style="margin-top:4px">
+      <strong>✅ ¿No puedes solo? Dime y te guío paso a paso en tiempo real.</strong>
+      Podemos hacerlo juntos en esta misma conversación.
+    </div>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const v=id=>parseFloat($(id).value)||0;
+const fm=(n,d=0)=>'$'+n.toLocaleString('es-MX',{minimumFractionDigits:d,maximumFractionDigits:d});
+const fu=(n,d=2)=>'$'+n.toFixed(d)+' USD';
+const fp=n=>n.toFixed(1)+'%';
+
+function syncTC(){$('tc2').value=$('tc').value}
+function syncTC2(){$('tc').value=$('tc2').value}
+
+function show(name,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  $('p-'+name).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function kpi(t,val,sub,cls){
+  return`<div class="kpi ${cls}"><div class="kt">${t}</div><div class="kv">${val}</div>${sub?`<div class="ks">${sub}</div>`:''}</div>`;
+}
+
+function calcNogales(){
+  const tc=v('tc'),kg=v('n_kg'),doc=v('n_doc'),hoja=v('n_hoja');
+  const pm=v('p_masa_n'),pp=v('p_pel'),ph=v('p_hoja_n');
+  const ck=v('c_kg'),cd=v('c_doc'),ch=v('c_hoja');
+  const ing=kg*pm+doc*pp+hoja*ph;
+  const cvar=kg*ck+doc*cd+hoja*ch;
+  const cfij=((v('c_renta')+v('c_luz'))/4+v('c_suel'))/6;
+  const ctot=cvar+cfij;
+  const util=ing-ctot;
+  const mar=ing>0?util/ing*100:0;
+
+  $('k-nogales').innerHTML=
+    kpi('Ingreso diario',fm(ing),`Sem: ${fm(ing*6)}`,'blue')+
+    kpi('Costo total/día',fm(ctot),`Var: ${fm(cvar)} | Fijo: ${fm(cfij)}`,'red')+
+    kpi('Utilidad diaria',fm(util),`Margen: ${fp(mar)}`,util>0?'green':'red')+
+    kpi('Utilidad mensual',fm(util*24),fu(util*24/tc),'light');
+
+  $('t-nogales').innerHTML=`
+    <thead><tr><th>Producto</th><th>Cant.</th><th>Precio</th><th>Ingreso</th><th>Costo</th><th>Ganancia</th></tr></thead>
+    <tbody>
+      <tr><td>🌽 Masa/Grano kg</td><td>${kg}kg</td><td>${fm(pm)}</td><td class="num pos">${fm(kg*pm)}</td><td class="num neg">${fm(kg*ck)}</td><td class="num pos">${fm(kg*(pm-ck))}</td></tr>
+      <tr><td>🌽 Docenas (pelada)</td><td>${doc}</td><td>${fm(pp)}</td><td class="num pos">${fm(doc*pp)}</td><td class="num neg">${fm(doc*cd)}</td><td class="num pos">${fm(doc*(pp-cd))}</td></tr>
+      <tr><td>🍃 Hojas</td><td>${hoja}</td><td>${fm(ph)}</td><td class="num pos">${fm(hoja*ph)}</td><td class="num neg">${fm(hoja*ch)}</td><td class="num pos">${fm(hoja*(ph-ch))}</td></tr>
+      <tr class="tr-sub"><td colspan="3"><strong>Subtotal variables</strong></td><td class="num">${fm(ing)}</td><td class="num">${fm(cvar)}</td><td class="num">${fm(ing-cvar)}</td></tr>
+      <tr><td colspan="3">Gastos fijos (÷días)</td><td></td><td class="num neg">${fm(cfij)}</td><td></td></tr>
+      <tr class="tr-tot"><td colspan="3"><strong>TOTAL DÍA</strong></td><td class="num">${fm(ing)}</td><td class="num">${fm(ctot)}</td><td class="num">${fm(util)}</td></tr>
+    </tbody>`;
+
+  $('a-nogales').innerHTML=mar>40
+    ?`<div class="alert green"><strong>✅ Buen margen (${fp(mar)})</strong> Estás por encima del 40% — saludable para tu negocio.</div>`
+    :`<div class="alert gold"><strong>🟡 Margen de ${fp(mar)}</strong> Revisa si puedes reducir costos o subir ligeramente los precios.</div>`;
+  $('r-nogales').style.display='block';
+  $('r-nogales').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function calcTucson(){
+  const tc=v('tc2');
+  const cost=v('u_cost'),doc_c=v('u_doc_c'),b5kg=v('u_5kg'),b5lb=v('u_5lb');
+  const pct_may=v('u_pct_may')/100, pct_cli=1-pct_may;
+  const p_doc=(v('u_doc_may')*pct_may+v('u_doc_cli')*pct_cli);
+  const p_5kg=(v('u_5kg_may')*pct_may+v('u_5kg_cli')*pct_cli);
+  const p_5lb=(v('u_5lb_may')*pct_may+v('u_5lb_cli')*pct_cli);
+  const ing_doc=cost*doc_c*p_doc;
+  const ing_5kg=b5kg*p_5kg;
+  const ing_5lb=b5lb*p_5lb;
+  const ing_tot=ing_doc+ing_5kg+ing_5lb;
+  const c_viajes=(v('u_gas')+v('u_otros'))*2;
+  const c_carro=v('u_carro')/tc/4;
+  const c_materia=cost*v('u_c_cost')/tc;
+  const c_etiq=cost*v('u_etiq')/tc;
+  const c_tot=c_viajes+c_carro+c_materia+c_etiq;
+  const util=ing_tot-c_tot;
+  const mar=ing_tot>0?util/ing_tot*100:0;
+
+  $('k-tucson').innerHTML=
+    kpi('Ingresos semana',fu(ing_tot,0),fm(ing_tot*tc),'blue')+
+    kpi('Costos semana',fu(c_tot,0),fm(c_tot*tc),'red')+
+    kpi('UTILIDAD semana',fu(util,0),`Margen: ${fp(mar)}`,util>0?'green':'red')+
+    kpi('Utilidad mensual',fu(util*8,0),fu(util*52,0)+'/año','light');
+
+  $('t-tucson').innerHTML=`
+    <thead><tr><th>Concepto</th><th>Detalle</th><th>USD</th><th>MXN</th></tr></thead>
+    <tbody>
+      <tr><td>🌽 Docenas (${cost*doc_c} doc)</td><td>$${p_doc.toFixed(2)}/doc prom</td><td class="num pos">${fu(ing_doc,0)}</td><td class="num pos">${fm(ing_doc*tc)}</td></tr>
+      <tr><td>📦 Bolsas 5KG (${b5kg})</td><td>$${p_5kg.toFixed(2)}/bolsa prom</td><td class="num pos">${fu(ing_5kg,0)}</td><td class="num pos">${fm(ing_5kg*tc)}</td></tr>
+      <tr><td>📦 Bolsas 5LB (${b5lb})</td><td>$${p_5lb.toFixed(2)}/bolsa prom</td><td class="num pos">${fu(ing_5lb,0)}</td><td class="num pos">${fm(ing_5lb*tc)}</td></tr>
+      <tr class="tr-sub"><td colspan="2"><strong>TOTAL INGRESOS</strong></td><td class="num"><strong>${fu(ing_tot,0)}</strong></td><td class="num"><strong>${fm(ing_tot*tc)}</strong></td></tr>
+      <tr class="tr-blue"><td colspan="4">💸 GASTOS</td></tr>
+      <tr><td>⛽ Gasolina 2 viajes</td><td>$${v('u_gas')}×2</td><td class="num neg">${fu(v('u_gas')*2)}</td><td class="num neg">${fm(v('u_gas')*2*tc)}</td></tr>
+      <tr><td>🚗 Mensualidad Sienna</td><td>$${fm(v('u_carro'))}/mes ÷4</td><td class="num neg">${fu(c_carro,0)}</td><td class="num neg">${fm(v('u_carro')/4)}</td></tr>
+      <tr><td>🌽 Materia prima</td><td>${cost} costales×$${v('u_c_cost')}</td><td class="num neg">${fu(c_materia,0)}</td><td class="num neg">${fm(cost*v('u_c_cost'))}</td></tr>
+      <tr><td>🏷️ Etiquetas</td><td>${cost}×$${v('u_etiq')}</td><td class="num neg">${fu(c_etiq,2)}</td><td class="num neg">${fm(cost*v('u_etiq'))}</td></tr>
+      <tr class="tr-tot"><td colspan="2"><strong>UTILIDAD NETA SEMANA</strong></td><td class="num"><strong>${fu(util,0)}</strong></td><td class="num"><strong>${fm(util*tc)}</strong></td></tr>
+    </tbody>`;
+
+  $('a-tucson').innerHTML=`
+    <div class="alert green"><strong>🇺🇸 EE.UU. es tu motor de ingresos</strong>
+    Con 2 viajes por semana generas ${fu(ing_tot,0)} USD. Cada costal adicional que lleves reduce el costo de transporte por unidad — llevar 70 en vez de 60 podría sumar +$${(10*p_doc*doc_c).toFixed(0)} USD extra por viaje.</div>`;
+
+  $('r-tucson').style.display='block';
+  $('r-tucson').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function calcClientes(){
+  const pm=80,pp=65,ph=40;
+  const t1=v('c1_d')*pp+v('c1_k')*pm;
+  const t2=v('c2_d')*pp+v('c2_k')*pm;
+  const t3=v('c3_d')*pp+v('c3_k')*pm;
+  const t4=v('c4_k')*pm+v('c4_h')*ph;
+  const tot=t1+t2+t3+t4;
+  $('k-clientes').innerHTML=
+    kpi('Michoacana San Miguel',fm(t1),'Tencha','light')+
+    kpi('Snack Bar Nogales',fm(t2),'Lluvia Villa','light')+
+    kpi('Fondita Edith',fm(t3),'Socorro y Gaby','light')+
+    kpi('Tamales Don Rubén',fm(t4),'Dulce o esposo','light')+
+    kpi('TOTAL CLIENTES/SEM',fm(tot),`~${fm(tot*4)}/mes`,'green');
+  $('t-clientes').innerHTML=`
+    <thead><tr><th>Cliente</th><th>Contacto</th><th>Doc</th><th>Kg</th><th>Total/sem</th></tr></thead>
+    <tbody>
+      <tr><td>🏪 La Michoacana</td><td>Tencha</td><td class="num">${v('c1_d')}</td><td class="num">${v('c1_k')}</td><td class="num pos">${fm(t1)}</td></tr>
+      <tr><td>🍹 Snack Bar</td><td>Lluvia Villa</td><td class="num">${v('c2_d')}</td><td class="num">${v('c2_k')}</td><td class="num pos">${fm(t2)}</td></tr>
+      <tr><td>🍽️ Fondita Edith</td><td>Socorro/Gaby</td><td class="num">${v('c3_d')}</td><td class="num">${v('c3_k')}</td><td class="num pos">${fm(t3)}</td></tr>
+      <tr><td>🫔 Tamales Don Rubén</td><td>Dulce/esposo</td><td class="num">—</td><td class="num">${v('c4_k')}</td><td class="num pos">${fm(t4)}</td></tr>
+      <tr class="tr-tot"><td colspan="4"><strong>TOTAL / SEMANA</strong></td><td class="num"><strong>${fm(tot)}</strong></td></tr>
+    </tbody>`;
+  $('r-clientes').style.display='block';
+}
+
+window.onload=()=>{calcNogales();calcTucson()};
+</script>
+</body>
+</html>
