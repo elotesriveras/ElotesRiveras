@@ -1,0 +1,2275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌽 Elotes Rivera's — Dashboard Familiar 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;0,900;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --v:#1a5c2e;--vm:#2e7d32;--vc:#66bb6a;--vb:#e8f5e9;--vl:#f0faf0;
+  --d:#f59f00;--dm:#e67700;--db:#fff8e1;
+  --r:#e03131;--rb:#fff5f5;
+  --a:#1971c2;--ab:#e7f5ff;
+  --p:#7048e8;--pb:#f3f0ff;
+  --bg:#f5f7f5;--card:#ffffff;
+  --txt:#1a1a1a;--muted:#6b7280;
+  --border:#e5e7eb;--border2:#f0f4f0;
+  --shadow:0 2px 16px rgba(26,92,46,.08);
+  --shadow2:0 4px 32px rgba(26,92,46,.12);
+  --radius:18px;--radius2:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+
+.hero{background:linear-gradient(135deg,#071a0d 0%,#0f3320 40%,#1a5c2e 75%,#2d7a3a 100%);
+  padding:36px 20px 44px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 120%,rgba(245,159,0,.12),transparent);}
+.hero-logo{font-size:12px;font-weight:700;color:rgba(245,159,0,.7);text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(26px,6vw,48px);color:#fff;line-height:1.05;margin-bottom:6px}
+.hero h1 em{color:var(--d);font-style:normal}
+.hero-sub{color:rgba(255,255,255,.5);font-size:13px;margin-bottom:22px}
+.hero-kpis{display:flex;justify-content:center;gap:7px;flex-wrap:wrap}
+.hk{background:rgba(255,255,255,.08);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);
+  border-radius:14px;padding:11px 15px;min-width:105px;text-align:center}
+.hk .hkv{font-family:'Fraunces',serif;font-size:20px;font-weight:900;color:var(--d)}
+.hk .hkl{font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+
+.nav{background:#fff;border-bottom:2px solid var(--border);position:sticky;top:0;z-index:200;
+  display:flex;overflow-x:auto;scrollbar-width:none;padding:0 6px}
+.nav::-webkit-scrollbar{display:none}
+.nb{padding:13px 13px;border:none;background:none;font-family:'Outfit',sans-serif;font-size:12px;
+  font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;
+  border-bottom:3px solid transparent;transition:all .2s;flex-shrink:0}
+.nb.active{color:var(--v);border-bottom-color:var(--v)}
+.nb:hover{color:var(--v)}
+
+.panel{display:none;max-width:940px;margin:0 auto;padding:18px 13px 80px}
+.panel.active{display:block}
+
+.sec-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;margin-top:22px}
+.sec-head:first-child{margin-top:0}
+.sec-icon{width:36px;height:36px;border-radius:10px;background:var(--v);
+  display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.sec-title{font-family:'Fraunces',serif;font-size:17px;color:var(--v)}
+.sec-sub{font-size:11.5px;color:var(--muted);margin-top:2px}
+
+.card{background:var(--card);border-radius:var(--radius);padding:18px;margin-bottom:13px;
+  box-shadow:var(--shadow)}
+.card-t{font-weight:700;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:13px;
+  display:flex;align-items:center;gap:6px}
+.card-t::after{content:'';flex:1;height:1px;background:var(--border2)}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(136px,1fr));gap:9px;margin-bottom:13px}
+.kpi{border-radius:var(--radius2);padding:14px 13px}
+.kpi.g{background:var(--v);color:#fff}.kpi.gol{background:var(--d);color:#1a1a1a}
+.kpi.red{background:var(--r);color:#fff}.kpi.blu{background:var(--a);color:#fff}
+.kpi.pur{background:var(--p);color:#fff}.kpi.lv{background:var(--vb);color:var(--v);border:1.5px solid var(--vc)}
+.kpi.ld{background:var(--db);color:#92400e;border:1.5px solid var(--d)}
+.kpi.lg{background:#fff;color:var(--txt);border:1.5px solid var(--border)}
+.kpi .kt{font-size:9px;font-weight:700;opacity:.75;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.kpi .kv{font-family:'Fraunces',serif;font-size:clamp(17px,3.5vw,24px);font-weight:900;line-height:1}
+.kpi .ks{font-size:9.5px;opacity:.65;margin-top:3px}
+
+.capture-form{display:grid}
+.cf-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;
+  border-bottom:1px solid var(--border2);gap:10px}
+.cf-row:last-child{border-bottom:none}
+.cf-label{font-size:13px;color:#374151;flex:1;display:flex;align-items:center;gap:5px}
+.cf-emoji{font-size:15px;width:20px;text-align:center;flex-shrink:0}
+.cf-input{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.cf-input input,.cf-input select{
+  padding:7px 9px;border:2px solid var(--border);border-radius:9px;
+  font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;
+  color:var(--a);background:#f8faff;transition:border-color .2s;}
+.cf-input input{width:84px;text-align:right}
+.cf-input select{width:auto;color:var(--txt);font-weight:500}
+.cf-input input:focus,.cf-input select:focus{outline:none;border-color:var(--vc);box-shadow:0 0 0 3px rgba(102,187,106,.15)}
+.cf-unit{font-size:10.5px;color:var(--muted);white-space:nowrap;min-width:28px}
+.cf-section{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;
+  color:var(--v);background:var(--vl);border-radius:7px;padding:4px 9px;
+  margin:9px 0 3px;display:flex;align-items:center;gap:4px}
+.cf-date-row{display:flex;align-items:center;gap:7px;margin-bottom:4px;flex-wrap:wrap}
+.cf-date-row input[type="date"]{
+  padding:8px 11px;border:2px solid var(--vc);border-radius:10px;
+  font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;color:var(--v);
+  background:var(--vb);flex:1;min-width:130px}
+
+.btn{border:none;border-radius:999px;padding:12px 26px;font-family:'Outfit',sans-serif;
+  font-size:14px;font-weight:700;cursor:pointer;transition:all .18s;width:100%;margin-top:11px}
+.btn-v{background:var(--v);color:#fff;box-shadow:0 4px 14px rgba(26,92,46,.3)}
+.btn-v:hover{background:var(--vm);transform:translateY(-1px)}
+.btn-d{background:var(--d);color:#1a1a1a;box-shadow:0 4px 14px rgba(245,159,0,.3)}
+.btn-d:hover{background:var(--dm);transform:translateY(-1px)}
+
+.tabla{overflow-x:auto;border-radius:11px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:9px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead tr{background:var(--v)}
+th{padding:9px 11px;color:#fff;font-weight:700;text-align:left;font-size:11px}
+td{padding:8px 11px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
+tr:nth-child(even) td{background:#fafafa}
+tr:last-child td{border-bottom:none}
+.tr-tot td{background:var(--v)!important;color:#fff!important;font-weight:700}
+.tr-win td{background:var(--vb)!important;color:var(--v)!important;font-weight:700}
+.tr-lose td{background:var(--rb)!important;color:var(--r)!important;font-weight:700}
+td.num{text-align:right;font-weight:600}
+td.pos{color:var(--vm);font-weight:700}
+td.neg{color:var(--r);font-weight:700}
+td.mu{color:var(--muted);font-size:10.5px}
+.badge{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:999px;font-size:10px;font-weight:700}
+.badge.g{background:var(--vb);color:var(--v)}.badge.d{background:var(--db);color:#92400e}
+.badge.r{background:var(--rb);color:var(--r)}.badge.b{background:var(--ab);color:var(--a)}
+
+.alert{border-radius:11px;padding:11px 14px;margin:9px 0;font-size:12.5px;line-height:1.5}
+.alert strong{display:block;margin-bottom:2px;font-size:13px}
+.alert.g{background:var(--vb);border-left:4px solid var(--vc);color:var(--v)}
+.alert.d{background:var(--db);border-left:4px solid var(--d);color:#92400e}
+.alert.r{background:var(--rb);border-left:4px solid #fca5a5;color:var(--r)}
+.alert.b{background:var(--ab);border-left:4px solid #74c0fc;color:var(--a)}
+
+.mes-tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px}
+.mes-btn{padding:6px 13px;border-radius:999px;border:2px solid var(--border);
+  background:#fff;font-family:'Outfit',sans-serif;font-size:11.5px;font-weight:700;
+  cursor:pointer;transition:all .18s;color:var(--muted)}
+.mes-btn.active{background:var(--v);border-color:var(--v);color:#fff}
+.mes-btn.has-data{border-color:var(--vc);color:var(--v)}
+.mes-btn.has-data.active{background:var(--v);color:#fff}
+
+.chart-wrap{padding:6px 0;overflow-x:auto}
+.chart-bars{display:flex;align-items:flex-end;gap:5px;height:110px;padding:0 3px}
+.bar-col{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;min-width:32px}
+.bar-inner{display:flex;flex-direction:column;align-items:center;width:100%;gap:2px;flex:1;justify-content:flex-end}
+.bar{border-radius:5px 5px 0 0;width:100%;min-height:3px;transition:height .5s ease;cursor:pointer}
+.bar.v{background:var(--v)}.bar.d{background:var(--d)}.bar.r{background:var(--r)}
+.bar-lbl{font-size:8.5px;font-weight:700;text-align:center;color:var(--muted);white-space:nowrap}
+
+.tc-row{display:flex;align-items:center;gap:7px;background:var(--ab);border:1.5px solid #74c0fc;
+  border-radius:999px;padding:5px 14px;font-size:12.5px;font-weight:600;color:var(--a);
+  width:fit-content;margin-bottom:13px}
+.tc-row input{width:52px;border:none;background:transparent;font-weight:700;color:var(--a);
+  font-size:12.5px;text-align:center;font-family:'Outfit',sans-serif}
+
+.reg-item{display:flex;align-items:center;justify-content:space-between;padding:9px 11px;
+  border-radius:10px;margin-bottom:4px;background:#fff;border:1px solid var(--border2)}
+.reg-item:hover{background:var(--vl)}
+.reg-left{display:flex;align-items:center;gap:7px}
+.reg-emoji{font-size:17px;width:26px;text-align:center}
+.reg-info .ri-name{font-size:13px;font-weight:600}
+.reg-info .ri-sub{font-size:10.5px;color:var(--muted)}
+.reg-amount{font-family:'Fraunces',serif;font-size:15px;font-weight:900}
+.reg-amount.pos{color:var(--v)}.reg-amount.neg{color:var(--r)}
+.reg-del{width:26px;height:26px;border-radius:7px;border:none;background:var(--rb);
+  color:var(--r);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center}
+
+.prog-bar-wrap{background:var(--border2);border-radius:999px;height:7px;margin-top:5px;overflow:hidden}
+.prog-bar{height:100%;border-radius:999px;transition:width .5s ease}
+.prog-bar.v{background:var(--v)}.prog-bar.d{background:var(--d)}.prog-bar.r{background:var(--r)}
+
+.mes-card{background:var(--card);border-radius:13px;padding:12px 14px;margin-bottom:7px;
+  box-shadow:var(--shadow);display:flex;align-items:center;gap:10px;cursor:pointer;
+  border-left:4px solid var(--border);transition:all .2s}
+.mes-card:hover{box-shadow:var(--shadow2)}
+.mes-card.great{border-left-color:var(--vm)}.mes-card.good{border-left-color:var(--d)}
+.mes-card.warn{border-left-color:#f97316}.mes-card.bad{border-left-color:var(--r)}
+.mes-card .mc-mes{font-weight:800;font-size:13px;min-width:34px}
+.mes-card .mc-bars{flex:1}
+.mes-card .mc-label{font-size:9.5px;color:var(--muted);display:flex;justify-content:space-between;gap:4px}
+.mes-card .mc-util{font-family:'Fraunces',serif;font-size:15px;font-weight:900;min-width:76px;text-align:right}
+.mes-card .mc-util.pos{color:var(--v)}.mes-card .mc-util.neg{color:var(--r)}
+
+.cli-card{background:#fff;border-radius:11px;padding:12px;margin-bottom:5px;
+  border-left:4px solid var(--vc);box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center}
+.cli-card.may{border-left-color:var(--d)}.cli-card.pub{border-left-color:var(--r)}
+.cli-left .cn{font-weight:700;font-size:13.5px}
+.cli-left .cs{font-size:10.5px;color:var(--muted);margin-top:1px}
+.cli-right{text-align:right}
+.cli-right .cv{font-family:'Fraunces',serif;font-size:16px;font-weight:900;color:var(--v)}
+.cli-right .cu{font-size:9.5px;color:var(--muted)}
+
+.familia-box{background:linear-gradient(135deg,#f0faf0,#fff8e1);border-radius:15px;
+  padding:18px;border:2px solid rgba(102,187,106,.3);margin-bottom:13px}
+.familia-box h3{font-family:'Fraunces',serif;font-size:19px;color:var(--v);margin-bottom:3px}
+.familia-box p{font-size:12.5px;color:var(--muted)}
+
+@media(max-width:480px){
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-kpis{gap:5px}.hk{min-width:88px;padding:9px 11px}.hk .hkv{font-size:17px}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-logo">🌽 Sistema Familiar Rivera's 2026</div>
+  <h1>Elotes <em>Rivera's</em></h1>
+  <p class="hero-sub">Nogales, Sonora 🇲🇽 ↔ Tucson, Arizona 🇺🇸 · Julio &amp; Marlene</p>
+  <div class="hero-kpis">
+    <div class="hk"><div class="hkv">$1.78M</div><div class="hkl">Venta USA año</div></div>
+    <div class="hk"><div class="hkv">$744K</div><div class="hkl">Venta Masa año</div></div>
+    <div class="hk"><div class="hkv">$578K</div><div class="hkl">Utilidad total</div></div>
+    <div class="hk"><div class="hkv">55</div><div class="hkl">Clientes Tucson</div></div>
+  </div>
+</div>
+
+<nav class="nav">
+  <button class="nb active" onclick="show('inicio',this)">🏠 Inicio</button>
+  <button class="nb" onclick="show('captura',this)">✏️ Capturar</button>
+  <button class="nb" onclick="show('usa',this)">🇺🇸 USA</button>
+  <button class="nb" onclick="show('masa',this)">🌽 Masa</button>
+  <button class="nb" onclick="show('hogar',this)">🏠 Hogar</button>
+  <button class="nb" onclick="show('clientes',this)">👥 Clientes</button>
+  <button class="nb" onclick="show('anual',this)">📅 Año Completo</button>
+  <button class="nb" onclick="show('edr',this)">📋 Est. Resultados</button>
+  <button class="nb" onclick="show('costos',this)">💰 Costos</button>
+</nav>
+
+
+<!-- ═══ INICIO ═══ -->
+<div id="p-inicio" class="panel active">
+  <div class="familia-box">
+    <h3>¡Bienvenida familia Minjarez Rivera! 👋</h3>
+    <p id="hoy-fecha">Cargando fecha...</p>
+  </div>
+
+  <div class="sec-head">
+    <div class="sec-icon">📊</div>
+    <div><div class="sec-title">Mayo 2026 — Resumen Real</div>
+    <div class="sec-sub">Datos de tus tres archivos unificados</div></div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi g"><div class="kt">💰 Ingresos Mayo</div><div class="kv">$112,569</div><div class="ks">MXN total familia</div></div>
+    <div class="kpi gol"><div class="kt">🇺🇸 Venta USA Mayo</div><div class="kv">$112,790</div><div class="ks">MXN · Tucson</div></div>
+    <div class="kpi lv"><div class="kt">🌽 Venta Masa Mayo</div><div class="kv">$54,188</div><div class="ks">MXN · Nogales</div></div>
+    <div class="kpi blu"><div class="kt">🏠 Balance Hogar</div><div class="kv">+$18,063</div><div class="ks">MXN superávit</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-t">📈 Ventas mes a mes 2026 (🟢 USA · 🟡 Masa)</div>
+    <div class="chart-wrap"><div class="chart-bars" id="chart-anual"></div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-t">🚦 Semáforo de Desempeño — Todo el Año</div>
+    <div id="semaforo-list"></div>
+  </div>
+
+  <div class="alert g"><strong>✅ Abril = tu mejor mes hasta ahora</strong>Utilidad combinada: +$56,807 MXN (USA $43,668 + Masa $13,139). Meta: superar eso cada mes.</div>
+  <div class="alert d"><strong>⚠️ Marzo: margen de Masa muy bajo (5.6%)</strong>Solo $2,622 MXN de utilidad. Revisa costos de elote y nómina en ese mes.</div>
+  <div class="alert b"><strong>💡 Bolsas 5KG = tu producto más rentable</strong>~76% de margen real. En mayo: 33 bolsas = $825 USD. ¡Empuja más de esas!</div>
+</div>
+
+
+<!-- ═══ CAPTURAR ═══ -->
+<div id="p-captura" class="panel">
+  <div class="sec-head">
+    <div class="sec-icon">✏️</div>
+    <div><div class="sec-title">Capturar el Día</div>
+    <div class="sec-sub">Llena esto cada día — todo se guarda y actualiza</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-t">📅 Fecha, tipo y quién captura</div>
+    <div class="cf-date-row">
+      <input type="date" id="cap-fecha">
+      <select id="cap-tipo" onchange="cambiarFormulario()" style="padding:8px 11px;border:2px solid var(--vc);border-radius:10px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;color:var(--v);background:var(--vb)">
+        <option value="usa">🇺🇸 Viaje a Tucson (USA)</option>
+        <option value="masa">🌽 Venta Masa (Nogales)</option>
+        <option value="hogar">🏠 Gasto del Hogar</option>
+      </select>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button id="btn-julio" onclick="selUser('Julio')" style="flex:1;padding:10px;border-radius:12px;border:2px solid var(--vc);background:var(--v);color:#fff;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer">👨 Julio</button>
+      <button id="btn-marlene" onclick="selUser('Marlene')" style="flex:1;padding:10px;border-radius:12px;border:2px solid var(--border);background:#fff;color:var(--muted);font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer">👩 Marlene</button>
+    </div>
+    <div id="quien-badge" style="text-align:center;font-size:12px;color:var(--v);font-weight:600;margin-top:6px">✅ Capturando: <strong>Julio</strong></div>
+  </div>
+
+  <div id="form-usa" class="card">
+    <div class="card-t">🇺🇸 Viaje a Tucson, Arizona</div>
+    <div class="tc-row">💱 TC: <input type="number" id="u-tc" value="17.00" step="0.01"> MXN/USD</div>
+    <div class="capture-form">
+      <div class="cf-section">🏪 Ventas Mayoreo</div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🌽</span>Docenas — mayoreo</div><div class="cf-input"><input type="number" id="u-docn-may" value="0" min="0"><span class="cf-unit">doc</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">📦</span>Bolsas 5LB — mayoreo</div><div class="cf-input"><input type="number" id="u-b5lb-may" value="0" min="0"><span class="cf-unit">bolsas</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">📦</span>Bolsas 5KG — mayoreo</div><div class="cf-input"><input type="number" id="u-b5kg-may" value="0" min="0"><span class="cf-unit">bolsas</span></div></div>
+      <div class="cf-section">🤝 Ventas Clientes (precio cliente)</div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🌽</span>Docenas — cliente</div><div class="cf-input"><input type="number" id="u-docn-cli" value="0" min="0"><span class="cf-unit">doc</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🌽</span>Docenas jimadas — cliente</div><div class="cf-input"><input type="number" id="u-docj-cli" value="0" min="0"><span class="cf-unit">doc</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">📦</span>Bolsas 5LB — cliente</div><div class="cf-input"><input type="number" id="u-b5lb-cli" value="0" min="0"><span class="cf-unit">bolsas</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">📦</span>Bolsas 5KG — cliente</div><div class="cf-input"><input type="number" id="u-b5kg-cli" value="0" min="0"><span class="cf-unit">bolsas</span></div></div>
+      <div class="cf-section">👤 Ventas Público General</div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🌽</span>Docenas — público</div><div class="cf-input"><input type="number" id="u-docn-pub" value="0" min="0"><span class="cf-unit">doc</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">📦</span>Bolsas 5LB — público</div><div class="cf-input"><input type="number" id="u-b5lb-pub" value="0" min="0"><span class="cf-unit">bolsas</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">📦</span>Bolsas 5KG — público</div><div class="cf-input"><input type="number" id="u-b5kg-pub" value="0" min="0"><span class="cf-unit">bolsas</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🎋</span>Costales hojas</div><div class="cf-input"><input type="number" id="u-cost" value="0" min="0"><span class="cf-unit">costales</span></div></div>
+      <div class="cf-section">💵 Precios Mayoreo (USD)</div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🏷️</span>Docena — mayoreo</div><div class="cf-input"><input type="number" id="u-pdoc-may" value="6"><span class="cf-unit">USD</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🏷️</span>Bolsa 5LB — mayoreo</div><div class="cf-input"><input type="number" id="u-p5lb-may" value="12"><span class="cf-unit">USD</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🏷️</span>Bolsa 5KG — mayoreo</div><div class="cf-input"><input type="number" id="u-p5kg-may" value="20"><span class="cf-unit">USD</span></div></div>
+      <div class="cf-section">💵 Precios Cliente (USD)</div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🏷️</span>Docena — cliente</div><div class="cf-input"><input type="number" id="u-pdoc-cli" value="7"><span class="cf-unit">USD</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🏷️</span>Bolsa 5LB — cliente</div><div class="cf-input"><input type="number" id="u-p5lb-cli" value="15"><span class="cf-unit">USD</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🏷️</span>Bolsa 5KG — cliente</div><div class="cf-input"><input type="number" id="u-p5kg-cli" value="25"><span class="cf-unit">USD</span></div></div>
+      <div class="cf-section">💵 Precios Público General (USD)</div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🏷️</span>Docena — público</div><div class="cf-input"><input type="number" id="u-pdoc-pub" value="8"><span class="cf-unit">USD</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🏷️</span>Bolsa 5LB — público</div><div class="cf-input"><input type="number" id="u-p5lb-pub" value="17"><span class="cf-unit">USD</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🏷️</span>Bolsa 5KG — público</div><div class="cf-input"><input type="number" id="u-p5kg-pub" value="28"><span class="cf-unit">USD</span></div></div>
+      <div class="cf-section">⛽ Gastos del viaje</div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">⛽</span>Gasolina</div><div class="cf-input"><input type="number" id="u-gas" value="60"><span class="cf-unit">USD</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🍔</span>Comida viaje</div><div class="cf-input"><input type="number" id="u-com" value="20"><span class="cf-unit">USD</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">👷</span>Nómina</div><div class="cf-input"><input type="number" id="u-nom" value="0"><span class="cf-unit">MXN</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">📜</span>Permisos</div><div class="cf-input"><input type="number" id="u-perm" value="666"><span class="cf-unit">MXN</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🚗</span>Sienna (1er viaje del mes)</div><div class="cf-input"><input type="number" id="u-sienna" value="0"><span class="cf-unit">MXN</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">📝</span>Otros gastos</div><div class="cf-input"><input type="number" id="u-otros" value="0"><span class="cf-unit">MXN</span></div></div>
+    </div>
+    <button class="btn btn-v" onclick="guardarUSA()">✅ Guardar Viaje USA</button>
+    <div id="res-usa" style="margin-top:11px;display:none"></div>
+  </div>
+
+  <div id="form-masa" class="card" style="display:none">
+    <div class="card-t">🌽 Venta del Día — Masa Nogales</div>
+    <div class="capture-form">
+      <div class="cf-section">🏪 Ventas a Negocios (precio mayoreo)</div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🫙</span>Kg masa — negocios</div><div class="cf-input"><input type="number" id="m-masa-n" value="0"><span class="cf-unit">kg</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🌽</span>Kg grano — negocios</div><div class="cf-input"><input type="number" id="m-grano-n" value="0"><span class="cf-unit">kg</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🌽</span>Docenas — negocios</div><div class="cf-input"><input type="number" id="m-doc-n" value="0"><span class="cf-unit">doc</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🍃</span>Hojas — negocios</div><div class="cf-input"><input type="number" id="m-hoja-n" value="0"><span class="cf-unit">paq</span></div></div>
+      <div class="cf-section">👤 Ventas Público General (precio al público)</div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🫙</span>Kg masa — público</div><div class="cf-input"><input type="number" id="m-masa-p" value="0"><span class="cf-unit">kg</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🌽</span>Kg grano — público</div><div class="cf-input"><input type="number" id="m-grano-p" value="0"><span class="cf-unit">kg</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🌽</span>Docenas — público</div><div class="cf-input"><input type="number" id="m-doc-p" value="0"><span class="cf-unit">doc</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🍃</span>Hojas — público</div><div class="cf-input"><input type="number" id="m-hoja-p" value="0"><span class="cf-unit">paq</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🧈</span>Mantequilla / otros</div><div class="cf-input"><input type="number" id="m-mant" value="0"><span class="cf-unit">MXN</span></div></div>
+      <div class="cf-section">💸 Gastos del día</div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">👷</span>Nómina del día</div><div class="cf-input"><input type="number" id="m-nom" value="650"><span class="cf-unit">MXN</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🌽</span>Compra elote</div><div class="cf-input"><input type="number" id="m-elote" value="0"><span class="cf-unit">MXN</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🛍️</span>Insumos varios</div><div class="cf-input"><input type="number" id="m-ins" value="0"><span class="cf-unit">MXN</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">🏢</span>Renta (cuando pagas)</div><div class="cf-input"><input type="number" id="m-renta" value="0"><span class="cf-unit">MXN</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">💡</span>Luz (cuando llega)</div><div class="cf-input"><input type="number" id="m-luz" value="0"><span class="cf-unit">MXN</span></div></div>
+      <div class="cf-section">🏷️ Precios — Negocios</div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">💰</span>Precio kg masa (negocios)</div><div class="cf-input"><input type="number" id="m-pmasa-n" value="80"><span class="cf-unit">MXN</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">💰</span>Precio kg grano (negocios)</div><div class="cf-input"><input type="number" id="m-pgrano-n" value="80"><span class="cf-unit">MXN</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">💰</span>Precio docena (negocios)</div><div class="cf-input"><input type="number" id="m-pdoc-n" value="65"><span class="cf-unit">MXN</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">💰</span>Precio hoja (negocios)</div><div class="cf-input"><input type="number" id="m-phoja-n" value="40"><span class="cf-unit">MXN</span></div></div>
+      <div class="cf-section">🏷️ Precios — Público General</div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">💰</span>Precio kg masa (público)</div><div class="cf-input"><input type="number" id="m-pmasa-p" value="90"><span class="cf-unit">MXN</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">💰</span>Precio kg grano (público)</div><div class="cf-input"><input type="number" id="m-pgrano-p" value="90"><span class="cf-unit">MXN</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">💰</span>Precio docena (público)</div><div class="cf-input"><input type="number" id="m-pdoc-p" value="75"><span class="cf-unit">MXN</span></div></div>
+      <div class="cf-row"><div class="cf-label"><span class="cf-emoji">💰</span>Precio hoja (público)</div><div class="cf-input"><input type="number" id="m-phoja-p" value="50"><span class="cf-unit">MXN</span></div></div>
+    </div>
+    <button class="btn btn-v" onclick="guardarMasa()">✅ Guardar Día Masa</button>
+    <div id="res-masa" style="margin-top:11px;display:none"></div>
+  </div>
+
+  <div id="form-hogar" class="card" style="display:none">
+    <div class="card-t">🏠 Gasto del Hogar / Personal</div>
+    <div class="capture-form">
+      <div class="cf-row">
+        <div class="cf-label"><span class="cf-emoji">📂</span>Categoría</div>
+        <div class="cf-input">
+          <select id="h-cat" style="width:150px">
+            <option>Hogar</option>
+            <option>── Negocio USA ──</option>
+            <option>USA · Materia Prima</option>
+            <option>USA · Gasolina</option>
+            <option>USA · Comida Viaje</option>
+            <option>USA · Permisos</option>
+            <option>USA · Sienna (mensualidad)</option>
+            <option>USA · Otros</option>
+            <option>── Negocio Masa ──</option>
+            <option>Masa · Compra Elote</option>
+            <option>Masa · Nómina</option>
+            <option>Masa · Insumos</option>
+            <option>Masa · Renta</option>
+            <option>Masa · Luz</option>
+            <option>Masa · Otros</option>
+            <option>── Personal ──</option>
+            <option>Personal</option><option>Salud</option><option>Educación</option>
+            <option>Combustible</option><option>Financiero</option><option>Otros</option>
+          </select>
+        </div>
+      </div>
+      <div class="cf-row">
+        <div class="cf-label"><span class="cf-emoji">📝</span>Descripción</div>
+        <div class="cf-input"><input type="text" id="h-desc" placeholder="ej: Luz, pizza, gasolina" style="width:150px;text-align:left;font-weight:500;color:var(--txt)"></div>
+      </div>
+      <div class="cf-row">
+        <div class="cf-label"><span class="cf-emoji">💵</span>Monto</div>
+        <div class="cf-input">
+          <input type="number" id="h-monto" value="0" min="0">
+          <select id="h-mon" style="width:58px"><option>MXN</option><option>USD</option></select>
+        </div>
+      </div>
+      <div class="cf-row">
+        <div class="cf-label"><span class="cf-emoji">💳</span>Forma de pago</div>
+        <div class="cf-input"><select id="h-forma"><option>Efectivo</option><option>Transferencia</option><option>Tarjeta</option></select></div>
+      </div>
+    </div>
+    <button class="btn btn-d" onclick="guardarHogar()">✅ Guardar Gasto</button>
+  </div>
+
+  <div class="card">
+    <div class="card-t">📋 Registrado hoy</div>
+    <div id="lista-hoy"><p style="color:var(--muted);font-size:13px;text-align:center;padding:14px">Aún no hay registros para hoy.</p></div>
+  </div>
+</div>
+
+
+<!-- ═══ USA ═══ -->
+<div id="p-usa" class="panel">
+  <div class="sec-head">
+    <div class="sec-icon">🇺🇸</div>
+    <div><div class="sec-title">Negocio USA — Tucson, AZ</div>
+    <div class="sec-sub">2 viajes/semana: Lunes y Viernes · Datos reales Ene–May 2026</div></div>
+  </div>
+  <div class="mes-tabs" id="mes-tabs-usa"></div>
+  <div class="kpi-grid" id="kpi-usa"></div>
+  <div class="card">
+    <div class="card-t">📊 Viajes del mes</div>
+    <div class="tabla"><table id="tabla-usa"><thead><tr><th>Fecha</th><th>Día</th><th>DocN</th><th>DocJ</th><th>5LB</th><th>5KG</th><th>Venta</th><th>Egresos</th><th>Utilidad</th><th>%</th></tr></thead><tbody></tbody></table></div>
+  </div>
+  <div class="card">
+    <div class="card-t">📈 Venta 🟢 vs Egresos 🔴</div>
+    <div class="chart-wrap"><div class="chart-bars" id="chart-usa-mes"></div></div>
+  </div>
+</div>
+
+
+<!-- ═══ MASA ═══ -->
+<div id="p-masa" class="panel">
+  <div class="sec-head">
+    <div class="sec-icon">🌽</div>
+    <div><div class="sec-title">Negocio Masa — Nogales</div>
+    <div class="sec-sub">Ventas diarias en el local · Datos reales 2026</div></div>
+  </div>
+  <div class="mes-tabs" id="mes-tabs-masa"></div>
+  <div class="kpi-grid" id="kpi-masa"></div>
+  <div class="card">
+    <div class="card-t">🏆 Márgenes por producto</div>
+    <div class="tabla">
+      <table>
+        <thead><tr><th>Producto</th><th>Precio</th><th>Costo aprox</th><th>Margen</th></tr></thead>
+        <tbody>
+          <tr><td>📦 Bolsa 5KG grano</td><td>$25 USD</td><td>~$4.84 USD</td><td class="num pos">80% 🔥</td></tr>
+          <tr><td>🫙 Kg masa negocios</td><td>$80 MXN</td><td>~$37 MXN</td><td class="num pos">54%</td></tr>
+          <tr><td>🌽 Docena jimada</td><td>$70 MXN</td><td>~$30 MXN</td><td class="num pos">57%</td></tr>
+          <tr><td>🌽 Docena pelada</td><td>$65 MXN</td><td>~$30 MXN</td><td class="num pos">54%</td></tr>
+          <tr><td>🍃 Paquete hoja</td><td>$40 MXN</td><td>~$18 MXN</td><td class="num pos">55%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert g" style="margin-top:9px"><strong>🏆 La bolsa 5KG es tu joya</strong>80% de margen — cada bolsa = $20 USD ganancia pura. ¡Enfoca aquí!</div>
+  </div>
+  <div class="card">
+    <div class="card-t">📊 Resumen mes a mes — Masa</div>
+    <div id="masa-mensual"></div>
+  </div>
+</div>
+
+
+<!-- ═══ HOGAR ═══ -->
+<div id="p-hogar" class="panel">
+  <div class="sec-head">
+    <div class="sec-icon">🏠</div>
+    <div><div class="sec-title">Control Hogar — Familia Minjarez Rivera</div>
+    <div class="sec-sub">Marlene &amp; Julio · 2026</div></div>
+  </div>
+  <div class="mes-tabs" id="mes-tabs-hogar"></div>
+  <div class="kpi-grid" id="kpi-hogar"></div>
+
+  <!-- ── GRÁFICAS CIRCULARES ── -->
+  <div class="card">
+    <div class="card-t">🍩 Resumen visual — <span id="graf-mes-label">MAY</span></div>
+    <div id="graficas-wrap" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-t">📊 Gastos por área — <span id="hogar-mes-label">MAY</span></div>
+    <div id="cat-egresos"></div>
+  </div>
+
+  <div style="background:#e7f5ff;border-radius:var(--radius);padding:16px;margin-bottom:13px;border:1.5px solid #74c0fc">
+    <div style="font-weight:800;font-size:13px;color:var(--a);margin-bottom:10px">🌽 GASTOS USA capturados — <span id="label-usa-cap">MAY</span></div>
+    <div id="lista-usa-hogar"><p style="color:var(--muted);font-size:12px;text-align:center;padding:10px">Sin capturas aún.</p></div>
+  </div>
+
+  <div style="background:#e8f5e9;border-radius:var(--radius);padding:16px;margin-bottom:13px;border:1.5px solid var(--vc)">
+    <div style="font-weight:800;font-size:13px;color:var(--v);margin-bottom:10px">🫙 GASTOS MASA capturados — <span id="label-masa-cap">MAY</span></div>
+    <div id="lista-masa-hogar"><p style="color:var(--muted);font-size:12px;text-align:center;padding:10px">Sin capturas aún.</p></div>
+  </div>
+
+  <div style="background:#fff8e1;border-radius:var(--radius);padding:16px;margin-bottom:13px;border:1.5px solid var(--d)">
+    <div style="font-weight:800;font-size:13px;color:#92400e;margin-bottom:10px">🏠 GASTOS HOGAR capturados — <span id="label-hog-cap">MAY</span></div>
+    <div id="lista-hog-hogar"><p style="color:var(--muted);font-size:12px;text-align:center;padding:10px">Sin capturas aún.</p></div>
+  </div>
+</div>
+
+
+<!-- ═══ CLIENTES ═══ -->
+<div id="p-clientes" class="panel">
+  <div class="sec-head">
+    <div class="sec-icon">👥</div>
+    <div><div class="sec-title">55 Clientes Tucson</div>
+    <div class="sec-sub">Catálogo completo con ventas de Mayo 2026</div></div>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi g"><div class="kt">Top Cliente Mayo</div><div class="kv">Sra. Lupita</div><div class="ks">$855 USD</div></div>
+    <div class="kpi gol"><div class="kt">Total Mayo</div><div class="kv">$4,637</div><div class="ks">USD · todos</div></div>
+    <div class="kpi blu"><div class="kt">Mayoreo</div><div class="kv">3</div><div class="ks">Rossy, Javo, Tavo</div></div>
+    <div class="kpi lv"><div class="kt">Regulares</div><div class="kv">42</div><div class="ks">clientes Tucson</div></div>
+  </div>
+  <div class="alert d"><strong>💡 +$1,176 USD/mes sin nuevos clientes</strong>Si los 42 clientes regulares compran 1 docena más/semana = +$294 USD/semana.</div>
+  <div class="card">
+    <div class="card-t">🔍 Buscar cliente</div>
+    <input type="text" id="busca-cli" placeholder="Busca por nombre o zona..." oninput="filtrarClientes()"
+      style="width:100%;padding:9px 13px;border:2px solid var(--vc);border-radius:11px;font-family:'Outfit',sans-serif;font-size:13px;margin-bottom:13px">
+    <div id="lista-clientes"></div>
+  </div>
+  <div class="card">
+    <div class="card-t">🏆 Top 10 Clientes Mayo 2026</div>
+    <div class="tabla">
+      <table>
+        <thead><tr><th>#</th><th>Cliente</th><th>Zona</th><th>Tipo</th><th>Unids</th><th>Venta USD</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><strong>Sra. Lupita</strong></td><td class="mu">Flowing Wells</td><td><span class="badge g">Cliente</span></td><td class="num">35</td><td class="num pos">$855</td></tr>
+          <tr><td>2</td><td><strong>Del Cielo Tamal</strong></td><td class="mu">Campbell</td><td><span class="badge g">Cliente</span></td><td class="num">50</td><td class="num pos">$350</td></tr>
+          <tr><td>3</td><td><strong>Lupita Tamales</strong></td><td class="mu">Irvington</td><td><span class="badge g">Cliente</span></td><td class="num">18</td><td class="num pos">$270</td></tr>
+          <tr><td>4</td><td>Cristina</td><td class="mu">Los Reales</td><td><span class="badge g">Cliente</span></td><td class="num">12</td><td class="num pos">$180</td></tr>
+          <tr><td>5</td><td>Doña Rosa</td><td class="mu">22nd &amp; Swan</td><td><span class="badge g">Cliente</span></td><td class="num">25</td><td class="num pos">$175</td></tr>
+          <tr><td>6</td><td>Jungle Fruits Sahuarita</td><td class="mu">Sahuarita</td><td><span class="badge g">Cliente</span></td><td class="num">20</td><td class="num pos">$140</td></tr>
+          <tr><td>7</td><td>Josefina</td><td class="mu">Valencia</td><td><span class="badge g">Cliente</span></td><td class="num">19</td><td class="num pos">$133</td></tr>
+          <tr><td>8</td><td>Rossy Michoacana</td><td class="mu">Drexel</td><td><span class="badge d">Mayoreo</span></td><td class="num">6</td><td class="num pos">$120</td></tr>
+          <tr><td>9</td><td>Artemisa</td><td class="mu">22nd &amp; Swan</td><td><span class="badge g">Cliente</span></td><td class="num">17</td><td class="num pos">$119</td></tr>
+          <tr><td>10</td><td>Antojin</td><td class="mu">22nd &amp; 4th</td><td><span class="badge g">Cliente</span></td><td class="num">7</td><td class="num pos">$105</td></tr>
+          <tr class="tr-tot"><td colspan="4"><strong>TOTAL MAYO</strong></td><td class="num">481+</td><td class="num">$4,637</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ AÑO ═══ -->
+<div id="p-anual" class="panel">
+  <div class="sec-head">
+    <div class="sec-icon">📅</div>
+    <div><div class="sec-title">Resumen Anual 2026</div>
+    <div class="sec-sub">Los 12 meses de un vistazo · USA + Masa + Hogar</div></div>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi g"><div class="kt">Venta USA Año</div><div class="kv">$1.785M</div><div class="ks">MXN</div></div>
+    <div class="kpi gol"><div class="kt">Venta Masa Año</div><div class="kv">$743,935</div><div class="ks">MXN</div></div>
+    <div class="kpi lv"><div class="kt">Utilidad USA</div><div class="kv">$320,228</div><div class="ks">Margen 17.9%</div></div>
+    <div class="kpi blu"><div class="kt">Utilidad Masa</div><div class="kv">$257,401</div><div class="ks">Margen 34.6%</div></div>
+    <div class="kpi pur"><div class="kt">UTILIDAD TOTAL</div><div class="kv">$577,629</div><div class="ks">MXN los 2 negocios</div></div>
+    <div class="kpi lg"><div class="kt">Mejor Mes</div><div class="kv">Julio</div><div class="ks">$108,919 combinado</div></div>
+  </div>
+  <div class="card">
+    <div class="card-t">📊 Mes a mes completo — USA y Masa</div>
+    <div class="tabla" id="tabla-anual"></div>
+    <div class="chart-wrap" style="margin-top:12px"><div class="chart-bars" id="chart-anual2" style="height:130px"></div></div>
+  </div>
+  <div class="card">
+    <div class="card-t">🚦 Semáforo anual</div>
+    <div id="semaforo-anual"></div>
+  </div>
+  <div class="alert g"><strong>📈 Tu meta 2027</strong>Si repites los meses Jul/Jun todos los meses = ~$1.3M MXN de utilidad anual. El negocio puede llegar ahí.</div>
+  <div class="alert d"><strong>📉 Meses a mejorar: Ene, Feb, Nov, Dic</strong>Todos con margen menor al 13% en USA. Reduce gastos fijos o sube volumen en esos meses.</div>
+</div>
+
+
+<!-- ═══ ESTADO DE RESULTADOS ═══ -->
+<div id="p-edr" class="panel">
+  <div class="sec-head">
+    <div class="sec-icon">📋</div>
+    <div><div class="sec-title">Estado de Resultados 2026</div>
+    <div class="sec-sub">Elotes Rivera's · Negocio USA + Negocio Masa · MXN</div></div>
+  </div>
+  <div class="kpi-grid" id="edr-kpis"></div>
+  <div class="card">
+    <div class="card-t">📊 Estado de Resultados — Mes a Mes</div>
+    <div class="tabla" id="edr-tabla"></div>
+  </div>
+  <div class="card">
+    <div class="card-t">🌽 Detalle Negocio USA — Mes a Mes</div>
+    <div class="tabla" id="edr-usa-tabla"></div>
+  </div>
+  <div class="card">
+    <div class="card-t">🫙 Detalle Negocio Masa — Mes a Mes</div>
+    <div class="tabla" id="edr-masa-tabla"></div>
+  </div>
+  <div id="edr-alertas"></div>
+</div>
+
+<!-- ═══ COSTOS ═══ -->
+<div id="p-costos" class="panel">
+  <div class="sec-head">
+    <div class="sec-icon">💰</div>
+    <div><div class="sec-title">Costos Reales por Producto</div>
+    <div class="sec-sub">¿Cuánto te cuesta cada cosa y cuánto ganas de verdad?</div></div>
+  </div>
+
+  <div class="alert b"><strong>📌 Costo base: docena de elote en mayoreo = $55 MXN</strong>Toda la cadena parte de este número. Si sube, tus márgenes bajan — hay que ajustar precios.</div>
+
+  <!-- COSTOS EDITABLES -->
+  <div class="card">
+    <div class="card-t">⚙️ Ajusta tus costos reales</div>
+    <div class="cf-section">🌽 Materia prima</div>
+    <div class="cf-row"><div class="cf-label">Docena elote (mayoreo) <span style="font-size:10px;color:var(--muted)">→ da 1.2 kg de grano</span></div><div class="cf-input"><input type="number" id="co-doc" value="55" oninput="calcCostos()"><span class="cf-unit">MXN</span></div></div>
+    <div class="cf-row"><div class="cf-label">Kg de grano <span style="font-size:10px;color:var(--muted)">= docena ÷ 1.2 (auto)</span></div><div class="cf-input"><input type="number" id="co-grano" value="45.83" step="0.01" readonly style="background:#f0faf0;color:var(--v);" oninput="calcCostos()"><span class="cf-unit">MXN/kg</span></div></div>
+    <div class="cf-row"><div class="cf-label">Bolsa Great Value 2 gal <span style="font-size:10px;color:var(--muted)">paq × 10 bolsas</span></div><div class="cf-input"><input type="number" id="co-bolsa2g" value="2.93" oninput="calcCostos()"><span class="cf-unit">USD/paq</span></div></div>
+    <div class="cf-row"><div class="cf-label">Bolsa Great Value 1 gal <span style="font-size:10px;color:var(--muted)">paq × 60 bolsas</span></div><div class="cf-input"><input type="number" id="co-bolsa1g" value="4.93" oninput="calcCostos()"><span class="cf-unit">USD/paq</span></div></div>
+    <div class="cf-row"><div class="cf-label">Etiqueta por costal/bolsa</div><div class="cf-input"><input type="number" id="co-etiq" value="4.50" oninput="calcCostos()"><span class="cf-unit">MXN</span></div></div>
+    <div class="cf-section">🚗 Gastos de viaje (por viaje)</div>
+    <div class="cf-row"><div class="cf-label">Gasolina</div><div class="cf-input"><input type="number" id="co-gas" value="60" oninput="calcCostos()"><span class="cf-unit">USD</span></div></div>
+    <div class="cf-row"><div class="cf-label">Comida viaje</div><div class="cf-input"><input type="number" id="co-com" value="20" oninput="calcCostos()"><span class="cf-unit">USD</span></div></div>
+    <div class="cf-row"><div class="cf-label">Permisos (caja)</div><div class="cf-input"><input type="number" id="co-perm" value="666" oninput="calcCostos()"><span class="cf-unit">MXN</span></div></div>
+    <div class="cf-row"><div class="cf-label">Sienna (mensualidad)</div><div class="cf-input"><input type="number" id="co-sienna" value="12000" oninput="calcCostos()"><span class="cf-unit">MXN/mes</span></div></div>
+    <div class="cf-row"><div class="cf-label">Costales promedio por viaje</div><div class="cf-input"><input type="number" id="co-ncost" value="30" oninput="calcCostos()"><span class="cf-unit">costales</span></div></div>
+    <div class="cf-section">🏭 Fijos Nogales (mensuales)</div>
+    <div class="cf-row"><div class="cf-label">Renta local</div><div class="cf-input"><input type="number" id="co-renta" value="4500" oninput="calcCostos()"><span class="cf-unit">MXN</span></div></div>
+    <div class="cf-row"><div class="cf-label">Luz</div><div class="cf-input"><input type="number" id="co-luz" value="1500" oninput="calcCostos()"><span class="cf-unit">MXN</span></div></div>
+    <div class="cf-row"><div class="cf-label">Nómina semanal</div><div class="cf-input"><input type="number" id="co-nom" value="5400" oninput="calcCostos()"><span class="cf-unit">MXN/sem</span></div></div>
+    <div class="cf-row"><div class="cf-label">💱 Tipo de cambio referencia</div><div class="cf-input"><input type="number" id="co-tc" value="17.00" step="0.01" oninput="calcCostos()"><span class="cf-unit">MXN/USD</span></div></div>
+  </div>
+
+  <!-- RESULTADOS -->
+  <div id="res-costos"></div>
+</div>
+
+<script>
+const DA = [
+  {mes:'ENE',vusa:107145,eusa:95915,uusa:11230,pusa:10.5,vmasa:46079,emasa:30911,umasa:15168,pmasa:32.9},
+  {mes:'FEB',vusa:136710,eusa:119175,uusa:17535,pusa:12.8,vmasa:53514,emasa:26805,umasa:26709,pmasa:49.9},
+  {mes:'MAR',vusa:197105,eusa:169702,uusa:27403,pusa:13.9,vmasa:47112,emasa:44490,umasa:2622,pmasa:5.6},
+  {mes:'ABR',vusa:154470,eusa:110802,uusa:43668,pusa:28.3,vmasa:55836,emasa:42697,umasa:13139,pmasa:23.5},
+  {mes:'MAY',vusa:112790,eusa:91383,uusa:21407,pusa:19.0,vmasa:54188,emasa:39116,umasa:15072,pmasa:27.8},
+  {mes:'JUN',vusa:0,eusa:0,uusa:0,pusa:0,vmasa:0,emasa:0,umasa:0,pmasa:0},
+  {mes:'JUL',vusa:0,eusa:0,uusa:0,pusa:0,vmasa:0,emasa:0,umasa:0,pmasa:0},
+  {mes:'AGO',vusa:0,eusa:0,uusa:0,pusa:0,vmasa:0,emasa:0,umasa:0,pmasa:0},
+  {mes:'SEP',vusa:0,eusa:0,uusa:0,pusa:0,vmasa:0,emasa:0,umasa:0,pmasa:0},
+  {mes:'OCT',vusa:0,eusa:0,uusa:0,pusa:0,vmasa:0,emasa:0,umasa:0,pmasa:0},
+  {mes:'NOV',vusa:0,eusa:0,uusa:0,pusa:0,vmasa:0,emasa:0,umasa:0,pmasa:0},
+  {mes:'DIC',vusa:0,eusa:0,uusa:0,pusa:0,vmasa:0,emasa:0,umasa:0,pmasa:0},
+];
+
+const VIAJES = [
+  {fecha:'02/01',dia:'VIE',mes:'ENE',tc:17,docn:46,docj:0,b5lb:30,b5kg:0,venta:13065,egre:23971,util:-10906,mar:-83.5},
+  {fecha:'05/01',dia:'LUN',mes:'ENE',tc:17,docn:45,docj:100,b5lb:7,b5kg:18,venta:27510,egre:20406,util:7104,mar:25.8},
+  {fecha:'09/01',dia:'VIE',mes:'ENE',tc:17,docn:63,docj:50,b5lb:12,b5kg:0,venta:15955,egre:13386,util:2569,mar:16.1},
+  {fecha:'12/01',dia:'LUN',mes:'ENE',tc:17,docn:75,docj:50,b5lb:15,b5kg:0,venta:17375,egre:14216,util:3159,mar:18.2},
+  {fecha:'16/01',dia:'VIE',mes:'ENE',tc:17,docn:69,docj:100,b5lb:21,b5kg:18,venta:33240,egre:23936,util:9304,mar:28.0},
+  {fecha:'02/02',dia:'LUN',mes:'FEB',tc:16.8,docn:82,docj:25,b5lb:12,b5kg:0,venta:14690,egre:24645,util:-9955,mar:-67.8},
+  {fecha:'06/02',dia:'VIE',mes:'FEB',tc:16.8,docn:82,docj:30,b5lb:16,b5kg:0,venta:15540,egre:13130,util:2410,mar:15.5},
+  {fecha:'09/02',dia:'LUN',mes:'FEB',tc:16.8,docn:97,docj:35,b5lb:13,b5kg:16,venta:24455,egre:18230,util:6225,mar:25.5},
+  {fecha:'16/02',dia:'LUN',mes:'FEB',tc:16.8,docn:93,docj:35,b5lb:17,b5kg:16,venta:24690,egre:18070,util:6620,mar:26.8},
+  {fecha:'20/02',dia:'VIE',mes:'FEB',tc:16.8,docn:115,docj:30,b5lb:12,b5kg:16,venta:24715,egre:18155,util:6560,mar:26.5},
+  {fecha:'23/02',dia:'LUN',mes:'FEB',tc:16.8,docn:63,docj:35,b5lb:14,b5kg:16,venta:20800,egre:16000,util:4800,mar:23.1},
+  {fecha:'06/03',dia:'VIE',mes:'MAR',tc:17.2,docn:80,docj:35,b5lb:24,b5kg:16,venta:25305,egre:17635,util:7670,mar:30.3},
+  {fecha:'09/03',dia:'LUN',mes:'MAR',tc:17.2,docn:72,docj:35,b5lb:11,b5kg:16,venta:21695,egre:15689,util:6006,mar:27.7},
+  {fecha:'13/03',dia:'VIE',mes:'MAR',tc:17.2,docn:61,docj:45,b5lb:24,b5kg:0,venta:17730,egre:13526,util:4204,mar:23.7},
+  {fecha:'16/03',dia:'LUN',mes:'MAR',tc:17.2,docn:134,docj:30,b5lb:14,b5kg:17,venta:28210,egre:19822,util:8388,mar:29.7},
+  {fecha:'20/03',dia:'VIE',mes:'MAR',tc:17.2,docn:67,docj:35,b5lb:19,b5kg:17,venta:23710,egre:16831,util:6879,mar:29.0},
+  {fecha:'23/03',dia:'LUN',mes:'MAR',tc:17.2,docn:72,docj:30,b5lb:12,b5kg:16,venta:20845,egre:15146,util:5699,mar:27.3},
+  {fecha:'27/03',dia:'VIE',mes:'MAR',tc:17.2,docn:66,docj:35,b5lb:22,b5kg:1,venta:16735,egre:13276,util:3459,mar:20.7},
+  {fecha:'30/03',dia:'LUN',mes:'MAR',tc:17.2,docn:102,docj:30,b5lb:11,b5kg:16,venta:22865,egre:17066,util:5799,mar:25.4},
+  {fecha:'06/04',dia:'LUN',mes:'ABR',tc:17.1,docn:70,docj:20,b5lb:12,b5kg:16,venta:18880,egre:13276,util:5604,mar:29.7},
+  {fecha:'10/04',dia:'VIE',mes:'ABR',tc:17.1,docn:91,docj:30,b5lb:14,b5kg:16,venta:23490,egre:17276,util:6214,mar:26.5},
+  {fecha:'13/04',dia:'LUN',mes:'ABR',tc:17.1,docn:90,docj:30,b5lb:12,b5kg:16,venta:22890,egre:16006,util:6884,mar:30.1},
+  {fecha:'17/04',dia:'VIE',mes:'ABR',tc:17.1,docn:75,docj:25,b5lb:11,b5kg:0,venta:14230,egre:11408,util:2822,mar:19.8},
+  {fecha:'20/04',dia:'LUN',mes:'ABR',tc:17.1,docn:99,docj:40,b5lb:26,b5kg:16,venta:28630,egre:19272,util:9358,mar:32.7},
+  {fecha:'24/04',dia:'VIE',mes:'ABR',tc:17.1,docn:70,docj:35,b5lb:24,b5kg:9,venta:21855,egre:15638,util:6217,mar:28.4},
+  {fecha:'27/04',dia:'LUN',mes:'ABR',tc:17.1,docn:105,docj:35,b5lb:12,b5kg:16,venta:24495,egre:17926,util:6569,mar:26.8},
+  {fecha:'01/05',dia:'VIE',mes:'MAY',tc:16.9,docn:78,docj:25,b5lb:15,b5kg:0,venta:15520,egre:24476,util:-8956,mar:-57.7},
+  {fecha:'04/05',dia:'LUN',mes:'MAY',tc:16.9,docn:105,docj:120,b5lb:20,b5kg:16,venta:38095,egre:25735,util:12360,mar:32.4},
+  {fecha:'08/05',dia:'VIE',mes:'MAY',tc:16.9,docn:57,docj:80,b5lb:24,b5kg:11,venta:27655,egre:19217,util:8438,mar:30.5},
+  {fecha:'11/05',dia:'LUN',mes:'MAY',tc:16.9,docn:99,docj:80,b5lb:16,b5kg:16,venta:31520,egre:21955,util:9565,mar:30.3},
+  // JUN–DIC: pendiente de capturar
+  {fecha:'—',dia:'—',mes:'JUN',tc:0,docn:0,docj:0,b5lb:0,b5kg:0,venta:0,egre:0,util:0,mar:0},
+  {fecha:'—',dia:'—',mes:'JUL',tc:0,docn:0,docj:0,b5lb:0,b5kg:0,venta:0,egre:0,util:0,mar:0},
+  {fecha:'—',dia:'—',mes:'AGO',tc:0,docn:0,docj:0,b5lb:0,b5kg:0,venta:0,egre:0,util:0,mar:0},
+  {fecha:'—',dia:'—',mes:'SEP',tc:0,docn:0,docj:0,b5lb:0,b5kg:0,venta:0,egre:0,util:0,mar:0},
+  {fecha:'—',dia:'—',mes:'OCT',tc:0,docn:0,docj:0,b5lb:0,b5kg:0,venta:0,egre:0,util:0,mar:0},
+  {fecha:'—',dia:'—',mes:'NOV',tc:0,docn:0,docj:0,b5lb:0,b5kg:0,venta:0,egre:0,util:0,mar:0},
+  {fecha:'—',dia:'—',mes:'DIC',tc:0,docn:0,docj:0,b5lb:0,b5kg:0,venta:0,egre:0,util:0,mar:0},
+];
+
+const MASA = [
+  {mes:'ENE',tot:46079,gas:30911,util:15168,mar:32.9},
+  {mes:'FEB',tot:53514,gas:26805,util:26709,mar:49.9},
+  {mes:'MAR',tot:47112,gas:44490,util:2622,mar:5.6},
+  {mes:'ABR',tot:55836,gas:42697,util:13139,mar:23.5},
+  {mes:'MAY',tot:54188,gas:39116,util:15072,mar:27.8},
+  {mes:'JUN',tot:0,gas:0,util:0,mar:0},
+  {mes:'JUL',tot:0,gas:0,util:0,mar:0},
+  {mes:'AGO',tot:0,gas:0,util:0,mar:0},
+  {mes:'SEP',tot:0,gas:0,util:0,mar:0},
+  {mes:'OCT',tot:0,gas:0,util:0,mar:0},
+  {mes:'NOV',tot:0,gas:0,util:0,mar:0},
+  {mes:'DIC',tot:0,gas:0,util:0,mar:0},
+];
+
+const CLIENTES_DATA = [
+  {n:'Sra. Lupita',zona:'Flowing Wells',tipo:'Cliente',mayo:855},
+  {n:'Del Cielo Tamal',zona:'Fortlowell/Campbell',tipo:'Cliente',mayo:350},
+  {n:'Lupita Tamales',zona:'Irvington/Campbell',tipo:'Cliente',mayo:270},
+  {n:'Cristina',zona:'Los Reales/Cardinal',tipo:'Cliente',mayo:180},
+  {n:'Antojitos Tucson',zona:'Congress Centro',tipo:'Cliente',mayo:180},
+  {n:'Doña Rosa',zona:'22nd y Swan',tipo:'Cliente',mayo:175},
+  {n:'Jungle Fruits Sahuarita',zona:'Sahuarita',tipo:'Cliente',mayo:140},
+  {n:'Jungle Fruits Tucson',zona:'Oracle',tipo:'Cliente',mayo:140},
+  {n:'Don Perfecto',zona:'Drexel y 12th',tipo:'Cliente',mayo:140},
+  {n:'Artemisa',zona:'22nd y Swan',tipo:'Cliente',mayo:119},
+  {n:'Rossy Michoacana',zona:'Drexel y Mission',tipo:'MAYOREO',mayo:120},
+  {n:'Antojitos Tucson',zona:'Congress',tipo:'Cliente',mayo:105},
+  {n:'Josefina',zona:'Valencia y Palo Verde',tipo:'Cliente',mayo:133},
+  {n:'Don Tavo / Rio Rico',zona:'Rio Rico',tipo:'MAYOREO',mayo:100},
+  {n:'Judith / Rio Rico',zona:'Rio Rico',tipo:'Cliente',mayo:90},
+  {n:'Silvia',zona:'Grant y Oracle',tipo:'Cliente',mayo:90},
+  {n:'María (hojas)',zona:'Valencia',tipo:'Cliente',mayo:80},
+  {n:'Pina VIP (Carnería)',zona:'Bilby/Nogales Hwy',tipo:'Cliente',mayo:70},
+  {n:'Armida Herradero',zona:'Congress/St.Marys',tipo:'Cliente',mayo:70},
+  {n:'Antojo Poblano',zona:'Congress/St.Marys',tipo:'Cliente',mayo:45},
+  {n:'Raspados Chikitin',zona:'Grant/Country Club',tipo:'Cliente',mayo:45},
+  {n:'Marisol',zona:'Grant y Oracle',tipo:'Cliente',mayo:105},
+  {n:'Kathia',zona:'Casino del Sol',tipo:'Cliente',mayo:60},
+  {n:'Graciela',zona:'Los Reales/Cardinal',tipo:'Cliente',mayo:56},
+  {n:'Magda Delicias',zona:'22nd y Craycroft',tipo:'Cliente',mayo:91},
+  {n:'Dilxia',zona:'Drexel y Palo Verde',tipo:'PUBLICO',mayo:51},
+  {n:'Lily Arvizu',zona:'San Xavier',tipo:'Cliente',mayo:49},
+  {n:'Cindy Nallely',zona:'Craycroft',tipo:'Cliente',mayo:63},
+  {n:'Nallely',zona:'Valencia/Randall',tipo:'Cliente',mayo:28},
+  {n:'Yese Herrero',zona:'36th/Country Club',tipo:'PUBLICO',mayo:35},
+  {n:'Gabby Maldonado',zona:'La Cholla',tipo:'PUBLICO',mayo:35},
+  {n:'Vecina Artemisa',zona:'22nd y Swan',tipo:'PUBLICO',mayo:35},
+  {n:'Ely Terrazas',zona:'Valencia/Palo Verde',tipo:'Cliente',mayo:63},
+  {n:'Angee',zona:'Irvington/Country Club',tipo:'Cliente',mayo:21},
+  {n:'Millie',zona:'Grant/Country Club',tipo:'Cliente',mayo:30},
+  {n:'Chanita',zona:'36th y Park',tipo:'Cliente',mayo:30},
+  {n:'Liss Duarte',zona:'Bilby y Park',tipo:'Cliente',mayo:30},
+  {n:'Antojin',zona:'22nd y 4th',tipo:'Cliente',mayo:105},
+  {n:'Alex',zona:'Sonic Valencia',tipo:'Cliente',mayo:25},
+  {n:'Manya',zona:'Valencia',tipo:'Cliente',mayo:20},
+  {n:'Chayo',zona:'Drexel/Country Club',tipo:'PUBLICO',mayo:18},
+  {n:'Juana',zona:'Grant y Oracle',tipo:'PUBLICO',mayo:17},
+  {n:'Emmy',zona:'Casino del Sol',tipo:'Cliente',mayo:15},
+  {n:'Maritza',zona:'Valencia y 12th',tipo:'PUBLICO',mayo:15},
+  {n:'Kikos',zona:'Oracle',tipo:'Cliente',mayo:14},
+  {n:'Mercedes',zona:'Irvington y 12th',tipo:'Cliente',mayo:21},
+  {n:'Marisela Federico',zona:'Irvington',tipo:'Cliente',mayo:14},
+  {n:'Jorge / American Eats',zona:'22nd y 4th',tipo:'Cliente',mayo:21},
+  {n:'Azucena',zona:'Flowing Wells',tipo:'Cliente',mayo:21},
+  {n:'Margarita',zona:'Speedway',tipo:'Cliente',mayo:35},
+  {n:'Don Javo / Rio Rico',zona:'Rio Rico',tipo:'MAYOREO',mayo:0},
+  {n:'Mirna',zona:'Drexel y Tucson',tipo:'PUBLICO',mayo:0},
+  {n:'Gpe. Miranda',zona:'Drexel y Park',tipo:'Cliente',mayo:0},
+  {n:'Krishna',zona:'22nd/Country Club',tipo:'PUBLICO',mayo:0},
+  {n:'Lupita',zona:'Flowing Wells',tipo:'Cliente',mayo:0},
+];
+
+let capturas = JSON.parse(localStorage.getItem('er_cap2026')||'[]');
+let mesUSA = 'MAY', mesMasa = 'MAY';
+let capturandoQuien = 'Julio';
+
+function selUser(quien){
+  capturandoQuien = quien;
+  document.getElementById('btn-julio').style.background = quien==='Julio' ? 'var(--v)' : '#fff';
+  document.getElementById('btn-julio').style.color = quien==='Julio' ? '#fff' : 'var(--muted)';
+  document.getElementById('btn-julio').style.borderColor = quien==='Julio' ? 'var(--vc)' : 'var(--border)';
+  document.getElementById('btn-marlene').style.background = quien==='Marlene' ? 'var(--p)' : '#fff';
+  document.getElementById('btn-marlene').style.color = quien==='Marlene' ? '#fff' : 'var(--muted)';
+  document.getElementById('btn-marlene').style.borderColor = quien==='Marlene' ? 'var(--p)' : 'var(--border)';
+  document.getElementById('quien-badge').innerHTML = `✅ Capturando: <strong>${quien === 'Julio' ? '👨 Julio' : '👩 Marlene'}</strong>`;
+}
+
+const v = id => parseFloat(document.getElementById(id).value)||0;
+const fm = (n,d=0) => '$'+Math.abs(n).toLocaleString('es-MX',{minimumFractionDigits:d,maximumFractionDigits:d});
+const fp = n => n.toFixed(1)+'%';
+
+function show(name,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('p-'+name).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(name==='usa') renderUSA();
+  if(name==='masa') renderMasa();
+  if(name==='anual') renderAnual();
+  if(name==='edr') renderEdR();
+  if(name==='clientes') filtrarClientes();
+  if(name==='hogar') { renderHogar(); renderGastosHogar(); }
+  if(name==='costos') calcCostos();
+}
+
+function cambiarFormulario(){
+  const t = document.getElementById('cap-tipo').value;
+  document.getElementById('form-usa').style.display = t==='usa'?'block':'none';
+  document.getElementById('form-masa').style.display = t==='masa'?'block':'none';
+  document.getElementById('form-hogar').style.display = t==='hogar'?'block':'none';
+}
+
+// ── INICIO ──
+function inicioSetup(){
+  const hoy = new Date();
+  const dias=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  const meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  document.getElementById('hoy-fecha').textContent=`Hoy es ${dias[hoy.getDay()]} ${hoy.getDate()} de ${meses[hoy.getMonth()]} de ${hoy.getFullYear()} — ¡a vender elotes!`;
+  document.getElementById('cap-fecha').valueAsDate = hoy;
+  renderChartHero();
+  renderSemaforoInicio();
+}
+
+function renderChartHero(){
+  const maxV = Math.max(...DA.map(d=>d.vusa));
+  const maxM = Math.max(...DA.map(d=>d.vmasa));
+  const mx = Math.max(maxV,maxM);
+  document.getElementById('chart-anual').innerHTML = DA.map(d=>`
+    <div class="bar-col">
+      <div class="bar-inner">
+        <div class="bar v" style="height:${Math.round(d.vusa/mx*100)}%" title="${d.mes} USA: ${fm(d.vusa)}"></div>
+        <div class="bar d" style="height:${Math.round(d.vmasa/mx*100)}%" title="${d.mes} Masa: ${fm(d.vmasa)}"></div>
+      </div>
+      <div class="bar-lbl">${d.mes}</div>
+    </div>`).join('');
+}
+
+function renderSemaforoInicio(){
+  const el = document.getElementById('semaforo-list');
+  const max = Math.max(...DA.map(d=>d.vusa+d.vmasa));
+  el.innerHTML = DA.map(d=>{
+    const u=d.uusa+d.umasa, t=d.vusa+d.vmasa, pm=t>0?u/t*100:0;
+    let cls='warn',ico='🟠';
+    if(u<0){cls='bad';ico='🔴';}else if(pm>=35){cls='great';ico='🟢';}else if(pm>=20){cls='good';ico='🟡';}
+    return `<div class="mes-card ${cls}">
+      <div class="mc-mes">${ico} ${d.mes}</div>
+      <div class="mc-bars">
+        <div class="mc-label"><span>USA ${fm(d.vusa)}</span><span>Masa ${fm(d.vmasa)}</span></div>
+        <div class="prog-bar-wrap"><div class="prog-bar v" style="width:${Math.round(d.vusa/max*100)}%"></div></div>
+      </div>
+      <div class="mc-util ${u>=0?'pos':'neg'}">${u>=0?'+':'−'}${fm(Math.abs(u))}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── CAPTURA ──
+function guardarUSA(){
+  const tc = v('u-tc');
+
+  // ── Cantidades por tipo ──
+  const docn_may=v('u-docn-may'), b5lb_may=v('u-b5lb-may'), b5kg_may=v('u-b5kg-may');
+  const docn_cli=v('u-docn-cli'), docj_cli=v('u-docj-cli'), b5lb_cli=v('u-b5lb-cli'), b5kg_cli=v('u-b5kg-cli');
+  const docn_pub=v('u-docn-pub'), b5lb_pub=v('u-b5lb-pub'), b5kg_pub=v('u-b5kg-pub');
+
+  // ── Precios por tipo ──
+  const pdoc_may=v('u-pdoc-may'), p5lb_may=v('u-p5lb-may'), p5kg_may=v('u-p5kg-may');
+  const pdoc_cli=v('u-pdoc-cli'), p5lb_cli=v('u-p5lb-cli'), p5kg_cli=v('u-p5kg-cli');
+  const pdoc_pub=v('u-pdoc-pub'), p5lb_pub=v('u-p5lb-pub'), p5kg_pub=v('u-p5kg-pub');
+
+  // ── Ingresos USD por segmento ──
+  const ing_may = docn_may*pdoc_may + b5lb_may*p5lb_may + b5kg_may*p5kg_may;
+  const ing_cli = (docn_cli+docj_cli)*pdoc_cli + b5lb_cli*p5lb_cli + b5kg_cli*p5kg_cli;
+  const ing_pub = docn_pub*pdoc_pub + b5lb_pub*p5lb_pub + b5kg_pub*p5kg_pub;
+  const ingUSD  = ing_may + ing_cli + ing_pub;
+  const ingMXN  = ingUSD * tc;
+
+  // ── Costos de mercancía (a precio de compra $55/docena) ──
+  const totalDoc = docn_may+docn_cli+docj_cli+docn_pub;
+  const totalB5lb = b5lb_may+b5lb_cli+b5lb_pub;
+  const totalB5kg = b5kg_may+b5kg_cli+b5kg_pub;
+  const c_mercia = totalDoc*55 + totalB5lb*38.5 + totalB5kg*80; // aprox costos MXN
+
+  // ── Gastos del viaje ──
+  const c_gas    = v('u-gas') * tc;
+  const c_com    = v('u-com') * tc;
+  const c_nom    = v('u-nom');
+  const c_perm   = v('u-perm');
+  const c_sienna = v('u-sienna');
+  const c_otros  = v('u-otros');
+  const egr = c_gas + c_com + c_nom + c_perm + c_sienna + c_otros + c_mercia;
+
+  const util=ingMXN-egr, mar=ingMXN>0?util/ingMXN*100:0;
+  const fecha=document.getElementById('cap-fecha').value;
+  capturas.push({tipo:'usa',fecha,tc,quien:capturandoQuien,
+    docn:totalDoc,docj:docj_cli,b5lb:totalB5lb,b5kg:totalB5kg,
+    ing_may,ing_cli,ing_pub,ingUSD,ingMXN,
+    c_mercia,c_gas,c_com,c_nom,c_perm,c_sienna,c_otros,
+    egr,util,mar,ts:Date.now()});
+  localStorage.setItem('er_cap2026',JSON.stringify(capturas));
+  const cls=util>=0?'g':'r';
+  document.getElementById('res-usa').style.display='block';
+  document.getElementById('res-usa').innerHTML=`<div class="alert ${cls}">
+    <strong>${util>=0?'✅':'⚠️'} Viaje guardado — TC: $${tc}</strong>
+    <span style="display:block;margin-top:4px;font-size:11.5px">
+      📦 Mayoreo: $${ing_may.toFixed(0)} USD &nbsp;·&nbsp; 🤝 Cliente: $${ing_cli.toFixed(0)} USD &nbsp;·&nbsp; 👤 Público: $${ing_pub.toFixed(0)} USD
+    </span>
+    <span style="display:block;margin-top:2px;font-size:11.5px">
+      💰 Total: ${fm(ingMXN)} MXN ($${ingUSD.toFixed(0)} USD) &nbsp;·&nbsp;
+      🛒 Mercancía: ${fm(c_mercia)} &nbsp;·&nbsp; ⛽ Viaje: ${fm(c_gas+c_com+c_perm+c_sienna+c_otros+c_nom)}
+    </span>
+    Utilidad: <strong>${util>=0?'+':'−'}${fm(Math.abs(util))}</strong> · Margen: ${fp(mar)}
+  </div>`;
+  renderListaHoy();
+  if(document.getElementById('p-hogar').classList.contains('active')){ renderHogar(); renderGastosHogar(); }
+}
+
+function guardarMasa(){
+  // ── Ingresos: negocios + público ──
+  const ing_neg = v('m-masa-n')*v('m-pmasa-n') + v('m-grano-n')*v('m-pgrano-n')
+                + v('m-doc-n')*v('m-pdoc-n')   + v('m-hoja-n')*v('m-phoja-n');
+  const ing_pub = v('m-masa-p')*v('m-pmasa-p') + v('m-grano-p')*v('m-pgrano-p')
+                + v('m-doc-p')*v('m-pdoc-p')   + v('m-hoja-p')*v('m-phoja-p');
+  const ing = ing_neg + ing_pub + v('m-mant');
+
+  // ── Costos: mercancía + nómina + insumos + fijos ──
+  const c_elote  = v('m-elote');   // compra de elote del día
+  const c_nom    = v('m-nom');     // nómina del día
+  const c_ins    = v('m-ins');     // insumos (bolsas, gas, agua, etc.)
+  const c_renta  = v('m-renta');   // renta (cuando pagan)
+  const c_luz    = v('m-luz');     // luz (cuando llega)
+  const egr = c_elote + c_nom + c_ins + c_renta + c_luz;
+
+  const util=ing-egr, mar=ing>0?util/ing*100:0;
+  const fecha=document.getElementById('cap-fecha').value;
+  const masa_n=v('m-masa-n'),masa_p=v('m-masa-p'),grano_n=v('m-grano-n'),grano_p=v('m-grano-p');
+  const doc_n=v('m-doc-n'),doc_p=v('m-doc-p');
+  capturas.push({tipo:'masa',fecha,quien:capturandoQuien,
+    masa_n,masa_p,grano_n,grano_p,doc_n,doc_p,
+    ing_neg,ing_pub,ing,
+    c_elote,c_nom,c_ins,c_renta,c_luz,
+    egr,util,mar,ts:Date.now()});
+  localStorage.setItem('er_cap2026',JSON.stringify(capturas));
+  const cls=util>=0?'g':'r';
+  document.getElementById('res-masa').style.display='block';
+  document.getElementById('res-masa').innerHTML=`<div class="alert ${cls}">
+    <strong>${util>=0?'✅':'⚠️'} Día guardado</strong>
+    <span style="display:block;margin-top:4px;font-size:11.5px">
+      🏪 Negocios: ${fm(ing_neg)} &nbsp;·&nbsp; 👤 Público: ${fm(ing_pub)}
+    </span>
+    <span style="display:block;margin-top:2px;font-size:11.5px">
+      🛒 Mercancía: ${fm(c_elote)} &nbsp;·&nbsp; 👷 Nómina: ${fm(c_nom)} &nbsp;·&nbsp; 🛍️ Insumos: ${fm(c_ins)}
+    </span>
+    Total: ${fm(ing)} · Egresos: ${fm(egr)} · Utilidad: <strong>${util>=0?'+':'−'}${fm(Math.abs(util))}</strong> · Margen: ${fp(mar)}
+  </div>`;
+  renderListaHoy();
+  if(document.getElementById('p-hogar').classList.contains('active')){ renderHogar(); renderGastosHogar(); }
+}
+
+function guardarHogar(){
+  const cat=document.getElementById('h-cat').value;
+  if(cat.startsWith('──')) return; // separator
+  const desc=document.getElementById('h-desc').value||'Sin descripción';
+  const monto=v('h-monto'), mon=document.getElementById('h-mon').value;
+  const forma=document.getElementById('h-forma').value;
+  const fecha=document.getElementById('cap-fecha').value;
+  capturas.push({tipo:'hogar',fecha,cat,desc,monto,mon,forma,quien:capturandoQuien,ts:Date.now()});
+  localStorage.setItem('er_cap2026',JSON.stringify(capturas));
+  document.getElementById('h-desc').value='';
+  document.getElementById('h-monto').value=0;
+  renderListaHoy();
+  renderGastosHogar();
+  renderHogar();
+}
+
+function renderListaHoy(){
+  const fecha=document.getElementById('cap-fecha').value;
+  const deHoy=[...capturas].filter(c=>c.fecha===fecha).reverse();
+  const el=document.getElementById('lista-hoy');
+  if(!deHoy.length){el.innerHTML='<p style="color:var(--muted);font-size:13px;text-align:center;padding:14px">Aún no hay registros para hoy.</p>';return;}
+  el.innerHTML=deHoy.map((c,i)=>{
+    let emoji='📋',name='',sub='',amt='',cls='pos';
+    if(c.tipo==='usa'){emoji='🇺🇸';name=`Viaje USA — ${c.docn} doc, ${c.b5lb} 5LB, ${c.b5kg} 5KG`;sub=`${c.quien||''} · TC: $${c.tc} · May:$${c.ing_may?.toFixed(0)||0} Cli:$${c.ing_cli?.toFixed(0)||0} Pub:$${c.ing_pub?.toFixed(0)||0} USD`;amt=(c.util>=0?'+':'')+fm(c.util);cls=c.util>=0?'pos':'neg';}
+    if(c.tipo==='masa'){emoji='🌽';name=`Masa: ${(c.masa_n||0)+(c.masa_p||0)}kg masa, ${(c.doc_n||0)+(c.doc_p||0)} doc`;sub=`${c.quien||''} · Neg: ${fm(c.ing_neg||0)} · Púb: ${fm(c.ing_pub||0)} · Elote: ${fm(c.c_elote||0)}`;amt=(c.util>=0?'+':'')+fm(c.util);cls=c.util>=0?'pos':'neg';}
+    if(c.tipo==='hogar'){emoji='🏠';name=c.desc;sub=`${c.quien||''} · ${c.cat} · ${c.forma}`;amt=`-${fm(c.mxn||c.monto||0)} MXN`;cls='neg';}
+    const realIdx=capturas.indexOf(c);
+    return `<div class="reg-item">
+      <div class="reg-left"><span class="reg-emoji">${emoji}</span>
+        <div class="reg-info"><div class="ri-name">${name}</div><div class="ri-sub">${sub}</div></div></div>
+      <div style="display:flex;align-items:center;gap:7px">
+        <span class="reg-amount ${cls}">${amt}</span>
+        <button class="reg-del" onclick="borrar(${realIdx})">×</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function borrar(idx){capturas.splice(idx,1);localStorage.setItem('er_cap2026',JSON.stringify(capturas));renderListaHoy();}
+
+// ── USA ──
+function renderUSA(){
+  const meses=[...new Set(VIAJES.map(v=>v.mes))];
+  document.getElementById('mes-tabs-usa').innerHTML=meses.map(m=>{
+    const hasData=VIAJES.filter(v=>v.mes===m&&v.venta>0).length>0;
+    return `<button class="mes-btn ${hasData?'has-data':''} ${m===mesUSA?'active':''}" onclick="selUSA('${m}',this)">${m}${hasData?'':' ⏳'}</button>`;
+  }).join('');
+  dibujarUSA();
+}
+function selUSA(m,btn){mesUSA=m;document.querySelectorAll('#mes-tabs-usa .mes-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');dibujarUSA();}
+function dibujarUSA(){
+  const data=VIAJES.filter(v=>v.mes===mesUSA);
+  const tv=data.reduce((a,b)=>a+b.venta,0), te=data.reduce((a,b)=>a+b.egre,0), tu=data.reduce((a,b)=>a+b.util,0);
+  const pm=tv>0?tu/tv*100:0;
+  const hayDatos=tv>0;
+  document.getElementById('kpi-usa').innerHTML=hayDatos?`
+    <div class="kpi blu"><div class="kt">Venta ${mesUSA}</div><div class="kv">${fm(tv)}</div><div class="ks">MXN</div></div>
+    <div class="kpi red"><div class="kt">Egresos ${mesUSA}</div><div class="kv">${fm(te)}</div></div>
+    <div class="kpi ${tu>=0?'g':'red'}"><div class="kt">Utilidad ${mesUSA}</div><div class="kv">${tu>=0?'+':'-'}${fm(Math.abs(tu))}</div><div class="ks">Margen: ${fp(pm)}</div></div>
+    <div class="kpi gol"><div class="kt">Viajes realizados</div><div class="kv">${data.filter(v=>v.venta>0).length}</div><div class="ks">de ${data.length}</div></div>`
+    :`<div class="alert b" style="grid-column:1/-1"><strong>⏳ ${mesUSA} — Sin datos aún</strong>Captura tus viajes usando el botón ✏️ Capturar del menú. Aquí aparecerán automáticamente.</div>`;
+  document.querySelector('#tabla-usa tbody').innerHTML=hayDatos?data.filter(r=>r.venta>0).map(r=>`<tr>
+    <td><strong>${r.fecha}</strong></td><td>${r.dia}</td>
+    <td class="num">${r.docn}</td><td class="num">${r.docj}</td><td class="num">${r.b5lb}</td><td class="num">${r.b5kg}</td>
+    <td class="num pos">${fm(r.venta)}</td><td class="num neg">${fm(r.egre)}</td>
+    <td class="num ${r.util>=0?'pos':'neg'}">${r.util>=0?'+':'-'}${fm(Math.abs(r.util))}</td>
+    <td class="num ${r.mar>=20?'pos':r.mar>=0?'':'neg'}">${fp(r.mar)}</td>
+  </tr>`).join('')+`<tr class="tr-tot"><td colspan="6">TOTAL ${mesUSA}</td><td class="num">${fm(tv)}</td><td class="num">${fm(te)}</td><td class="num">${tu>=0?'+':'-'}${fm(Math.abs(tu))}</td><td class="num">${fp(pm)}</td></tr>`
+    :`<tr><td colspan="10" style="text-align:center;color:var(--muted);padding:20px">⏳ Pendiente de capturar</td></tr>`;
+  if(hayDatos){
+    const mx=Math.max(...data.map(r=>Math.max(r.venta,r.egre)),1);
+    document.getElementById('chart-usa-mes').innerHTML=data.filter(r=>r.venta>0||r.egre>0).map(r=>`
+      <div class="bar-col"><div class="bar-inner">
+        <div class="bar v" style="height:${Math.round(r.venta/mx*100)}%"></div>
+        <div class="bar r" style="height:${Math.round(r.egre/mx*100)}%"></div>
+      </div><div class="bar-lbl">${r.fecha.split('/')[0]}</div></div>`).join('');
+  } else {
+    document.getElementById('chart-usa-mes').innerHTML='<p style="color:var(--muted);font-size:12px;padding:16px;text-align:center">📊 La gráfica aparecerá cuando captures viajes</p>';
+  }
+}
+
+// ── MASA ──
+function renderMasa(){
+  document.getElementById('mes-tabs-masa').innerHTML=MASA.map(m=>{
+    const hasData=m.tot>0;
+    return `<button class="mes-btn ${hasData?'has-data':''} ${m.mes===mesMasa?'active':''}" onclick="selMasa('${m.mes}',this)">${m.mes}${hasData?'':' ⏳'}</button>`;
+  }).join('');
+  dibujarKpiMasa();
+  document.getElementById('masa-mensual').innerHTML=MASA.map(d=>{
+    if(d.tot===0) return `<div class="mes-card warn"><div class="mc-mes">⏳ ${d.mes}</div><div class="mc-bars"><div class="mc-label"><span>Pendiente de capturar</span></div><div class="prog-bar-wrap"><div class="prog-bar v" style="width:0%"></div></div></div><div class="mc-util" style="color:var(--muted)">$0</div></div>`;
+    const mx=96743; const w=Math.round(d.tot/mx*100), wg=Math.round(d.gas/mx*100);
+    let cls='warn',ico='🟠'; if(d.util<0){cls='bad';ico='🔴';}else if(d.mar>=35){cls='great';ico='🟢';}else if(d.mar>=20){cls='good';ico='🟡';}
+    return `<div class="mes-card ${cls}">
+      <div class="mc-mes">${ico} ${d.mes}</div>
+      <div class="mc-bars">
+        <div class="mc-label"><span>Venta: ${fm(d.tot)}</span><span>Gasto: ${fm(d.gas)}</span><span>${fp(d.mar)}</span></div>
+        <div class="prog-bar-wrap"><div class="prog-bar v" style="width:${w}%"></div></div>
+        <div class="prog-bar-wrap" style="margin-top:3px"><div class="prog-bar r" style="width:${wg}%"></div></div>
+      </div>
+      <div class="mc-util ${d.util>=0?'pos':'neg'}">${d.util>=0?'+':'-'}${fm(Math.abs(d.util))}</div>
+    </div>`;
+  }).join('');
+}
+function selMasa(m,btn){mesMasa=m;document.querySelectorAll('#mes-tabs-masa .mes-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');dibujarKpiMasa();}
+function dibujarKpiMasa(){
+  const d=MASA.find(m=>m.mes===mesMasa);if(!d)return;
+  document.getElementById('kpi-masa').innerHTML=`
+    <div class="kpi blu"><div class="kt">Venta ${d.mes}</div><div class="kv">${fm(d.tot)}</div><div class="ks">MXN</div></div>
+    <div class="kpi red"><div class="kt">Gastos ${d.mes}</div><div class="kv">${fm(d.gas)}</div></div>
+    <div class="kpi ${d.util>=0?'g':'red'}"><div class="kt">Utilidad ${d.mes}</div><div class="kv">${d.util>=0?'+':'-'}${fm(Math.abs(d.util))}</div><div class="ks">Margen: ${fp(d.mar)}</div></div>
+    <div class="kpi ${d.mar>=35?'gol':d.mar>=20?'lv':'ld'}"><div class="kt">Estado</div><div class="kv">${d.mar>=35?'🟢 Excelente':d.mar>=20?'🟡 Bueno':d.util>=0?'🟠 Cuidado':'🔴 Pérdida'}</div></div>`;
+}
+
+// ── HOGAR DATA ──
+const HOGAR_MESES = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+let mesHogar = 'MAY';
+
+// ═══════════════════════════════════════════════════════
+// DATOS HOGAR — SIMULACRO ENE-ABR basado en Excel real
+// ENE = mes malo · FEB = mes malo · MAR = buen mes · ABR = mes regular
+// MAY = datos 100% reales del Excel Control_Financiero_Hogar_2026
+// ═══════════════════════════════════════════════════════
+
+// ── ENERO — Mes Malo ──
+// Pocas ventas USA (107K MXN), Masa normal (46K). Muchos gastos fijos y Sienna.
+const INGRESOS_ENE = [
+  {fecha:'02/01',fuente:'Venta Elotes USA',desc:'Viaje VIE – 46 doc, 30 5LB',mon:'USD',orig:768,tc:17,mxn:13065,forma:'Efectivo'},
+  {fecha:'05/01',fuente:'Venta Elotes USA',desc:'Viaje LUN – 45 doc, 100 jimadas, 18 5KG',mon:'USD',orig:1618,tc:17,mxn:27510,forma:'Efectivo'},
+  {fecha:'09/01',fuente:'Venta Elotes USA',desc:'Viaje VIE – 63 doc, 50 jimadas, 12 5LB',mon:'USD',orig:938,tc:17,mxn:15955,forma:'Efectivo'},
+  {fecha:'12/01',fuente:'Venta Elotes USA',desc:'Viaje LUN – 75 doc, 50 jimadas, 15 5LB',mon:'USD',orig:1022,tc:17,mxn:17375,forma:'Efectivo'},
+  {fecha:'16/01',fuente:'Venta Elotes USA',desc:'Viaje VIE – 69 doc, 100 jimadas, 21 5LB, 18 5KG',mon:'USD',orig:1955,tc:17,mxn:33240,forma:'Efectivo'},
+  {fecha:'04/01',fuente:'Venta Masa',desc:'Venta semanal masa+grano',mon:'MXN',orig:9240,mxn:9240,forma:'Efectivo'},
+  {fecha:'11/01',fuente:'Venta Masa',desc:'Venta semanal masa+grano',mon:'MXN',orig:10180,mxn:10180,forma:'Efectivo'},
+  {fecha:'18/01',fuente:'Venta Masa',desc:'Venta semanal masa+grano',mon:'MXN',orig:9820,mxn:9820,forma:'Efectivo'},
+  {fecha:'25/01',fuente:'Venta Masa',desc:'Venta semanal masa+grano+hojas',mon:'MXN',orig:8900,mxn:8900,forma:'Efectivo'},
+  {fecha:'02/01',fuente:'Ingreso Marlene',desc:'Sueldo Marlene',mon:'MXN',orig:1000,mxn:1000,forma:'Transferencia'},
+];
+const EGRESOS_ENE = {
+  usa:[
+    {fecha:'02/01',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas semana 1',mon:'MXN',orig:8250,mxn:8250,forma:'Efectivo'},
+    {fecha:'02/01',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna VIE',mon:'USD',orig:35,mxn:595,forma:'Efectivo'},
+    {fecha:'02/01',cat:'Negocio USA',subcat:'Sienna (mensualidad)',desc:'Mensualidad Sienna enero',mon:'MXN',orig:12000,mxn:12000,forma:'Transferencia'},
+    {fecha:'02/01',cat:'Negocio USA',subcat:'Permisos',desc:'Permisos caja viaje 1',mon:'MXN',orig:666,mxn:666,forma:'Efectivo'},
+    {fecha:'02/01',cat:'Negocio USA',subcat:'Nómina',desc:'Nómina empleados viaje',mon:'MXN',orig:3000,mxn:3000,forma:'Efectivo'},
+    {fecha:'02/01',cat:'Negocio USA',subcat:'Alimentos',desc:'Comida viaje VIE',mon:'MXN',orig:300,mxn:300,forma:'Efectivo'},
+    {fecha:'05/01',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas semana 2',mon:'MXN',orig:14025,mxn:14025,forma:'Efectivo'},
+    {fecha:'05/01',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna LUN',mon:'USD',orig:35,mxn:595,forma:'Efectivo'},
+    {fecha:'05/01',cat:'Negocio USA',subcat:'Permisos',desc:'Permisos caja viaje 2',mon:'MXN',orig:666,mxn:666,forma:'Efectivo'},
+    {fecha:'05/01',cat:'Negocio USA',subcat:'Nómina',desc:'Nómina empleados viaje',mon:'MXN',orig:3000,mxn:3000,forma:'Efectivo'},
+    {fecha:'09/01',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas semana 3',mon:'MXN',orig:9900,mxn:9900,forma:'Efectivo'},
+    {fecha:'09/01',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna VIE',mon:'USD',orig:35,mxn:595,forma:'Efectivo'},
+    {fecha:'09/01',cat:'Negocio USA',subcat:'Permisos',desc:'Permisos caja',mon:'MXN',orig:666,mxn:666,forma:'Efectivo'},
+    {fecha:'16/01',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas semana 4',mon:'MXN',orig:14025,mxn:14025,forma:'Efectivo'},
+    {fecha:'16/01',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna VIE',mon:'USD',orig:35,mxn:595,forma:'Efectivo'},
+    {fecha:'16/01',cat:'Negocio USA',subcat:'Permisos',desc:'Permisos caja',mon:'MXN',orig:666,mxn:666,forma:'Efectivo'},
+    {fecha:'16/01',cat:'Negocio USA',subcat:'Insumos',desc:'Etiquetas y bolsas',mon:'MXN',orig:290,mxn:290,forma:'Efectivo'},
+  ],
+  masa:[
+    {fecha:'05/01',cat:'Negocio Masa',subcat:'Renta',desc:'Renta local Nogales enero',mon:'MXN',orig:4500,mxn:4500,forma:'Transferencia'},
+    {fecha:'01/01',cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina semana 1',mon:'MXN',orig:1750,mxn:1750,forma:'Efectivo'},
+    {fecha:'08/01',cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina semana 2',mon:'MXN',orig:1800,mxn:1800,forma:'Efectivo'},
+    {fecha:'15/01',cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina semana 3',mon:'MXN',orig:1750,mxn:1750,forma:'Efectivo'},
+    {fecha:'22/01',cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina semana 4',mon:'MXN',orig:1800,mxn:1800,forma:'Efectivo'},
+    {fecha:'07/01',cat:'Negocio Masa',subcat:'Insumos',desc:'Mantequilla + manteca',mon:'MXN',orig:280,mxn:280,forma:'Efectivo'},
+    {fecha:'14/01',cat:'Negocio Masa',subcat:'Insumos',desc:'Bolsas GV + ferretería',mon:'MXN',orig:540,mxn:540,forma:'Efectivo'},
+    {fecha:'28/01',cat:'Negocio Masa',subcat:'Insumos',desc:'Compra elote semana 4',mon:'MXN',orig:1070,mxn:1070,forma:'Efectivo'},
+  ],
+  hogar:[
+    {fecha:'02/01',cat:'Hogar',subcat:'Servicios',desc:'Luz bimestral casa',mon:'MXN',orig:2700,mxn:2700,forma:'Efectivo'},
+    {fecha:'05/01',cat:'Hogar',subcat:'Alimentos',desc:'Despensa semana 1',mon:'MXN',orig:2400,mxn:2400,forma:'Efectivo'},
+    {fecha:'12/01',cat:'Hogar',subcat:'Alimentos',desc:'Despensa semana 2',mon:'MXN',orig:2100,mxn:2100,forma:'Efectivo'},
+    {fecha:'19/01',cat:'Hogar',subcat:'Alimentos',desc:'Despensa semana 3',mon:'MXN',orig:1900,mxn:1900,forma:'Efectivo'},
+    {fecha:'26/01',cat:'Hogar',subcat:'Alimentos',desc:'Despensa semana 4',mon:'MXN',orig:1800,mxn:1800,forma:'Efectivo'},
+    {fecha:'05/01',cat:'Hogar',subcat:'Servicios',desc:'Internet cajita',mon:'MXN',orig:250,mxn:250,forma:'Transferencia'},
+    {fecha:'12/01',cat:'Hogar',subcat:'Mascotas',desc:'Croquetas y cosas Zeus',mon:'MXN',orig:380,mxn:380,forma:'Efectivo'},
+    {fecha:'08/01',cat:'Teléfono',subcat:'Celular',desc:'Telcel Julio',mon:'MXN',orig:799,mxn:799,forma:'Transferencia'},
+    {fecha:'08/01',cat:'Teléfono',subcat:'Celular',desc:'Telcel Marlene',mon:'MXN',orig:1176,mxn:1176,forma:'Transferencia'},
+    {fecha:'09/01',cat:'Educación',subcat:'Colegiatura',desc:'Colegiatura Sophia enero',mon:'MXN',orig:4345,mxn:4345,forma:'Transferencia'},
+    {fecha:'06/01',cat:'Financiero',subcat:'Tarjeta crédito',desc:'Tarjeta BBVA',mon:'MXN',orig:1500,mxn:1500,forma:'Transferencia'},
+    {fecha:'06/01',cat:'Financiero',subcat:'Tarjeta crédito',desc:'Tarjeta NU',mon:'MXN',orig:1400,mxn:1400,forma:'Transferencia'},
+    {fecha:'05/01',cat:'Combustible',subcat:'Gasolina',desc:'Gasolina Jetta',mon:'MXN',orig:700,mxn:700,forma:'Efectivo'},
+    {fecha:'19/01',cat:'Combustible',subcat:'Gasolina',desc:'Gasolina Jetta',mon:'MXN',orig:600,mxn:600,forma:'Efectivo'},
+    {fecha:'15/01',cat:'Personal',subcat:'Julio',desc:'Gastos Julio semana',mon:'MXN',orig:500,mxn:500,forma:'Efectivo'},
+    {fecha:'22/01',cat:'Personal',subcat:'Marlene',desc:'Gastos Marlene semana',mon:'MXN',orig:400,mxn:400,forma:'Efectivo'},
+    {fecha:'10/01',cat:'Salud',subcat:'Medicamentos',desc:'Farmacia',mon:'MXN',orig:380,mxn:380,forma:'Efectivo'},
+    {fecha:'16/01',cat:'Personal',subcat:'Sophia',desc:'Gastos Sophia semana',mon:'MXN',orig:200,mxn:200,forma:'Efectivo'},
+  ],
+};
+
+// ── FEBRERO — Mes Malo (pero menos que Enero) ──
+// USA repunta algo (136K), Masa buena (53K). Gastos similares a Enero.
+const INGRESOS_FEB = [
+  {fecha:'02/02',fuente:'Venta Elotes USA',desc:'Viaje LUN – 82 doc, 25 jimadas, 12 5LB',mon:'USD',orig:874,tc:16.8,mxn:14690,forma:'Efectivo'},
+  {fecha:'06/02',fuente:'Venta Elotes USA',desc:'Viaje VIE – 82 doc, 30 jimadas, 16 5LB',mon:'USD',orig:925,tc:16.8,mxn:15540,forma:'Efectivo'},
+  {fecha:'09/02',fuente:'Venta Elotes USA',desc:'Viaje LUN – 97 doc, 35 jimadas, 13 5LB, 16 5KG',mon:'USD',orig:1455,tc:16.8,mxn:24455,forma:'Efectivo'},
+  {fecha:'13/02',fuente:'Venta Elotes USA',desc:'Viaje VIE – 35 doc, 40 jimadas, 11 5LB',mon:'USD',orig:703,tc:16.8,mxn:11820,forma:'Efectivo'},
+  {fecha:'16/02',fuente:'Venta Elotes USA',desc:'Viaje LUN – 93 doc, 35 jimadas, 17 5LB, 16 5KG',mon:'USD',orig:1469,tc:16.8,mxn:24690,forma:'Efectivo'},
+  {fecha:'20/02',fuente:'Venta Elotes USA',desc:'Viaje VIE – 115 doc, 30 jimadas, 12 5LB, 16 5KG',mon:'USD',orig:1471,tc:16.8,mxn:24715,forma:'Efectivo'},
+  {fecha:'23/02',fuente:'Venta Elotes USA',desc:'Viaje LUN – 63 doc, 35 jimadas, 14 5LB, 16 5KG',mon:'USD',orig:1238,tc:16.8,mxn:20800,forma:'Efectivo'},
+  {fecha:'01/02',fuente:'Venta Masa',desc:'Venta masa semana 1',mon:'MXN',orig:13400,mxn:13400,forma:'Efectivo'},
+  {fecha:'08/02',fuente:'Venta Masa',desc:'Venta masa semana 2',mon:'MXN',orig:14200,mxn:14200,forma:'Efectivo'},
+  {fecha:'15/02',fuente:'Venta Masa',desc:'Venta masa semana 3',mon:'MXN',orig:13100,mxn:13100,forma:'Efectivo'},
+  {fecha:'22/02',fuente:'Venta Masa',desc:'Venta masa semana 4',mon:'MXN',orig:12814,mxn:12814,forma:'Efectivo'},
+  {fecha:'02/02',fuente:'Ingreso Marlene',desc:'Sueldo Marlene',mon:'MXN',orig:1000,mxn:1000,forma:'Transferencia'},
+];
+const EGRESOS_FEB = {
+  usa:[
+    {fecha:'02/02',cat:'Negocio USA',subcat:'Sienna (mensualidad)',desc:'Mensualidad Sienna febrero',mon:'MXN',orig:12000,mxn:12000,forma:'Transferencia'},
+    {fecha:'02/02',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas viaje 1',mon:'MXN',orig:8800,mxn:8800,forma:'Efectivo'},
+    {fecha:'02/02',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna',mon:'USD',orig:35,mxn:588,forma:'Efectivo'},
+    {fecha:'02/02',cat:'Negocio USA',subcat:'Permisos',desc:'Permisos caja',mon:'MXN',orig:666,mxn:666,forma:'Efectivo'},
+    {fecha:'02/02',cat:'Negocio USA',subcat:'Nómina',desc:'Nómina empleados',mon:'MXN',orig:2000,mxn:2000,forma:'Efectivo'},
+    {fecha:'06/02',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas viaje 2',mon:'MXN',orig:8800,mxn:8800,forma:'Efectivo'},
+    {fecha:'06/02',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna',mon:'USD',orig:35,mxn:588,forma:'Efectivo'},
+    {fecha:'06/02',cat:'Negocio USA',subcat:'Permisos',desc:'Permisos caja',mon:'MXN',orig:666,mxn:666,forma:'Efectivo'},
+    {fecha:'09/02',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas viaje 3',mon:'MXN',orig:14025,mxn:14025,forma:'Efectivo'},
+    {fecha:'09/02',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna',mon:'USD',orig:35,mxn:588,forma:'Efectivo'},
+    {fecha:'09/02',cat:'Negocio USA',subcat:'Permisos',desc:'Permisos caja',mon:'MXN',orig:666,mxn:666,forma:'Efectivo'},
+    {fecha:'09/02',cat:'Negocio USA',subcat:'Insumos',desc:'Etiquetas y bolsas GV',mon:'MXN',orig:290,mxn:290,forma:'Efectivo'},
+    {fecha:'16/02',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas viaje 4',mon:'MXN',orig:14300,mxn:14300,forma:'Efectivo'},
+    {fecha:'16/02',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna',mon:'USD',orig:35,mxn:588,forma:'Efectivo'},
+    {fecha:'16/02',cat:'Negocio USA',subcat:'Permisos',desc:'Permisos caja',mon:'MXN',orig:666,mxn:666,forma:'Efectivo'},
+    {fecha:'20/02',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas viaje 5',mon:'MXN',orig:14025,mxn:14025,forma:'Efectivo'},
+    {fecha:'20/02',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna',mon:'USD',orig:35,mxn:588,forma:'Efectivo'},
+    {fecha:'20/02',cat:'Negocio USA',subcat:'Permisos',desc:'Permisos caja',mon:'MXN',orig:666,mxn:666,forma:'Efectivo'},
+    {fecha:'23/02',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas viaje 6',mon:'MXN',orig:11920,mxn:11920,forma:'Efectivo'},
+    {fecha:'23/02',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna',mon:'USD',orig:35,mxn:588,forma:'Efectivo'},
+    {fecha:'23/02',cat:'Negocio USA',subcat:'Permisos',desc:'Permisos caja',mon:'MXN',orig:666,mxn:666,forma:'Efectivo'},
+    {fecha:'23/02',cat:'Negocio USA',subcat:'Insumos',desc:'Etiquetas y bolsas',mon:'MXN',orig:290,mxn:290,forma:'Efectivo'},
+  ],
+  masa:[
+    {fecha:'02/02',cat:'Negocio Masa',subcat:'Renta',desc:'Renta local Nogales febrero',mon:'MXN',orig:4500,mxn:4500,forma:'Transferencia'},
+    {fecha:'01/02',cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina semana 1',mon:'MXN',orig:1800,mxn:1800,forma:'Efectivo'},
+    {fecha:'08/02',cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina semana 2',mon:'MXN',orig:1750,mxn:1750,forma:'Efectivo'},
+    {fecha:'15/02',cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina semana 3',mon:'MXN',orig:1800,mxn:1800,forma:'Efectivo'},
+    {fecha:'22/02',cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina semana 4',mon:'MXN',orig:1750,mxn:1750,forma:'Efectivo'},
+    {fecha:'15/02',cat:'Negocio Masa',subcat:'Insumos',desc:'Bolsas GV + ferretería',mon:'MXN',orig:630,mxn:630,forma:'Efectivo'},
+    {fecha:'09/02',cat:'Negocio Masa',subcat:'Insumos',desc:'Luz local bimestral',mon:'MXN',orig:1800,mxn:1800,forma:'Efectivo'},
+  ],
+  hogar:[
+    {fecha:'02/02',cat:'Hogar',subcat:'Alimentos',desc:'Despensa semana 1',mon:'MXN',orig:2500,mxn:2500,forma:'Efectivo'},
+    {fecha:'09/02',cat:'Hogar',subcat:'Alimentos',desc:'Despensa semana 2',mon:'MXN',orig:2200,mxn:2200,forma:'Efectivo'},
+    {fecha:'16/02',cat:'Hogar',subcat:'Alimentos',desc:'Despensa semana 3',mon:'MXN',orig:2000,mxn:2000,forma:'Efectivo'},
+    {fecha:'23/02',cat:'Hogar',subcat:'Alimentos',desc:'Despensa semana 4',mon:'MXN',orig:2000,mxn:2000,forma:'Efectivo'},
+    {fecha:'09/02',cat:'Educación',subcat:'Colegiatura',desc:'Colegiatura Sophia febrero',mon:'MXN',orig:4345,mxn:4345,forma:'Transferencia'},
+    {fecha:'08/02',cat:'Teléfono',subcat:'Celular',desc:'Telcel Julio',mon:'MXN',orig:799,mxn:799,forma:'Transferencia'},
+    {fecha:'08/02',cat:'Teléfono',subcat:'Celular',desc:'Telcel Marlene',mon:'MXN',orig:1176,mxn:1176,forma:'Transferencia'},
+    {fecha:'06/02',cat:'Financiero',subcat:'Tarjeta crédito',desc:'Tarjeta BBVA',mon:'MXN',orig:1600,mxn:1600,forma:'Transferencia'},
+    {fecha:'06/02',cat:'Financiero',subcat:'Tarjeta crédito',desc:'Tarjeta NU',mon:'MXN',orig:1500,mxn:1500,forma:'Transferencia'},
+    {fecha:'05/02',cat:'Combustible',subcat:'Gasolina',desc:'Gasolina Jetta',mon:'MXN',orig:700,mxn:700,forma:'Efectivo'},
+    {fecha:'19/02',cat:'Combustible',subcat:'Gasolina',desc:'Gasolina Jetta',mon:'MXN',orig:650,mxn:650,forma:'Efectivo'},
+    {fecha:'05/02',cat:'Hogar',subcat:'Servicios',desc:'Internet cajita',mon:'MXN',orig:250,mxn:250,forma:'Transferencia'},
+    {fecha:'14/02',cat:'Hogar',subcat:'Festividad',desc:'Día del Amor cena',mon:'MXN',orig:800,mxn:800,forma:'Efectivo'},
+    {fecha:'14/02',cat:'Personal',subcat:'Marlene',desc:'Detalle San Valentín',mon:'MXN',orig:400,mxn:400,forma:'Efectivo'},
+    {fecha:'15/02',cat:'Personal',subcat:'Julio',desc:'Gastos Julio',mon:'MXN',orig:450,mxn:450,forma:'Efectivo'},
+    {fecha:'22/02',cat:'Salud',subcat:'Medicamentos',desc:'Farmacia',mon:'MXN',orig:350,mxn:350,forma:'Efectivo'},
+    {fecha:'16/02',cat:'Personal',subcat:'Sophia',desc:'Útiles escolares',mon:'MXN',orig:250,mxn:250,forma:'Efectivo'},
+    {fecha:'10/02',cat:'Hogar',subcat:'Mascotas',desc:'Croquetas Zeus',mon:'MXN',orig:380,mxn:380,forma:'Efectivo'},
+  ],
+};
+
+// ── MARZO — Buen Mes ──
+// USA excelente (197K), Masa baja por gastos altos (placas+servicio+renta). Mucho volumen.
+const INGRESOS_MAR = [
+  {fecha:'02/03',fuente:'Venta Elotes USA',desc:'Viaje LUN – 75 doc, 30 jimadas, 11 5LB, 15 5KG',mon:'USD',orig:1163,tc:17.2,mxn:20010,forma:'Efectivo'},
+  {fecha:'06/03',fuente:'Venta Elotes USA',desc:'Viaje VIE – 80 doc, 35 jimadas, 24 5LB, 16 5KG',mon:'USD',orig:1471,tc:17.2,mxn:25305,forma:'Efectivo'},
+  {fecha:'09/03',fuente:'Venta Elotes USA',desc:'Viaje LUN – 72 doc, 35 jimadas, 11 5LB, 16 5KG',mon:'USD',orig:1261,tc:17.2,mxn:21695,forma:'Efectivo'},
+  {fecha:'13/03',fuente:'Venta Elotes USA',desc:'Viaje VIE – 61 doc, 45 jimadas, 24 5LB',mon:'USD',orig:1030,tc:17.2,mxn:17730,forma:'Efectivo'},
+  {fecha:'16/03',fuente:'Venta Elotes USA',desc:'Viaje LUN – 134 doc, 30 jimadas, 14 5LB, 17 5KG',mon:'USD',orig:1640,tc:17.2,mxn:28210,forma:'Efectivo'},
+  {fecha:'20/03',fuente:'Venta Elotes USA',desc:'Viaje VIE – 67 doc, 35 jimadas, 19 5LB, 17 5KG',mon:'USD',orig:1378,tc:17.2,mxn:23710,forma:'Efectivo'},
+  {fecha:'23/03',fuente:'Venta Elotes USA',desc:'Viaje LUN – 72 doc, 30 jimadas, 12 5LB, 16 5KG',mon:'USD',orig:1211,tc:17.2,mxn:20845,forma:'Efectivo'},
+  {fecha:'27/03',fuente:'Venta Elotes USA',desc:'Viaje VIE – 66 doc, 35 jimadas, 22 5LB, 1 5KG',mon:'USD',orig:972,tc:17.2,mxn:16735,forma:'Efectivo'},
+  {fecha:'30/03',fuente:'Venta Elotes USA',desc:'Viaje LUN – 102 doc, 30 jimadas, 11 5LB, 16 5KG',mon:'USD',orig:1329,tc:17.2,mxn:22865,forma:'Efectivo'},
+  {fecha:'01/03',fuente:'Venta Masa',desc:'Venta masa semana 1',mon:'MXN',orig:11800,mxn:11800,forma:'Efectivo'},
+  {fecha:'08/03',fuente:'Venta Masa',desc:'Venta masa semana 2',mon:'MXN',orig:12400,mxn:12400,forma:'Efectivo'},
+  {fecha:'15/03',fuente:'Venta Masa',desc:'Venta masa semana 3',mon:'MXN',orig:11200,mxn:11200,forma:'Efectivo'},
+  {fecha:'22/03',fuente:'Venta Masa',desc:'Venta masa semana 4',mon:'MXN',orig:11712,mxn:11712,forma:'Efectivo'},
+  {fecha:'02/03',fuente:'Ingreso Marlene',desc:'Sueldo Marlene',mon:'MXN',orig:1000,mxn:1000,forma:'Transferencia'},
+];
+const EGRESOS_MAR = {
+  usa:[
+    {fecha:'02/03',cat:'Negocio USA',subcat:'Sienna (mensualidad)',desc:'Mensualidad Sienna marzo',mon:'MXN',orig:12000,mxn:12000,forma:'Transferencia'},
+    {fecha:'02/03',cat:'Negocio USA',subcat:'Materia prima',desc:'Placas + Servicio Sienna',mon:'MXN',orig:13836,mxn:13836,forma:'Efectivo'},
+    {fecha:'02/03',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas viaje 1',mon:'MXN',orig:11515,mxn:11515,forma:'Efectivo'},
+    {fecha:'02/03',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna',mon:'USD',orig:29,mxn:504,forma:'Efectivo'},
+    {fecha:'02/03',cat:'Negocio USA',subcat:'Permisos',desc:'Permisos caja',mon:'MXN',orig:666,mxn:666,forma:'Efectivo'},
+    {fecha:'06/03',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas viaje 2',mon:'MXN',orig:14505,mxn:14505,forma:'Efectivo'},
+    {fecha:'06/03',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna',mon:'USD',orig:34,mxn:588,forma:'Efectivo'},
+    {fecha:'06/03',cat:'Negocio USA',subcat:'Permisos',desc:'Permisos caja',mon:'MXN',orig:666,mxn:666,forma:'Efectivo'},
+    {fecha:'09/03',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas viaje 3',mon:'MXN',orig:12495,mxn:12495,forma:'Efectivo'},
+    {fecha:'09/03',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna',mon:'USD',orig:29,mxn:500,forma:'Efectivo'},
+    {fecha:'09/03',cat:'Negocio USA',subcat:'Permisos',desc:'Permisos caja',mon:'MXN',orig:666,mxn:666,forma:'Efectivo'},
+    {fecha:'16/03',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas viaje 4',mon:'MXN',orig:16370,mxn:16370,forma:'Efectivo'},
+    {fecha:'16/03',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna',mon:'USD',orig:39,mxn:680,forma:'Efectivo'},
+    {fecha:'16/03',cat:'Negocio USA',subcat:'Permisos',desc:'Permisos caja',mon:'MXN',orig:666,mxn:666,forma:'Efectivo'},
+    {fecha:'20/03',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas viaje 5',mon:'MXN',orig:13560,mxn:13560,forma:'Efectivo'},
+    {fecha:'20/03',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna',mon:'USD',orig:44,mxn:765,forma:'Efectivo'},
+    {fecha:'23/03',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas viaje 6',mon:'MXN',orig:11960,mxn:11960,forma:'Efectivo'},
+    {fecha:'23/03',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna',mon:'USD',orig:39,mxn:680,forma:'Efectivo'},
+    {fecha:'23/03',cat:'Negocio USA',subcat:'Insumos',desc:'Bolsas GV + etiquetas',mon:'MXN',orig:290,mxn:290,forma:'Efectivo'},
+    {fecha:'27/03',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas viaje 7',mon:'MXN',orig:9905,mxn:9905,forma:'Efectivo'},
+    {fecha:'30/03',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas viaje 8',mon:'MXN',orig:13220,mxn:13220,forma:'Efectivo'},
+    {fecha:'30/03',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna',mon:'USD',orig:39,mxn:680,forma:'Efectivo'},
+  ],
+  masa:[
+    {fecha:'01/03',cat:'Negocio Masa',subcat:'Renta',desc:'Renta local Nogales marzo',mon:'MXN',orig:4500,mxn:4500,forma:'Transferencia'},
+    {fecha:'15/03',cat:'Negocio Masa',subcat:'Renta',desc:'Segunda renta (bimestral)',mon:'MXN',orig:4500,mxn:4500,forma:'Transferencia'},
+    {fecha:'01/03',cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina semana 1',mon:'MXN',orig:1850,mxn:1850,forma:'Efectivo'},
+    {fecha:'09/03',cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina semana 2',mon:'MXN',orig:2250,mxn:2250,forma:'Efectivo'},
+    {fecha:'16/03',cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina semana 3',mon:'MXN',orig:2300,mxn:2300,forma:'Efectivo'},
+    {fecha:'23/03',cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina semana 4',mon:'MXN',orig:2550,mxn:2550,forma:'Efectivo'},
+    {fecha:'08/03',cat:'Negocio Masa',subcat:'Insumos',desc:'Compra elote semanal',mon:'MXN',orig:1375,mxn:1375,forma:'Efectivo'},
+    {fecha:'22/03',cat:'Negocio Masa',subcat:'Insumos',desc:'Compra elote semanal',mon:'MXN',orig:1925,mxn:1925,forma:'Efectivo'},
+    {fecha:'15/03',cat:'Negocio Masa',subcat:'Insumos',desc:'Bolsas GV + ferretería',mon:'MXN',orig:540,mxn:540,forma:'Efectivo'},
+    {fecha:'05/03',cat:'Negocio Masa',subcat:'Operación',desc:'Desayunos empleados',mon:'MXN',orig:400,mxn:400,forma:'Efectivo'},
+    {fecha:'15/03',cat:'Negocio Masa',subcat:'Insumos',desc:'Mantequilla insumos',mon:'MXN',orig:270,mxn:270,forma:'Efectivo'},
+  ],
+  hogar:[
+    {fecha:'02/03',cat:'Hogar',subcat:'Alimentos',desc:'Despensa semana 1',mon:'MXN',orig:2800,mxn:2800,forma:'Efectivo'},
+    {fecha:'09/03',cat:'Hogar',subcat:'Alimentos',desc:'Despensa semana 2',mon:'MXN',orig:2600,mxn:2600,forma:'Efectivo'},
+    {fecha:'16/03',cat:'Hogar',subcat:'Alimentos',desc:'Despensa semana 3',mon:'MXN',orig:2500,mxn:2500,forma:'Efectivo'},
+    {fecha:'23/03',cat:'Hogar',subcat:'Alimentos',desc:'Despensa semana 4',mon:'MXN',orig:2400,mxn:2400,forma:'Efectivo'},
+    {fecha:'09/03',cat:'Educación',subcat:'Colegiatura',desc:'Colegiatura Sophia marzo',mon:'MXN',orig:4345,mxn:4345,forma:'Transferencia'},
+    {fecha:'08/03',cat:'Teléfono',subcat:'Celular',desc:'Telcel Julio',mon:'MXN',orig:799,mxn:799,forma:'Transferencia'},
+    {fecha:'08/03',cat:'Teléfono',subcat:'Celular',desc:'Telcel Marlene',mon:'MXN',orig:1176,mxn:1176,forma:'Transferencia'},
+    {fecha:'06/03',cat:'Financiero',subcat:'Tarjeta crédito',desc:'Tarjeta BBVA',mon:'MXN',orig:1700,mxn:1700,forma:'Transferencia'},
+    {fecha:'06/03',cat:'Financiero',subcat:'Tarjeta crédito',desc:'Tarjeta NU',mon:'MXN',orig:1600,mxn:1600,forma:'Transferencia'},
+    {fecha:'05/03',cat:'Combustible',subcat:'Gasolina',desc:'Gasolina Jetta semana 1',mon:'MXN',orig:700,mxn:700,forma:'Efectivo'},
+    {fecha:'19/03',cat:'Combustible',subcat:'Gasolina',desc:'Gasolina Jetta semana 3',mon:'MXN',orig:700,mxn:700,forma:'Efectivo'},
+    {fecha:'05/03',cat:'Hogar',subcat:'Servicios',desc:'Internet cajita',mon:'MXN',orig:250,mxn:250,forma:'Transferencia'},
+    {fecha:'02/03',cat:'Hogar',subcat:'Servicios',desc:'Luz bimestral casa',mon:'MXN',orig:2750,mxn:2750,forma:'Efectivo'},
+    {fecha:'15/03',cat:'Personal',subcat:'Julio',desc:'Gastos Julio semana',mon:'MXN',orig:600,mxn:600,forma:'Efectivo'},
+    {fecha:'22/03',cat:'Personal',subcat:'Marlene',desc:'Gastos Marlene semana',mon:'MXN',orig:500,mxn:500,forma:'Efectivo'},
+    {fecha:'10/03',cat:'Salud',subcat:'Medicamentos',desc:'Farmacia',mon:'MXN',orig:280,mxn:280,forma:'Efectivo'},
+    {fecha:'16/03',cat:'Personal',subcat:'Sophia',desc:'Gastos escolares Sophia',mon:'MXN',orig:300,mxn:300,forma:'Efectivo'},
+    {fecha:'18/03',cat:'Hogar',subcat:'Artículos hogar',desc:'Compras hogar Walmart',mon:'MXN',orig:850,mxn:850,forma:'Efectivo'},
+    {fecha:'20/03',cat:'Hogar',subcat:'Mascotas',desc:'Croquetas Zeus',mon:'MXN',orig:380,mxn:380,forma:'Efectivo'},
+  ],
+};
+
+// ── ABRIL — Mes Regular ──
+// USA muy bueno (154K), Masa ok (55K). Gastos equilibrados, sin sorpresas mayores.
+const INGRESOS_ABR = [
+  {fecha:'06/04',fuente:'Venta Elotes USA',desc:'Viaje LUN – 70 doc, 20 jimadas, 12 5LB, 16 5KG',mon:'USD',orig:1104,tc:17.1,mxn:18880,forma:'Efectivo'},
+  {fecha:'10/04',fuente:'Venta Elotes USA',desc:'Viaje VIE – 91 doc, 30 jimadas, 14 5LB, 16 5KG',mon:'USD',orig:1373,tc:17.1,mxn:23490,forma:'Efectivo'},
+  {fecha:'13/04',fuente:'Venta Elotes USA',desc:'Viaje LUN – 90 doc, 30 jimadas, 12 5LB, 16 5KG',mon:'USD',orig:1338,tc:17.1,mxn:22890,forma:'Efectivo'},
+  {fecha:'17/04',fuente:'Venta Elotes USA',desc:'Viaje VIE – 75 doc, 25 jimadas, 11 5LB',mon:'USD',orig:832,tc:17.1,mxn:14230,forma:'Efectivo'},
+  {fecha:'20/04',fuente:'Venta Elotes USA',desc:'Viaje LUN – 99 doc, 40 jimadas, 26 5LB, 16 5KG',mon:'USD',orig:1674,tc:17.1,mxn:28630,forma:'Efectivo'},
+  {fecha:'24/04',fuente:'Venta Elotes USA',desc:'Viaje VIE – 70 doc, 35 jimadas, 24 5LB, 9 5KG',mon:'USD',orig:1278,tc:17.1,mxn:21855,forma:'Efectivo'},
+  {fecha:'27/04',fuente:'Venta Elotes USA',desc:'Viaje LUN – 105 doc, 35 jimadas, 12 5LB, 16 5KG',mon:'USD',orig:1432,tc:17.1,mxn:24495,forma:'Efectivo'},
+  {fecha:'01/04',fuente:'Venta Masa',desc:'Venta masa semana 1',mon:'MXN',orig:14300,mxn:14300,forma:'Efectivo'},
+  {fecha:'08/04',fuente:'Venta Masa',desc:'Venta masa semana 2',mon:'MXN',orig:13200,mxn:13200,forma:'Efectivo'},
+  {fecha:'15/04',fuente:'Venta Masa',desc:'Venta masa semana 3',mon:'MXN',orig:14100,mxn:14100,forma:'Efectivo'},
+  {fecha:'22/04',fuente:'Venta Masa',desc:'Venta masa semana 4',mon:'MXN',orig:14236,mxn:14236,forma:'Efectivo'},
+  {fecha:'02/04',fuente:'Ingreso Marlene',desc:'Sueldo Marlene',mon:'MXN',orig:1000,mxn:1000,forma:'Transferencia'},
+];
+const EGRESOS_ABR = {
+  usa:[
+    {fecha:'06/04',cat:'Negocio USA',subcat:'Sienna (mensualidad)',desc:'Mensualidad Sienna abril',mon:'MXN',orig:12000,mxn:12000,forma:'Transferencia'},
+    {fecha:'06/04',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas viaje 1',mon:'MXN',orig:10750,mxn:10750,forma:'Efectivo'},
+    {fecha:'06/04',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna',mon:'USD',orig:45,mxn:770,forma:'Efectivo'},
+    {fecha:'06/04',cat:'Negocio USA',subcat:'Permisos',desc:'Permisos caja',mon:'MXN',orig:666,mxn:666,forma:'Efectivo'},
+    {fecha:'06/04',cat:'Negocio USA',subcat:'Nómina',desc:'Nómina empleados viaje',mon:'MXN',orig:600,mxn:600,forma:'Efectivo'},
+    {fecha:'10/04',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas viaje 2',mon:'MXN',orig:13535,mxn:13535,forma:'Efectivo'},
+    {fecha:'10/04',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna',mon:'USD',orig:54,mxn:935,forma:'Efectivo'},
+    {fecha:'10/04',cat:'Negocio USA',subcat:'Permisos',desc:'Permisos caja',mon:'MXN',orig:666,mxn:666,forma:'Efectivo'},
+    {fecha:'10/04',cat:'Negocio USA',subcat:'Insumos',desc:'Etiquetas bolsas',mon:'MXN',orig:450,mxn:450,forma:'Efectivo'},
+    {fecha:'13/04',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas viaje 3',mon:'MXN',orig:13200,mxn:13200,forma:'Efectivo'},
+    {fecha:'13/04',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna',mon:'USD',orig:49,mxn:850,forma:'Efectivo'},
+    {fecha:'13/04',cat:'Negocio USA',subcat:'Permisos',desc:'Permisos caja',mon:'MXN',orig:666,mxn:666,forma:'Efectivo'},
+    {fecha:'17/04',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas viaje 4',mon:'MXN',orig:8540,mxn:8540,forma:'Efectivo'},
+    {fecha:'17/04',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna',mon:'USD',orig:34,mxn:588,forma:'Efectivo'},
+    {fecha:'17/04',cat:'Negocio USA',subcat:'Permisos',desc:'Permisos caja',mon:'MXN',orig:666,mxn:666,forma:'Efectivo'},
+    {fecha:'20/04',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas viaje 5',mon:'MXN',orig:16505,mxn:16505,forma:'Efectivo'},
+    {fecha:'20/04',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna',mon:'USD',orig:44,mxn:761,forma:'Efectivo'},
+    {fecha:'20/04',cat:'Negocio USA',subcat:'Permisos',desc:'Permisos caja',mon:'MXN',orig:666,mxn:666,forma:'Efectivo'},
+    {fecha:'24/04',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas viaje 6',mon:'MXN',orig:12665,mxn:12665,forma:'Efectivo'},
+    {fecha:'24/04',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna',mon:'USD',orig:50,mxn:867,forma:'Efectivo'},
+    {fecha:'27/04',cat:'Negocio USA',subcat:'Materia prima',desc:'Pago docenas viaje 7',mon:'MXN',orig:14200,mxn:14200,forma:'Efectivo'},
+    {fecha:'27/04',cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna',mon:'USD',orig:59,mxn:1020,forma:'Efectivo'},
+    {fecha:'27/04',cat:'Negocio USA',subcat:'Permisos',desc:'Permisos caja',mon:'MXN',orig:666,mxn:666,forma:'Efectivo'},
+    {fecha:'27/04',cat:'Negocio USA',subcat:'Insumos',desc:'Etiquetas costales y bolsas',mon:'MXN',orig:490,mxn:490,forma:'Efectivo'},
+  ],
+  masa:[
+    {fecha:'13/04',cat:'Negocio Masa',subcat:'Renta',desc:'Renta local Nogales + Luz',mon:'MXN',orig:8500,mxn:8500,forma:'Transferencia'},
+    {fecha:'01/04',cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina semana 1',mon:'MXN',orig:1650,mxn:1650,forma:'Efectivo'},
+    {fecha:'08/04',cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina semana 2',mon:'MXN',orig:1800,mxn:1800,forma:'Efectivo'},
+    {fecha:'15/04',cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina semana 3',mon:'MXN',orig:1750,mxn:1750,forma:'Efectivo'},
+    {fecha:'22/04',cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina semana 4',mon:'MXN',orig:1800,mxn:1800,forma:'Efectivo'},
+    {fecha:'09/04',cat:'Negocio Masa',subcat:'Insumos',desc:'Compra elote semana 2',mon:'MXN',orig:1080,mxn:1080,forma:'Efectivo'},
+    {fecha:'22/04',cat:'Negocio Masa',subcat:'Insumos',desc:'Compra elote semana 4',mon:'MXN',orig:1650,mxn:1650,forma:'Efectivo'},
+    {fecha:'15/04',cat:'Negocio Masa',subcat:'Insumos',desc:'Ferretería y materiales',mon:'MXN',orig:320,mxn:320,forma:'Efectivo'},
+    {fecha:'03/04',cat:'Negocio Masa',subcat:'Operación',desc:'Desayunos y sodas semana',mon:'MXN',orig:280,mxn:280,forma:'Efectivo'},
+  ],
+  hogar:[
+    {fecha:'01/04',cat:'Hogar',subcat:'Alimentos',desc:'Despensa semana 1',mon:'MXN',orig:2700,mxn:2700,forma:'Efectivo'},
+    {fecha:'08/04',cat:'Hogar',subcat:'Alimentos',desc:'Despensa semana 2',mon:'MXN',orig:2400,mxn:2400,forma:'Efectivo'},
+    {fecha:'15/04',cat:'Hogar',subcat:'Alimentos',desc:'Despensa semana 3',mon:'MXN',orig:2200,mxn:2200,forma:'Efectivo'},
+    {fecha:'22/04',cat:'Hogar',subcat:'Alimentos',desc:'Despensa semana 4',mon:'MXN',orig:2100,mxn:2100,forma:'Efectivo'},
+    {fecha:'09/04',cat:'Educación',subcat:'Colegiatura',desc:'Colegiatura Sophia abril',mon:'MXN',orig:4345,mxn:4345,forma:'Transferencia'},
+    {fecha:'08/04',cat:'Teléfono',subcat:'Celular',desc:'Telcel Julio',mon:'MXN',orig:799,mxn:799,forma:'Transferencia'},
+    {fecha:'08/04',cat:'Teléfono',subcat:'Celular',desc:'Telcel Marlene',mon:'MXN',orig:1176,mxn:1176,forma:'Transferencia'},
+    {fecha:'06/04',cat:'Financiero',subcat:'Tarjeta crédito',desc:'Tarjeta BBVA',mon:'MXN',orig:1700,mxn:1700,forma:'Transferencia'},
+    {fecha:'06/04',cat:'Financiero',subcat:'Tarjeta crédito',desc:'Tarjeta NU',mon:'MXN',orig:1600,mxn:1600,forma:'Transferencia'},
+    {fecha:'05/04',cat:'Combustible',subcat:'Gasolina',desc:'Gasolina Jetta',mon:'MXN',orig:700,mxn:700,forma:'Efectivo'},
+    {fecha:'19/04',cat:'Combustible',subcat:'Gasolina',desc:'Gasolina Jetta',mon:'MXN',orig:650,mxn:650,forma:'Efectivo'},
+    {fecha:'05/04',cat:'Hogar',subcat:'Servicios',desc:'Internet cajita',mon:'MXN',orig:250,mxn:250,forma:'Transferencia'},
+    {fecha:'15/04',cat:'Personal',subcat:'Julio',desc:'Gastos Julio semana',mon:'MXN',orig:550,mxn:550,forma:'Efectivo'},
+    {fecha:'22/04',cat:'Personal',subcat:'Marlene',desc:'Gastos Marlene semana',mon:'MXN',orig:450,mxn:450,forma:'Efectivo'},
+    {fecha:'10/04',cat:'Salud',subcat:'Medicamentos',desc:'Farmacia',mon:'MXN',orig:300,mxn:300,forma:'Efectivo'},
+    {fecha:'16/04',cat:'Personal',subcat:'Sophia',desc:'Gastos escolares Sophia',mon:'MXN',orig:280,mxn:280,forma:'Efectivo'},
+    {fecha:'20/04',cat:'Hogar',subcat:'Mascotas',desc:'Croquetas Zeus',mon:'MXN',orig:380,mxn:380,forma:'Efectivo'},
+    {fecha:'22/04',cat:'Hogar',subcat:'Artículos hogar',desc:'Compras hogar varios',mon:'MXN',orig:700,mxn:700,forma:'Efectivo'},
+    {fecha:'30/04',cat:'Hogar',subcat:'Festividad',desc:'Cumpleaños familiar',mon:'MXN',orig:900,mxn:900,forma:'Efectivo'},
+  ],
+};
+
+// Índice para acceder por mes
+const DATOS_MES = {
+  ENE:{ ingresos:INGRESOS_ENE, egresos:EGRESOS_ENE },
+  FEB:{ ingresos:INGRESOS_FEB, egresos:EGRESOS_FEB },
+  MAR:{ ingresos:INGRESOS_MAR, egresos:EGRESOS_MAR },
+  ABR:{ ingresos:INGRESOS_ABR, egresos:EGRESOS_ABR },
+};
+
+// ═══ DATOS REALES DEL EXCEL — MAYO 2026 ═══
+const INGRESOS_MAY = [
+  {fecha:'01/05',dia:'Vie',sem:18,fuente:'Venta Elotes USA',desc:'Ingresos elotes USA',mon:'USD',orig:870,tc:16.9,mxn:14703,forma:'Efectivo'},
+  {fecha:'02/05',dia:'Sáb',sem:18,fuente:'Venta Masa',desc:'Ingresos Masa',mon:'MXN',orig:2185,mxn:2185,forma:'Efectivo'},
+  {fecha:'02/05',dia:'Sáb',sem:18,fuente:'Ingreso Marlene',desc:'Depósito BBVA',mon:'MXN',orig:1000,mxn:1000,forma:'Transferencia'},
+  {fecha:'02/05',dia:'Sáb',sem:18,fuente:'Ingreso Marlene',desc:'Efectivo Marlene',mon:'MXN',orig:400,mxn:400,forma:'Efectivo'},
+  {fecha:'03/05',dia:'Dom',sem:18,fuente:'Venta Masa',desc:'Venta del día',mon:'MXN',orig:1604,mxn:1604,forma:'Efectivo'},
+  {fecha:'04/05',dia:'Lun',sem:19,fuente:'Venta Elotes USA',desc:'Venta USA',mon:'MXN',orig:21970,mxn:21970,forma:'Efectivo'},
+  {fecha:'04/05',dia:'Lun',sem:19,fuente:'Venta Masa',desc:'Venta Masa',mon:'MXN',orig:2530,mxn:2530,forma:'Efectivo'},
+  {fecha:'05/05',dia:'Mar',sem:19,fuente:'Venta Masa',desc:'Venta Masa',mon:'MXN',orig:1785,mxn:1785,forma:'Efectivo'},
+  {fecha:'05/05',dia:'Mar',sem:19,fuente:'Venta Elotes USA',desc:'Venta antojitos',mon:'MXN',orig:6707,mxn:6707,forma:'Efectivo'},
+  {fecha:'06/05',dia:'Mié',sem:19,fuente:'Venta Masa',desc:'Venta Masa',mon:'MXN',orig:3040,mxn:3040,forma:'Efectivo'},
+  {fecha:'08/05',dia:'Vie',sem:19,fuente:'Venta Elotes USA',desc:'Venta USA',mon:'USD',orig:860,tc:16.9,mxn:14534,forma:'Efectivo'},
+  {fecha:'08/05',dia:'Vie',sem:19,fuente:'Venta Masa',desc:'Venta Masa',mon:'MXN',orig:1600,mxn:1600,forma:'Efectivo'},
+  {fecha:'09/05',dia:'Sáb',sem:19,fuente:'Venta Masa',desc:'Venta Masa',mon:'MXN',orig:2088,mxn:2088,forma:'Efectivo'},
+  {fecha:'11/05',dia:'Lun',sem:20,fuente:'Venta Masa',desc:'Venta Masa',mon:'MXN',orig:1745,mxn:1745,forma:'Efectivo'},
+  {fecha:'11/05',dia:'Lun',sem:20,fuente:'Venta Elotes USA',desc:'Venta USA',mon:'USD',orig:1428,tc:16.8,mxn:23990,forma:'Efectivo'},
+  {fecha:'14/05',dia:'Mié',sem:20,fuente:'Venta Masa',desc:'Venta Masa',mon:'MXN',orig:2271,mxn:2271,forma:'Efectivo'},
+  {fecha:'16/05',dia:'Vie',sem:20,fuente:'Venta Masa',desc:'Venta Masa',mon:'MXN',orig:1280,mxn:1280,forma:'Efectivo'},
+  {fecha:'16/05',dia:'Vie',sem:20,fuente:'Renta Casa',desc:'Renta Casa Hermosillo',mon:'MXN',orig:8000,mxn:8000,forma:'Efectivo'},
+  {fecha:'16/05',dia:'Vie',sem:20,fuente:'Venta Elotes USA',desc:'Venta USA',mon:'USD',orig:1200,tc:16.85,mxn:20220,forma:'Efectivo'},
+  {fecha:'19/05',dia:'Lun',sem:21,fuente:'Venta Masa',desc:'Venta masa',mon:'MXN',orig:2970,mxn:2970,forma:'Efectivo'},
+  {fecha:'19/05',dia:'Lun',sem:21,fuente:'Venta Elotes USA',desc:'Venta USA',mon:'USD',orig:1331,tc:16.8,mxn:22361,forma:'Efectivo'},
+  {fecha:'19/05',dia:'Lun',sem:21,fuente:'Venta Elotes USA',desc:'Venta Rossy pendiente',mon:'USD',orig:320,tc:16.8,mxn:5376,forma:'Transferencia'},
+  {fecha:'20/05',dia:'Mar',sem:21,fuente:'Venta Masa',desc:'Venta masa',mon:'MXN',orig:740,mxn:740,forma:'Efectivo'},
+];
+
+const EGRESOS_MAY = {
+  usa: [
+    {fecha:'01/05',sem:18,cat:'Negocio USA',subcat:'Operación',desc:'Desayuno Julio',mon:'USD',orig:7,mxn:118,forma:'Efectivo'},
+    {fecha:'01/05',sem:18,cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina USA',mon:'USD',orig:50,mxn:845,forma:'Efectivo'},
+    {fecha:'02/05',sem:18,cat:'Negocio USA',subcat:'Materia prima',desc:'166 docenas × $55',mon:'MXN',orig:9130,mxn:9130,forma:'Efectivo'},
+    {fecha:'03/05',sem:18,cat:'Negocio USA',subcat:'Nómina',desc:'3 empleados',mon:'MXN',orig:1100,mxn:1100,forma:'Efectivo'},
+    {fecha:'04/05',sem:19,cat:'Negocio USA',subcat:'Operación',desc:'Cortada elote USA',mon:'MXN',orig:250,mxn:250,forma:'Efectivo'},
+    {fecha:'04/05',sem:19,cat:'Negocio USA',subcat:'Operación',desc:'Burritos Marlene y Julio',mon:'MXN',orig:422.5,mxn:422.5,forma:'Efectivo'},
+    {fecha:'04/05',sem:19,cat:'Negocio USA',subcat:'Insumos',desc:'Bolsas 2gal y 1gal',mon:'MXN',orig:278,mxn:278,forma:'Efectivo'},
+    {fecha:'04/05',sem:19,cat:'Negocio USA',subcat:'Materia prima',desc:'Pago doña Mary',mon:'MXN',orig:14025,mxn:14025,forma:'Efectivo'},
+    {fecha:'08/05',sem:19,cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Tucson',mon:'USD',orig:45,mxn:760.5,forma:'Efectivo'},
+    {fecha:'08/05',sem:19,cat:'Negocio USA',subcat:'Operación',desc:'Burritos Julio',mon:'USD',orig:8,mxn:135.2,forma:'Efectivo'},
+    {fecha:'08/05',sem:19,cat:'Negocio USA',subcat:'Materia prima',desc:'Pago elote 508 USD',mon:'USD',orig:508,mxn:8636,forma:'Efectivo'},
+    {fecha:'10/05',sem:19,cat:'Negocio USA',subcat:'Nómina',desc:'Nómina viaje USA',mon:'MXN',orig:900,mxn:900,forma:'Efectivo'},
+    {fecha:'10/05',sem:19,cat:'Negocio USA',subcat:'Alimentos',desc:'Desayuno viaje USA',mon:'MXN',orig:300,mxn:300,forma:'Efectivo'},
+    {fecha:'11/05',sem:20,cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna',mon:'USD',orig:60,mxn:1008,forma:'Efectivo'},
+    {fecha:'15/05',sem:20,cat:'Negocio USA',subcat:'Alimentos',desc:'Desayuno Jordan y Héctor',mon:'MXN',orig:150,mxn:150,forma:'Efectivo'},
+    {fecha:'15/05',sem:20,cat:'Negocio USA',subcat:'Nómina',desc:'Nómina del día USA',mon:'MXN',orig:700,mxn:700,forma:'Efectivo'},
+    {fecha:'16/05',sem:20,cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna 65 USD',mon:'USD',orig:65,mxn:1095.25,forma:'Efectivo'},
+    {fecha:'16/05',sem:20,cat:'Negocio USA',subcat:'Alimentos',desc:'Desayuno Julio viaje',mon:'USD',orig:10,mxn:168.5,forma:'Efectivo'},
+    {fecha:'18/05',sem:20,cat:'Negocio USA',subcat:'Insumos',desc:'Cubos de hielo hieleras',mon:'MXN',orig:200,mxn:200,forma:'Efectivo'},
+    {fecha:'18/05',sem:20,cat:'Negocio USA',subcat:'Alimentos',desc:'Desayuno chamacos',mon:'MXN',orig:500,mxn:500,forma:'Efectivo'},
+    {fecha:'18/05',sem:20,cat:'Negocio USA',subcat:'Nómina',desc:'Nómina USA',mon:'MXN',orig:1300,mxn:1300,forma:'Efectivo'},
+    {fecha:'19/05',sem:21,cat:'Negocio USA',subcat:'Alimentos',desc:'Lunch Julio USA',mon:'USD',orig:10,mxn:168,forma:'Efectivo'},
+    {fecha:'19/05',sem:21,cat:'Negocio USA',subcat:'Gasolina',desc:'Gasolina Sienna 50 USD',mon:'USD',orig:50,mxn:840,forma:'Efectivo'},
+    {fecha:'19/05',sem:21,cat:'Negocio USA',subcat:'Alimentos',desc:'Comida Marlene tostitos',mon:'USD',orig:10,mxn:168,forma:'Efectivo'},
+    {fecha:'19/05',sem:21,cat:'Negocio USA',subcat:'Insumos',desc:'Bolsas GV 2 gal (24.85 USD)',mon:'USD',orig:24.85,mxn:417.48,forma:'Efectivo'},
+    {fecha:'19/05',sem:21,cat:'Negocio USA',subcat:'Insumos',desc:'Bolsas GV 1 gal (5.37 USD)',mon:'USD',orig:5.37,mxn:90.22,forma:'Efectivo'},
+    {fecha:'21/05',sem:21,cat:'Negocio USA',subcat:'Insumos',desc:'Etiquetas bolsas grano 100h',mon:'MXN',orig:450,mxn:450,forma:'Efectivo'},
+    {fecha:'21/05',sem:21,cat:'Negocio USA',subcat:'Insumos',desc:'Etiquetas costales docenas 20h',mon:'MXN',orig:38,mxn:38,forma:'Efectivo'},
+  ],
+  masa: [
+    {fecha:'01/05',sem:18,cat:'Negocio Masa',subcat:'Insumos',desc:'Afilador',mon:'MXN',orig:550,mxn:550,forma:'Efectivo'},
+    {fecha:'01/05',sem:18,cat:'Negocio Masa',subcat:'Insumos',desc:'Mantequilla',mon:'MXN',orig:345,mxn:345,forma:'Efectivo'},
+    {fecha:'03/05',sem:18,cat:'Negocio Masa',subcat:'Operación',desc:'Sodas Oxxo',mon:'MXN',orig:200,mxn:200,forma:'Efectivo'},
+    {fecha:'03/05',sem:18,cat:'Negocio Masa',subcat:'Operación',desc:'Desayuno tortas',mon:'MXN',orig:535,mxn:535,forma:'Efectivo'},
+    {fecha:'03/05',sem:18,cat:'Negocio Masa',subcat:'Insumos',desc:'Cajas Economax',mon:'MXN',orig:50,mxn:50,forma:'Efectivo'},
+    {fecha:'03/05',sem:18,cat:'Negocio Masa',subcat:'Insumos',desc:'Rafia ferretería',mon:'MXN',orig:100,mxn:100,forma:'Efectivo'},
+    {fecha:'04/05',sem:19,cat:'Negocio Masa',subcat:'Insumos',desc:'Ferretería cuchillos',mon:'MXN',orig:630,mxn:630,forma:'Efectivo'},
+    {fecha:'04/05',sem:19,cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina del día',mon:'MXN',orig:650,mxn:650,forma:'Efectivo'},
+    {fecha:'05/05',sem:19,cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina del día',mon:'MXN',orig:650,mxn:650,forma:'Efectivo'},
+    {fecha:'06/05',sem:19,cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina del día',mon:'MXN',orig:650,mxn:650,forma:'Efectivo'},
+    {fecha:'08/05',sem:19,cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina Héctor y Anel',mon:'MXN',orig:650,mxn:650,forma:'Efectivo'},
+    {fecha:'11/05',sem:20,cat:'Negocio Masa',subcat:'Insumos',desc:'Bolsas 2 gal (6.43 USD)',mon:'USD',orig:6.43,mxn:108.02,forma:'Efectivo'},
+    {fecha:'13/05',sem:20,cat:'Negocio Masa',subcat:'Herramienta',desc:'Herrería Lobo',mon:'MXN',orig:600,mxn:600,forma:'Efectivo'},
+    {fecha:'13/05',sem:20,cat:'Negocio Masa',subcat:'Nómina',desc:'Héctor y Jordan',mon:'MXN',orig:450,mxn:450,forma:'Efectivo'},
+    {fecha:'13/05',sem:20,cat:'Negocio Masa',subcat:'Herramienta',desc:'Cuerda para la Lobo',mon:'MXN',orig:40,mxn:40,forma:'Efectivo'},
+    {fecha:'14/05',sem:20,cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina del día',mon:'MXN',orig:650,mxn:650,forma:'Efectivo'},
+    {fecha:'14/05',sem:20,cat:'Negocio Masa',subcat:'Operación',desc:'Limpieza (papel de baño)',mon:'MXN',orig:65,mxn:65,forma:'Efectivo'},
+    {fecha:'14/05',sem:20,cat:'Negocio Masa',subcat:'Operación',desc:'Desayuno pelaron elote',mon:'MXN',orig:200,mxn:200,forma:'Efectivo'},
+    {fecha:'15/05',sem:20,cat:'Negocio Masa',subcat:'Operación',desc:'Sodas local',mon:'MXN',orig:120,mxn:120,forma:'Efectivo'},
+    {fecha:'15/05',sem:20,cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina del día',mon:'MXN',orig:350,mxn:350,forma:'Efectivo'},
+    {fecha:'16/05',sem:20,cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina',mon:'MXN',orig:350,mxn:350,forma:'Efectivo'},
+    {fecha:'17/05',sem:20,cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina sábado',mon:'MXN',orig:700,mxn:700,forma:'Efectivo'},
+    {fecha:'18/05',sem:20,cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina domingo',mon:'MXN',orig:350,mxn:350,forma:'Efectivo'},
+    {fecha:'19/05',sem:21,cat:'Negocio Masa',subcat:'Insumos',desc:'Plástico para chile (4.12 USD)',mon:'USD',orig:4.12,mxn:69.22,forma:'Efectivo'},
+    {fecha:'19/05',sem:21,cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina del día',mon:'MXN',orig:700,mxn:700,forma:'Efectivo'},
+    {fecha:'20/05',sem:21,cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina del día',mon:'MXN',orig:350,mxn:350,forma:'Efectivo'},
+    {fecha:'21/05',sem:21,cat:'Negocio Masa',subcat:'Nómina',desc:'Nómina del día',mon:'MXN',orig:350,mxn:350,forma:'Efectivo'},
+  ],
+  hogar: [
+    {fecha:'01/05',sem:18,cat:'Hogar',subcat:'Artículos hogar',desc:'Aromatizantes',mon:'MXN',orig:125,mxn:125,forma:'Efectivo'},
+    {fecha:'01/05',sem:18,cat:'Hogar',subcat:'Alimentos',desc:'Coca Cola 2lts',mon:'MXN',orig:50,mxn:50,forma:'Efectivo'},
+    {fecha:'01/05',sem:18,cat:'Varios',subcat:'Varios',desc:'Lupillo',mon:'MXN',orig:5,mxn:5,forma:'Efectivo'},
+    {fecha:'01/05',sem:18,cat:'Combustible',subcat:'Gasolina',desc:'Gasolina USA',mon:'USD',orig:50,mxn:845,forma:'Efectivo'},
+    {fecha:'02/05',sem:18,cat:'Personal',subcat:'Julio',desc:'Café Oxxo',mon:'MXN',orig:33,mxn:33,forma:'Efectivo'},
+    {fecha:'02/05',sem:18,cat:'Personal',subcat:'Julio',desc:'Póster mundial',mon:'MXN',orig:99,mxn:99,forma:'Efectivo'},
+    {fecha:'02/05',sem:18,cat:'Hogar',subcat:'Alimentos',desc:'Jugo naranja 3lts',mon:'MXN',orig:52,mxn:52,forma:'Efectivo'},
+    {fecha:'02/05',sem:18,cat:'Hogar',subcat:'Servicios',desc:'Luz bimestral casa',mon:'MXN',orig:2743,mxn:2743,forma:'Efectivo'},
+    {fecha:'02/05',sem:18,cat:'Hogar',subcat:'Alimentos',desc:'Cena tacos',mon:'MXN',orig:300,mxn:300,forma:'Efectivo'},
+    {fecha:'02/05',sem:18,cat:'Personal',subcat:'Marlene',desc:'Raspado',mon:'MXN',orig:50,mxn:50,forma:'Efectivo'},
+    {fecha:'02/05',sem:18,cat:'Hogar',subcat:'Alimentos',desc:'Soda 2lts',mon:'MXN',orig:60,mxn:60,forma:'Efectivo'},
+    {fecha:'02/05',sem:18,cat:'Personal',subcat:'Julio',desc:'Gastos Julio',mon:'MXN',orig:700,mxn:700,forma:'Efectivo'},
+    {fecha:'03/05',sem:18,cat:'Salud',subcat:'Medicamentos',desc:'Ardosson',mon:'MXN',orig:83,mxn:83,forma:'Efectivo'},
+    {fecha:'03/05',sem:18,cat:'Hogar',subcat:'Alimentos',desc:'Espagueti',mon:'MXN',orig:200,mxn:200,forma:'Efectivo'},
+    {fecha:'03/05',sem:18,cat:'Salud',subcat:'Medicamentos',desc:'Ardosson 2',mon:'MXN',orig:100,mxn:100,forma:'Efectivo'},
+    {fecha:'04/05',sem:19,cat:'Personal',subcat:'Sophia',desc:'Semana Sophia',mon:'MXN',orig:200,mxn:200,forma:'Efectivo'},
+    {fecha:'04/05',sem:19,cat:'Hogar',subcat:'Alimentos',desc:'Leche, cereal, agua',mon:'MXN',orig:258,mxn:258,forma:'Efectivo'},
+    {fecha:'04/05',sem:19,cat:'Personal',subcat:'Sophia',desc:'Taza Hedwig',mon:'MXN',orig:91,mxn:91,forma:'Efectivo'},
+    {fecha:'05/05',sem:19,cat:'Hogar',subcat:'Alimentos',desc:'Pizza Little Caesars',mon:'MXN',orig:270,mxn:270,forma:'Efectivo'},
+    {fecha:'05/05',sem:19,cat:'Hogar',subcat:'Servicios',desc:'Luz bimestral local Masa',mon:'MXN',orig:2142,mxn:2142,forma:'Efectivo'},
+    {fecha:'06/05',sem:19,cat:'Hogar',subcat:'Alimentos',desc:'Comida Paloma',mon:'MXN',orig:250,mxn:250,forma:'Efectivo'},
+    {fecha:'06/05',sem:19,cat:'Hogar',subcat:'Servicios',desc:'Internet cajita',mon:'MXN',orig:250,mxn:250,forma:'Transferencia'},
+    {fecha:'06/05',sem:19,cat:'Personal',subcat:'Julio',desc:'Diversión Julio',mon:'MXN',orig:300,mxn:300,forma:'Efectivo'},
+    {fecha:'06/05',sem:19,cat:'Financiero',subcat:'Tarjeta crédito',desc:'Tarjeta BBVA',mon:'MXN',orig:1700,mxn:1700,forma:'Transferencia'},
+    {fecha:'06/05',sem:19,cat:'Financiero',subcat:'Tarjeta crédito',desc:'Tarjeta NU',mon:'MXN',orig:1712,mxn:1712,forma:'Transferencia'},
+    {fecha:'07/05',sem:19,cat:'Personal',subcat:'Julio',desc:'Café Oxxo',mon:'MXN',orig:33,mxn:33,forma:'Efectivo'},
+    {fecha:'07/05',sem:19,cat:'Hogar',subcat:'Alimentos',desc:'Desayuno Marlene y Julio',mon:'MXN',orig:250,mxn:250,forma:'Efectivo'},
+    {fecha:'07/05',sem:19,cat:'Hogar',subcat:'Alimentos',desc:'Desayuno Sophia',mon:'MXN',orig:100,mxn:100,forma:'Efectivo'},
+    {fecha:'07/05',sem:19,cat:'Hogar',subcat:'Alimentos',desc:'Coca cola 2lts',mon:'MXN',orig:60,mxn:60,forma:'Efectivo'},
+    {fecha:'07/05',sem:19,cat:'Hogar',subcat:'Mascotas',desc:'Chicharrones Zeus',mon:'MXN',orig:50,mxn:50,forma:'Efectivo'},
+    {fecha:'07/05',sem:19,cat:'Hogar',subcat:'Alimentos',desc:'Comida china Sophia',mon:'MXN',orig:100,mxn:100,forma:'Efectivo'},
+    {fecha:'07/05',sem:19,cat:'Hogar',subcat:'Artículos hogar',desc:'Papitas y cartas',mon:'MXN',orig:250,mxn:250,forma:'Efectivo'},
+    {fecha:'08/05',sem:19,cat:'Combustible',subcat:'Gasolina',desc:'Gasolina extra viaje',mon:'USD',orig:15,mxn:253.5,forma:'Efectivo'},
+    {fecha:'08/05',sem:19,cat:'Hogar',subcat:'Alimentos',desc:'Tacos Marlene',mon:'MXN',orig:200,mxn:200,forma:'Efectivo'},
+    {fecha:'08/05',sem:19,cat:'Hogar',subcat:'Alimentos',desc:'Coca cola 2lts',mon:'MXN',orig:55,mxn:55,forma:'Efectivo'},
+    {fecha:'08/05',sem:19,cat:'Hogar',subcat:'Alimentos',desc:'Propina Lupillo',mon:'MXN',orig:10,mxn:10,forma:'Efectivo'},
+    {fecha:'08/05',sem:19,cat:'Salud',subcat:'Medicamentos',desc:'Benadryl y loratadina',mon:'MXN',orig:150,mxn:150,forma:'Efectivo'},
+    {fecha:'08/05',sem:19,cat:'Teléfono',subcat:'Celular',desc:'Telcel Julio',mon:'MXN',orig:799,mxn:799,forma:'Transferencia'},
+    {fecha:'09/05',sem:19,cat:'Hogar',subcat:'Varios',desc:'Oxxo sábado',mon:'MXN',orig:500,mxn:500,forma:'Efectivo'},
+    {fecha:'09/05',sem:19,cat:'Teléfono',subcat:'Celular',desc:'Telcel Marlene',mon:'MXN',orig:1176.12,mxn:1176.12,forma:'Transferencia'},
+    {fecha:'09/05',sem:19,cat:'Educación',subcat:'Colegiatura',desc:'Colegiatura Sophia',mon:'MXN',orig:4345,mxn:4345,forma:'Transferencia'},
+    {fecha:'10/05',sem:19,cat:'Hogar',subcat:'Varios',desc:'Oxxo domingo',mon:'MXN',orig:25,mxn:25,forma:'Efectivo'},
+    {fecha:'10/05',sem:19,cat:'Hogar',subcat:'Alimentos',desc:'Desayuno Marlene y Julio',mon:'MXN',orig:400,mxn:400,forma:'Efectivo'},
+    {fecha:'10/05',sem:19,cat:'Hogar',subcat:'Alimentos',desc:'Desayuno Sophia',mon:'MXN',orig:70,mxn:70,forma:'Efectivo'},
+    {fecha:'10/05',sem:19,cat:'Hogar',subcat:'Festividad',desc:'Comida Día de las Madres',mon:'MXN',orig:850,mxn:850,forma:'Efectivo'},
+    {fecha:'10/05',sem:19,cat:'Personal',subcat:'Marlene',desc:'Flores Día de las Madres',mon:'MXN',orig:500,mxn:500,forma:'Efectivo'},
+    {fecha:'10/05',sem:19,cat:'Combustible',subcat:'Gasolina',desc:'Gasolina Jetta México',mon:'MXN',orig:500,mxn:500,forma:'Efectivo'},
+    {fecha:'11/05',sem:20,cat:'Hogar',subcat:'Alimentos',desc:'Desayuno viaje USA familia',mon:'USD',orig:20,mxn:336,forma:'Efectivo'},
+    {fecha:'11/05',sem:20,cat:'Hogar',subcat:'Alimentos',desc:'Tacos al pastor casa',mon:'MXN',orig:400,mxn:400,forma:'Efectivo'},
+    {fecha:'11/05',sem:20,cat:'Hogar',subcat:'Mascotas',desc:'Croquetas perro 24.73 USD',mon:'USD',orig:24.73,mxn:415.46,forma:'Efectivo'},
+    {fecha:'11/05',sem:20,cat:'Diversión',subcat:'Sophia',desc:'Monitos Walmart Sophia 7.43 USD',mon:'USD',orig:7.43,mxn:124.82,forma:'Efectivo'},
+    {fecha:'11/05',sem:20,cat:'Hogar',subcat:'Herramienta',desc:'Herramienta promoción 18 USD',mon:'USD',orig:18,mxn:302.4,forma:'Efectivo'},
+    {fecha:'11/05',sem:20,cat:'Hogar',subcat:'Artículos hogar',desc:'Downy Walmart 14 USD',mon:'USD',orig:14,mxn:235.2,forma:'Efectivo'},
+    {fecha:'11/05',sem:20,cat:'Hogar',subcat:'Artículos hogar',desc:'Botellas agua Walmart 6.02 USD',mon:'USD',orig:6.02,mxn:101.14,forma:'Efectivo'},
+    {fecha:'11/05',sem:20,cat:'Hogar',subcat:'Artículos hogar',desc:'Aromatizantes 6.41 USD',mon:'USD',orig:6.41,mxn:107.69,forma:'Efectivo'},
+    {fecha:'12/05',sem:20,cat:'Hogar',subcat:'Alimentos',desc:'Lunch Sophia',mon:'MXN',orig:180,mxn:180,forma:'Efectivo'},
+    {fecha:'12/05',sem:20,cat:'Combustible',subcat:'Gasolina',desc:'Gasolina Jetta México',mon:'MXN',orig:400,mxn:400,forma:'Efectivo'},
+    {fecha:'12/05',sem:20,cat:'Hogar',subcat:'Alimentos',desc:'Sophia McDonalds',mon:'MXN',orig:150,mxn:150,forma:'Efectivo'},
+    {fecha:'12/05',sem:20,cat:'Hogar',subcat:'Alimentos',desc:'Julio Pollo Asado',mon:'MXN',orig:220,mxn:220,forma:'Efectivo'},
+    {fecha:'12/05',sem:20,cat:'Hogar',subcat:'Alimentos',desc:'Coca Cola 2lts',mon:'MXN',orig:50,mxn:50,forma:'Efectivo'},
+    {fecha:'12/05',sem:20,cat:'Hogar',subcat:'Aseo personal',desc:'Toallas, desodorantes Benavides',mon:'MXN',orig:454,mxn:454,forma:'Efectivo'},
+    {fecha:'13/05',sem:20,cat:'Hogar',subcat:'Alimentos',desc:'Lunch Sophia',mon:'MXN',orig:150,mxn:150,forma:'Efectivo'},
+    {fecha:'13/05',sem:20,cat:'Hogar',subcat:'Alimentos',desc:'Desayuno Marlene y Julio taco fish',mon:'MXN',orig:300,mxn:300,forma:'Efectivo'},
+    {fecha:'15/05',sem:20,cat:'Hogar',subcat:'Gastos hogar',desc:'Gastos Marlene',mon:'MXN',orig:500,mxn:500,forma:'Efectivo'},
+    {fecha:'15/05',sem:20,cat:'Hogar',subcat:'Alimentos',desc:'Lunch Sophia',mon:'MXN',orig:150,mxn:150,forma:'Efectivo'},
+    {fecha:'16/05',sem:20,cat:'Hogar',subcat:'Mascotas',desc:'Chicharrones Zeus',mon:'MXN',orig:100,mxn:100,forma:'Efectivo'},
+    {fecha:'16/05',sem:20,cat:'Hogar',subcat:'Alimentos',desc:'Cena tacos pastor',mon:'MXN',orig:300,mxn:300,forma:'Efectivo'},
+    {fecha:'17/05',sem:20,cat:'Hogar',subcat:'Alimentos',desc:'Galletas y café',mon:'MXN',orig:100,mxn:100,forma:'Efectivo'},
+    {fecha:'17/05',sem:20,cat:'Hogar',subcat:'Electrónica',desc:'Cable iPhone',mon:'MXN',orig:100,mxn:100,forma:'Efectivo'},
+    {fecha:'17/05',sem:20,cat:'Personal',subcat:'Julio',desc:'Cartitas del mundial',mon:'MXN',orig:500,mxn:500,forma:'Efectivo'},
+    {fecha:'17/05',sem:20,cat:'Hogar',subcat:'Alimentos',desc:'Comida Sophia y Julio',mon:'MXN',orig:700,mxn:700,forma:'Efectivo'},
+    {fecha:'18/05',sem:20,cat:'Hogar',subcat:'Alimentos',desc:'Comida Julio',mon:'MXN',orig:300,mxn:300,forma:'Efectivo'},
+    {fecha:'19/05',sem:21,cat:'Hogar',subcat:'Alimentos',desc:'Leche 3.42 USD',mon:'USD',orig:3.42,mxn:57.46,forma:'Efectivo'},
+    {fecha:'19/05',sem:21,cat:'Hogar',subcat:'Alimentos',desc:'Cereal 5.08 USD',mon:'USD',orig:5.08,mxn:85.34,forma:'Efectivo'},
+    {fecha:'19/05',sem:21,cat:'Personal',subcat:'Sophia',desc:'Juguete Harry Potter 2.72 USD',mon:'USD',orig:2.72,mxn:45.7,forma:'Efectivo'},
+    {fecha:'19/05',sem:21,cat:'Personal',subcat:'Sophia',desc:'Ruffles Sophia 5 USD',mon:'USD',orig:5,mxn:84,forma:'Efectivo'},
+    {fecha:'19/05',sem:21,cat:'Hogar',subcat:'Vestimenta',desc:'Calcetas Marlene 13.10 USD',mon:'USD',orig:13.1,mxn:220.08,forma:'Efectivo'},
+    {fecha:'19/05',sem:21,cat:'Hogar',subcat:'Higiene',desc:'Toallas para la cara 2.75 USD',mon:'USD',orig:2.75,mxn:46.2,forma:'Efectivo'},
+    {fecha:'19/05',sem:21,cat:'Hogar',subcat:'Artículos hogar',desc:'Espejo Sophia 8.12 USD',mon:'USD',orig:8.12,mxn:136.42,forma:'Efectivo'},
+    {fecha:'19/05',sem:21,cat:'Hogar',subcat:'Limpieza',desc:'Aspiradora chica 20.08 USD',mon:'USD',orig:20.08,mxn:337.34,forma:'Efectivo'},
+    {fecha:'19/05',sem:21,cat:'Hogar',subcat:'Alimentos',desc:'Comida tacos Jass',mon:'MXN',orig:400,mxn:400,forma:'Efectivo'},
+    {fecha:'19/05',sem:21,cat:'Hogar',subcat:'Mascotas',desc:'Comida Zeus chicharrones',mon:'MXN',orig:100,mxn:100,forma:'Efectivo'},
+    {fecha:'20/05',sem:21,cat:'Hogar',subcat:'Alimentos',desc:'Lunch Sophia',mon:'MXN',orig:120,mxn:120,forma:'Efectivo'},
+    {fecha:'20/05',sem:21,cat:'Hogar',subcat:'Alimentos',desc:'Comida Carl Jr.',mon:'MXN',orig:700,mxn:700,forma:'Efectivo'},
+    {fecha:'21/05',sem:21,cat:'Hogar',subcat:'Alimentos',desc:'Lunch Sophia',mon:'MXN',orig:120,mxn:120,forma:'Efectivo'},
+    {fecha:'21/05',sem:21,cat:'Hogar',subcat:'Alimentos',desc:'Café Julio',mon:'MXN',orig:25,mxn:25,forma:'Efectivo'},
+    {fecha:'21/05',sem:21,cat:'Educación',subcat:'Papelería',desc:'Cartulina Office Depot',mon:'MXN',orig:120,mxn:120,forma:'Efectivo'},
+    {fecha:'21/05',sem:21,cat:'Hogar',subcat:'Papelería',desc:'Cinta doble cara',mon:'MXN',orig:169,mxn:169,forma:'Efectivo'},
+    {fecha:'21/05',sem:21,cat:'Hogar',subcat:'Electrónica',desc:'USB 64 GB',mon:'MXN',orig:179,mxn:179,forma:'Efectivo'},
+    {fecha:'21/05',sem:21,cat:'Hogar',subcat:'Alimentos',desc:'Desayuno',mon:'MXN',orig:300,mxn:300,forma:'Efectivo'},
+  ],
+};
+
+function sumaGrupo(arr){ return arr.reduce((a,b)=>a+(b.mxn||0),0); }
+
+// Totales Mayo precalculados (referencia)
+const MAY_USA_EGRE  = sumaGrupo(EGRESOS_MAY.usa);
+const MAY_MASA_EGRE = sumaGrupo(EGRESOS_MAY.masa);
+const MAY_HOG_EGRE  = sumaGrupo(EGRESOS_MAY.hogar);
+
+function renderHogar(){
+  // Tabs — meses con datos en DA = ENE-MAY
+  document.getElementById('mes-tabs-hogar').innerHTML = HOGAR_MESES.map(m=>{
+    const da = DA.find(d=>d.mes===m);
+    const hasData = da && (da.vusa>0 || da.vmasa>0);
+    return `<button class="mes-btn ${hasData?'has-data':''} ${m===mesHogar?'active':''}" onclick="selHogar('${m}',this)">${m}${hasData?'':' ⏳'}</button>`;
+  }).join('');
+
+  const da = DA.find(d=>d.mes===mesHogar);
+  if(!da || (da.vusa===0 && da.vmasa===0)){
+    document.getElementById('kpi-hogar').innerHTML = `<div class="alert b" style="grid-column:1/-1"><strong>⏳ ${mesHogar} — Sin datos aún</strong>Captura tus viajes y ventas del mes. Aquí aparecerá el resumen automáticamente.</div>`;
+    document.getElementById('cat-egresos').innerHTML = '';
+    return;
+  }
+
+  // ── Gastos capturados por el usuario este mes ──
+  const mesIdx = HOGAR_MESES.indexOf(mesHogar);
+  const capsMes = capturas.filter(c=>{
+    if(c.tipo!=='hogar'||!c.fecha) return false;
+    return parseInt(c.fecha.split('-')[1])-1 === mesIdx;
+  });
+
+  // Para Mayo usamos datos reales hardcoded + capturas usuario
+  // Para ENE-ABR usamos DATOS_MES simulacro + capturas usuario
+  // Para JUN+ solo capturas
+  const esMAY = mesHogar==='MAY';
+  const datosMes = DATOS_MES[mesHogar] || null;
+
+  // ── Gastos USA del mes ──
+  const gasUSACap  = capsMes.filter(c=>c.cat&&c.cat.startsWith('🌽 USA'));
+  const gasUSABase = esMAY ? EGRESOS_MAY.usa : (datosMes ? datosMes.egresos.usa : []);
+  const gasUSABase_tot = gasUSABase.reduce((a,b)=>a+(b.mxn||b.monto||0),0);
+  const gasUSATot  = gasUSABase_tot + gasUSACap.reduce((a,b)=>a+(b.mxn||b.monto||0),0);
+
+  // ── Gastos Masa del mes ──
+  const gasMasaCap  = capsMes.filter(c=>c.cat&&c.cat.startsWith('🫙 Masa'));
+  const gasMasaBase = esMAY ? EGRESOS_MAY.masa : (datosMes ? datosMes.egresos.masa : []);
+  const gasMasaBase_tot = gasMasaBase.reduce((a,b)=>a+(b.mxn||b.monto||0),0);
+  const gasMasaTot  = gasMasaBase_tot + gasMasaCap.reduce((a,b)=>a+(b.mxn||b.monto||0),0);
+
+  // ── Gastos Hogar/Personal del mes ──
+  const gasHogCap   = capsMes.filter(c=>!c.cat||(!(c.cat.startsWith('🌽 USA'))&&!(c.cat.startsWith('🫙 Masa'))));
+  const gasHogBase  = esMAY ? EGRESOS_MAY.hogar : (datosMes ? datosMes.egresos.hogar : []);
+  const gasHogBase_tot = gasHogBase.reduce((a,b)=>a+(b.mxn||b.monto||0),0);
+  const gasHogTot   = gasHogBase_tot + gasHogCap.reduce((a,b)=>a+(b.mxn||b.monto||0),0);
+
+  const totalEgr = gasUSATot + gasMasaTot + gasHogTot;
+  const totalIng = da.vusa + da.vmasa; // venta bruta
+  const utilTotal = da.uusa + da.umasa;
+
+  // ── KPIs ──
+  document.getElementById('kpi-hogar').innerHTML = `
+    <div class="kpi blu"><div class="kt">🌽 Venta USA ${mesHogar}</div><div class="kv">${fm(da.vusa)}</div><div class="ks">Util: +${fm(da.uusa)}</div></div>
+    <div class="kpi lv"><div class="kt">🫙 Venta Masa ${mesHogar}</div><div class="kv">${fm(da.vmasa)}</div><div class="ks">Util: +${fm(da.umasa)}</div></div>
+    <div class="kpi ${utilTotal>=0?'g':'red'}"><div class="kt">💰 Utilidad Total</div><div class="kv">${utilTotal>=0?'+':''}${fm(utilTotal)}</div><div class="ks">Ambos negocios</div></div>
+    <div class="kpi red"><div class="kt">🏠 Gastos Familia</div><div class="kv">${fm(totalEgr)}</div><div class="ks">USA+Masa+Hogar</div></div>`;
+
+  // ── Sección USA ──
+  const usaGrupos = {};
+  [...gasUSABase,...gasUSACap].forEach(g=>{
+    const k=g.subcat?`${g.cat} · ${g.subcat}`:g.cat||'Otros'; usaGrupos[k]=(usaGrupos[k]||0)+(g.mxn||g.monto||0);
+  });
+  const usaMaxTot = Object.values(usaGrupos).reduce((a,b)=>a+b,0)||1;
+
+  // ── Sección Masa ──
+  const masaGrupos = {};
+  [...gasMasaBase,...gasMasaCap].forEach(g=>{
+    const k=g.subcat?`${g.cat} · ${g.subcat}`:g.cat||'Otros'; masaGrupos[k]=(masaGrupos[k]||0)+(g.mxn||g.monto||0);
+  });
+  const masaMaxTot = Object.values(masaGrupos).reduce((a,b)=>a+b,0)||1;
+
+  // ── Sección Hogar/Personal ──
+  const hogGrupos = {};
+  [...gasHogBase,...gasHogCap].forEach(g=>{
+    const k=g.subcat?`${g.cat} · ${g.subcat}`:g.cat||'Hogar'; hogGrupos[k]=(hogGrupos[k]||0)+(g.mxn||g.monto||0);
+  });
+  const hogMaxTot = Object.values(hogGrupos).reduce((a,b)=>a+b,0)||1;
+
+  const barGroup=(obj,total,color)=>Object.entries(obj).map(([n,m])=>`
+    <div style="margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px">
+        <span style="font-weight:600">${n}</span>
+        <span style="font-weight:700;color:${color}">${fm(m)} <span style="color:var(--muted);font-weight:400">(${Math.round(m/total*100)}%)</span></span>
+      </div>
+      <div class="prog-bar-wrap"><div class="prog-bar" style="width:${Math.round(m/total*100)}%;background:${color}"></div></div>
+    </div>`).join('');
+
+  const pendMsg = `<p style="color:var(--muted);font-size:12px;text-align:center;padding:12px 0">⏳ Captura gastos en ✏️ Capturar → Gasto del Hogar</p>`;
+
+  document.getElementById('cat-egresos').innerHTML = `
+
+    <div style="background:#e7f5ff;border-radius:13px;padding:14px;margin-bottom:12px;border-left:4px solid var(--a)">
+      <div style="font-weight:800;font-size:13px;color:var(--a);margin-bottom:10px">🌽 NEGOCIO USA — Gastos ${mesHogar} · ${fm(gasUSATot)}</div>
+      ${gasUSATot>0 ? barGroup(usaGrupos,usaMaxTot,'var(--a)') : pendMsg}
+    </div>
+
+    <div style="background:#e8f5e9;border-radius:13px;padding:14px;margin-bottom:12px;border-left:4px solid var(--v)">
+      <div style="font-weight:800;font-size:13px;color:var(--v);margin-bottom:10px">🫙 NEGOCIO MASA — Gastos ${mesHogar} · ${fm(gasMasaTot)}</div>
+      ${gasMasaTot>0 ? barGroup(masaGrupos,masaMaxTot,'var(--v)') : pendMsg}
+    </div>
+
+    <div style="background:#fff8e1;border-radius:13px;padding:14px;margin-bottom:12px;border-left:4px solid var(--d)">
+      <div style="font-weight:800;font-size:13px;color:#92400e;margin-bottom:10px">🏠 HOGAR Y PERSONAL — Gastos ${mesHogar} · ${fm(gasHogTot)}</div>
+      ${gasHogTot>0 ? barGroup(hogGrupos,hogMaxTot,'var(--dm)') : pendMsg}
+    </div>
+
+    <div style="background:var(--rb);border-radius:13px;padding:12px 14px;border-left:4px solid var(--r)">
+      <div style="display:flex;justify-content:space-between;font-weight:800;font-size:13px">
+        <span style="color:var(--r)">💸 TOTAL GASTOS ${mesHogar}</span>
+        <span style="color:var(--r)">${fm(totalEgr)}</span>
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px">
+        USA: ${fm(gasUSATot)} · Masa: ${fm(gasMasaTot)} · Hogar: ${fm(gasHogTot)}
+      </div>
+    </div>`;
+
+  // ── Calcular ingresos del mes para las gráficas ──
+  const esMAY2 = mesHogar==='MAY';
+  const datosMes2 = DATOS_MES[mesHogar] || null;
+  const mesIdx2 = HOGAR_MESES.indexOf(mesHogar);
+  let ingUSA=0, ingMasa=0, ingOtros=0;
+  if(esMAY2){
+    INGRESOS_MAY.forEach(r=>{
+      if(r.fuente.includes('USA')) ingUSA+=r.mxn;
+      else if(r.fuente.includes('Masa')) ingMasa+=r.mxn;
+      else ingOtros+=r.mxn;
+    });
+  } else if(datosMes2){
+    datosMes2.ingresos.forEach(r=>{
+      if(r.fuente&&r.fuente.includes('USA')) ingUSA+=r.mxn;
+      else if(r.fuente&&r.fuente.includes('Masa')) ingMasa+=r.mxn;
+      else ingOtros+=r.mxn;
+    });
+  } else {
+    // de capturas del usuario
+    const capIng = capturas.filter(c=>c.tipo==='usa'||c.tipo==='masa');
+    capIng.filter(c=>c.tipo==='usa'&&c.fecha&&parseInt(c.fecha.split('-')[1])-1===mesIdx2)
+          .forEach(c=>ingUSA+=(c.ingMXN||0));
+    capIng.filter(c=>c.tipo==='masa'&&c.fecha&&parseInt(c.fecha.split('-')[1])-1===mesIdx2)
+          .forEach(c=>ingMasa+=(c.ing||0));
+  }
+  renderGraficas(gasUSATot, gasMasaTot, gasHogTot, ingUSA, ingMasa, ingOtros);
+}
+
+// ══════════════════════════════════════════
+// ── GRÁFICAS CIRCULARES (DONUT) ──
+// ══════════════════════════════════════════
+
+function donutSVG(segmentos, titulo, centro, color_centro){
+  // segmentos = [{label, valor, color}]
+  const total = segmentos.reduce((a,b)=>a+b.valor,0);
+  if(total===0) return `
+    <div style="text-align:center;padding:10px">
+      <svg viewBox="0 0 120 120" width="120" height="120">
+        <circle cx="60" cy="60" r="46" fill="none" stroke="#e5e7eb" stroke-width="18"/>
+        <text x="60" y="56" text-anchor="middle" font-size="10" fill="#9ca3af" font-family="Outfit,sans-serif">Sin datos</text>
+        <text x="60" y="70" text-anchor="middle" font-size="8" fill="#9ca3af" font-family="Outfit,sans-serif">⏳</text>
+      </svg>
+      <div style="font-size:11px;font-weight:700;color:#6b7280;margin-top:4px">${titulo}</div>
+    </div>`;
+
+  const R = 46, cx = 60, cy = 60, stroke = 18;
+  const circ = 2 * Math.PI * R; // circunferencia
+
+  let paths = '';
+  let offset = -circ / 4; // empieza arriba (12 en punto)
+
+  segmentos.forEach(s => {
+    const pct = s.valor / total;
+    const dash = pct * circ;
+    const gap  = circ - dash;
+    paths += `<circle cx="${cx}" cy="${cy}" r="${R}"
+      fill="none" stroke="${s.color}" stroke-width="${stroke}"
+      stroke-dasharray="${dash.toFixed(2)} ${gap.toFixed(2)}"
+      stroke-dashoffset="${offset.toFixed(2)}"
+      style="transition:stroke-dasharray .5s ease"/>`;
+    offset -= dash;
+  });
+
+  // Leyenda debajo
+  const leyenda = segmentos.map(s=>`
+    <div style="display:flex;align-items:center;gap:5px;margin-bottom:3px">
+      <div style="width:10px;height:10px;border-radius:50%;background:${s.color};flex-shrink:0"></div>
+      <div style="font-size:10px;color:#374151;flex:1;line-height:1.2">${s.label}</div>
+      <div style="font-size:10px;font-weight:700;color:#374151">${Math.round(s.valor/total*100)}%</div>
+    </div>`).join('');
+
+  return `
+    <div style="text-align:center">
+      <svg viewBox="0 0 120 120" width="110" height="110" style="display:block;margin:0 auto">
+        ${paths}
+        <text x="${cx}" y="${cy-6}" text-anchor="middle" font-size="9" fill="${color_centro||'#374151'}" font-family="Outfit,sans-serif" font-weight="700">${centro}</text>
+        <text x="${cx}" y="${cy+8}" text-anchor="middle" font-size="8" fill="#6b7280" font-family="Outfit,sans-serif">total</text>
+      </svg>
+      <div style="font-size:11px;font-weight:800;color:#374151;margin:4px 0 6px">${titulo}</div>
+      <div style="text-align:left;padding:0 4px">${leyenda}</div>
+    </div>`;
+}
+
+function renderGraficas(gasUSATot, gasMasaTot, gasHogTot, ingUSA, ingMasa, ingOtros){
+  const el = document.getElementById('graficas-wrap');
+  if(!el) return;
+  document.getElementById('graf-mes-label').textContent = mesHogar;
+
+  const totEgr = gasUSATot + gasMasaTot + gasHogTot;
+  const totIng = ingUSA + ingMasa + ingOtros;
+
+  // ── Dona 1: INGRESOS por fuente ──
+  const segIng = [
+    {label:'🌽 Venta USA',    valor:ingUSA,   color:'#1971c2'},
+    {label:'🫙 Venta Masa',   valor:ingMasa,  color:'#1a5c2e'},
+    {label:'💼 Otros',        valor:ingOtros, color:'#f59f00'},
+  ].filter(s=>s.valor>0);
+
+  // ── Dona 2: GASTOS por negocio ──
+  const segEgr = [
+    {label:'🌽 Negocio USA',  valor:gasUSATot,  color:'#1971c2'},
+    {label:'🫙 Negocio Masa', valor:gasMasaTot, color:'#1a5c2e'},
+    {label:'🏠 Hogar/Personal',valor:gasHogTot, color:'#f59f00'},
+  ].filter(s=>s.valor>0);
+
+  // ── Dona 3: GASTOS HOGAR detalle (de EGRESOS_MAY.hogar agrupado por cat) ──
+  const hogBase = mesHogar==='MAY' ? EGRESOS_MAY.hogar : [];
+  const mesIdx  = HOGAR_MESES.indexOf(mesHogar);
+  const hogCap  = capturas.filter(c=>c.tipo==='hogar'&&c.fecha&&parseInt(c.fecha.split('-')[1])-1===mesIdx&&(!c.cat||(!c.cat.startsWith('🌽 USA')&&!c.cat.startsWith('🫙 Masa'))));
+  const hogMap  = {};
+  const HOG_COLORS = ['#f59f00','#e03131','#7048e8','#1971c2','#2f9e44','#e8590c','#1a5c2e','#ae3ec9','#0c8599','#5c7cfa'];
+  [...hogBase,...hogCap].forEach(g=>{
+    const k = g.cat||'Hogar'; hogMap[k]=(hogMap[k]||0)+(g.mxn||g.monto||0);
+  });
+  const segHog = Object.entries(hogMap)
+    .sort((a,b)=>b[1]-a[1]).slice(0,8)
+    .map(([k,v],i)=>({label:k,valor:v,color:HOG_COLORS[i%HOG_COLORS.length]}))
+    .filter(s=>s.valor>0);
+
+  // ── Dona 4: INGRESOS vs GASTOS (balance) ──
+  const saldo = totIng - totEgr;
+  const segBal = saldo >= 0
+    ? [{label:'💰 Disponible',valor:saldo,color:'#2f9e44'},{label:'💸 Gastos',valor:totEgr,color:'#e03131'}]
+    : [{label:'💸 Gastos',valor:totEgr,color:'#e03131'},{label:'❌ Déficit',valor:Math.abs(saldo),color:'#f03e3e'}];
+
+  el.innerHTML =
+    `<div style="background:#fff;border-radius:14px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      ${donutSVG(segIng, '💰 De dónde viene el dinero', fm(totIng), '#1971c2')}
+    </div>` +
+    `<div style="background:#fff;border-radius:14px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      ${donutSVG(segEgr, '💸 En qué se va el dinero', fm(totEgr), '#e03131')}
+    </div>` +
+    `<div style="background:#fff;border-radius:14px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      ${donutSVG(segHog, '🏠 Gastos del hogar', fm(gasHogTot), '#f59f00')}
+    </div>` +
+    `<div style="background:#fff;border-radius:14px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      ${donutSVG(segBal, saldo>=0?'✅ Balance del mes':'⚠️ Balance del mes', (saldo>=0?'+':'')+fm(saldo), saldo>=0?'#2f9e44':'#e03131')}
+    </div>`;
+}
+
+function selHogar(m,btn){
+  mesHogar=m;
+  document.querySelectorAll('#mes-tabs-hogar .mes-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderHogar();
+  renderGastosHogar();
+}
+
+function renderGastosHogar(){
+  ['usa','masa','hog'].forEach(s=>{
+    const el=document.getElementById(`label-${s}-cap`);
+    if(el) el.textContent=mesHogar;
+  });
+  document.getElementById('hogar-mes-label').textContent=mesHogar;
+
+  const mesIdx = HOGAR_MESES.indexOf(mesHogar);
+  const esMAY = mesHogar==='MAY';
+  const datosMes = DATOS_MES[mesHogar] || null;
+  const userColor = q=>q==='Marlene'?'var(--p)':'var(--v)';
+
+  const makeRow = (g,idx,isDel)=>{
+    const quien=g.quien||'';
+    const idxReal=isDel?capturas.indexOf(g):null;
+    return `<div class="reg-item">
+      <div class="reg-left">
+        <span class="reg-emoji">${g.cat?.includes('USA')?'🌽':g.cat?.includes('Masa')?'🫙':'🏠'}</span>
+        <div class="reg-info">
+          <div class="ri-name">${g.desc}${quien?` <span style="font-size:10px;color:${userColor(quien)};font-weight:700">${quien==='Marlene'?'👩':'👨'} ${quien}</span>`:''}
+          </div>
+          <div class="ri-sub">${g.fecha} · ${g.cat||''} · ${g.forma||''}</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <span class="reg-amount neg">-${fm(g.mxn||g.monto||0)} MXN${g.mon==="USD"?` ($${g.orig} USD)`:""}</span>
+        ${isDel?`<button class="reg-del" onclick="borrarHogar(${idxReal})">×</button>`:''}
+      </div>
+    </div>`;
+  };
+
+  // Capturas del usuario este mes
+  const capsMes = capturas.filter(c=>{
+    if(c.tipo!=='hogar'||!c.fecha) return false;
+    return parseInt(c.fecha.split('-')[1])-1 === mesIdx;
+  });
+
+  // ── USA ──
+  const usaBase = esMAY ? EGRESOS_MAY.usa : (datosMes ? datosMes.egresos.usa : []);
+  const usaCap  = capsMes.filter(c=>c.cat&&c.cat.startsWith('🌽 USA'));
+  const usaTotal= [...usaBase,...usaCap];
+  document.getElementById('lista-usa-hogar').innerHTML = usaTotal.length
+    ? usaBase.map(g=>makeRow(g,0,false)).join('')+usaCap.map(g=>makeRow(g,0,true)).join('')
+      + `<div style="text-align:right;font-size:12px;font-weight:800;color:var(--a);padding:8px 0 0">TOTAL: ${fm(usaTotal.reduce((a,b)=>a+(b.mxn||b.monto||0),0))}</div>`
+    : '<p style="color:var(--muted);font-size:12px;text-align:center;padding:10px">Sin capturas para este mes.</p>';
+
+  // ── MASA ──
+  const masaBase = esMAY ? EGRESOS_MAY.masa : (datosMes ? datosMes.egresos.masa : []);
+  const masaCap  = capsMes.filter(c=>c.cat&&c.cat.startsWith('🫙 Masa'));
+  const masaTotal= [...masaBase,...masaCap];
+  document.getElementById('lista-masa-hogar').innerHTML = masaTotal.length
+    ? masaBase.map(g=>makeRow(g,0,false)).join('')+masaCap.map(g=>makeRow(g,0,true)).join('')
+      + `<div style="text-align:right;font-size:12px;font-weight:800;color:var(--v);padding:8px 0 0">TOTAL: ${fm(masaTotal.reduce((a,b)=>a+(b.mxn||b.monto||0),0))}</div>`
+    : '<p style="color:var(--muted);font-size:12px;text-align:center;padding:10px">Sin capturas para este mes.</p>';
+
+  // ── HOGAR ──
+  const hogBase = esMAY ? EGRESOS_MAY.hogar : (datosMes ? datosMes.egresos.hogar : []);
+  const hogCap  = capsMes.filter(c=>!c.cat||(!(c.cat.startsWith('🌽 USA'))&&!(c.cat.startsWith('🫙 Masa'))));
+  const hogTotal= [...hogBase,...hogCap];
+  document.getElementById('lista-hog-hogar').innerHTML = hogTotal.length
+    ? hogBase.map(g=>makeRow(g,0,false)).join('')+hogCap.map(g=>makeRow(g,0,true)).join('')
+      + `<div style="text-align:right;font-size:12px;font-weight:800;color:#92400e;padding:8px 0 0">TOTAL: ${fm(hogTotal.reduce((a,b)=>a+(b.mxn||b.monto||0),0))}</div>`
+    : '<p style="color:var(--muted);font-size:12px;text-align:center;padding:10px">Sin capturas para este mes.</p>';
+}
+
+function borrarHogar(idx){
+  capturas.splice(idx,1);
+  localStorage.setItem('er_cap2026',JSON.stringify(capturas));
+  renderHogar();
+  renderGastosHogar();
+}
+
+// ── CLIENTES ──
+function filtrarClientes(){
+  const q=(document.getElementById('busca-cli')?.value||'').toLowerCase();
+  const lista=q?CLIENTES_DATA.filter(c=>c.n.toLowerCase().includes(q)||c.zona.toLowerCase().includes(q)):CLIENTES_DATA;
+  const sorted=[...lista].sort((a,b)=>b.mayo-a.mayo);
+  document.getElementById('lista-clientes').innerHTML=sorted.map(c=>{
+    const cls=c.tipo==='MAYOREO'?'may':c.tipo==='PUBLICO'?'pub':'';
+    const badge=c.tipo==='MAYOREO'?'<span class="badge d">Mayoreo</span>':c.tipo==='PUBLICO'?'<span class="badge r">Público</span>':'<span class="badge g">Cliente</span>';
+    return `<div class="cli-card ${cls}">
+      <div class="cli-left"><div class="cn">${c.n} ${badge}</div><div class="cs">📍 ${c.zona}</div></div>
+      <div class="cli-right">${c.mayo>0?`<div class="cv">$${c.mayo}</div><div class="cu">USD · Mayo</div>`:'<div class="cu">Sin datos Mayo</div>'}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── ANUAL ──
+function renderAnual(){
+  let tv=0,tu=0,tvm=0,tum=0;
+  let rows='';
+  DA.forEach(d=>{
+    const ut=d.uusa+d.umasa, tot=d.vusa+d.vmasa, pm=tot>0?ut/tot*100:0;
+    let cls=''; if(ut<0) cls='tr-lose'; else if(pm>=30) cls='tr-win';
+    tv+=d.vusa; tu+=d.uusa; tvm+=d.vmasa; tum+=d.umasa;
+    rows+=`<tr class="${cls}">
+      <td><strong>${d.mes}</strong></td>
+      <td class="num pos">${fm(d.vusa)}</td>
+      <td class="num ${d.uusa>=0?'pos':'neg'}">${d.uusa>=0?'+':'-'}${fm(Math.abs(d.uusa))}</td>
+      <td class="num ${d.pusa>=20?'pos':d.pusa>=0?'':'neg'}">${fp(d.pusa)}</td>
+      <td class="num pos">${fm(d.vmasa)}</td>
+      <td class="num ${d.umasa>=0?'pos':'neg'}">${d.umasa>=0?'+':'-'}${fm(Math.abs(d.umasa))}</td>
+      <td class="num ${d.pmasa>=20?'pos':''}">${fp(d.pmasa)}</td>
+      <td class="num ${(d.uusa+d.umasa)>=0?'pos':'neg'}"><strong>${(d.uusa+d.umasa)>=0?'+':'-'}${fm(Math.abs(d.uusa+d.umasa))}</strong></td>
+    </tr>`;
+  });
+  rows+=`<tr class="tr-tot"><td>TOTAL</td><td class="num">${fm(tv)}</td><td class="num">${fm(tu)}</td><td class="num">${fp(tu/tv*100)}</td><td class="num">${fm(tvm)}</td><td class="num">${fm(tum)}</td><td class="num">${fp(tum/tvm*100)}</td><td class="num">${fm(tu+tum)}</td></tr>`;
+  document.getElementById('tabla-anual').innerHTML=`<table><thead><tr><th>Mes</th><th>Venta USA</th><th>Util USA</th><th>% USA</th><th>Venta Masa</th><th>Util Masa</th><th>% Masa</th><th>Util Total</th></tr></thead><tbody>${rows}</tbody></table>`;
+
+  const mx=Math.max(...DA.map(d=>d.vusa+d.vmasa));
+  document.getElementById('chart-anual2').innerHTML=DA.map(d=>`
+    <div class="bar-col"><div class="bar-inner">
+      <div class="bar v" style="height:${Math.round(d.vusa/mx*100)}%" title="${d.mes} USA"></div>
+      <div class="bar d" style="height:${Math.round(d.vmasa/mx*100)}%" title="${d.mes} Masa"></div>
+    </div><div class="bar-lbl">${d.mes}</div></div>`).join('');
+
+  document.getElementById('semaforo-anual').innerHTML=DA.map(d=>{
+    const u=d.uusa+d.umasa, tot=d.vusa+d.vmasa, pm=tot>0?u/tot*100:0;
+    let cls='warn',ico='🟠'; if(u<0){cls='bad';ico='🔴';}else if(pm>=35){cls='great';ico='🟢';}else if(pm>=20){cls='good';ico='🟡';}
+    return `<div class="mes-card ${cls}">
+      <div class="mc-mes">${ico} ${d.mes}</div>
+      <div class="mc-bars">
+        <div class="mc-label"><span>USA ${fp(d.pusa)}</span><span>Masa ${fp(d.pmasa)}</span><span>Total ${fp(pm)}</span></div>
+        <div class="prog-bar-wrap"><div class="prog-bar ${u>=0?'v':'r'}" style="width:${Math.min(100,Math.abs(pm)*2.5)}%"></div></div>
+      </div>
+      <div class="mc-util ${u>=0?'pos':'neg'}">${u>=0?'+':'-'}${fm(Math.abs(u))}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── ESTADO DE RESULTADOS ──
+function renderEdR(){
+  // Solo meses con datos reales
+  const mesesActivos = DA.filter(d=>d.vusa>0||d.vmasa>0);
+  const pendientes   = DA.filter(d=>d.vusa===0&&d.vmasa===0);
+
+  // ── Totales acumulados ──
+  const totVusa  = mesesActivos.reduce((a,d)=>a+d.vusa, 0);
+  const totEusa  = mesesActivos.reduce((a,d)=>a+d.eusa, 0);
+  const totUusa  = mesesActivos.reduce((a,d)=>a+d.uusa, 0);
+  const totVmasa = mesesActivos.reduce((a,d)=>a+d.vmasa,0);
+  const totEmasa = mesesActivos.reduce((a,d)=>a+d.emasa,0);
+  const totUmasa = mesesActivos.reduce((a,d)=>a+d.umasa,0);
+  const totVtot  = totVusa  + totVmasa;
+  const totEtot  = totEusa  + totEmasa;
+  const totUtot  = totUusa  + totUmasa;
+  const totPtot  = totVtot>0 ? totUtot/totVtot*100 : 0;
+
+  // ── KPIs ──
+  document.getElementById('edr-kpis').innerHTML=`
+    <div class="kpi blu"><div class="kt">Ingresos USA acum.</div><div class="kv">${fm(totVusa)}</div><div class="ks">Ene–May 2026</div></div>
+    <div class="kpi lv"><div class="kt">Ingresos Masa acum.</div><div class="kv">${fm(totVmasa)}</div><div class="ks">Ene–May 2026</div></div>
+    <div class="kpi g"><div class="kt">Utilidad USA acum.</div><div class="kv">+${fm(totUusa)}</div><div class="ks">Margen ${fp(totVusa>0?totUusa/totVusa*100:0)}</div></div>
+    <div class="kpi lv"><div class="kt">Utilidad Masa acum.</div><div class="kv">+${fm(totUmasa)}</div><div class="ks">Margen ${fp(totVmasa>0?totUmasa/totVmasa*100:0)}</div></div>
+    <div class="kpi pur"><div class="kt">UTILIDAD TOTAL</div><div class="kv">+${fm(totUtot)}</div><div class="ks">Margen ${fp(totPtot)}</div></div>
+    <div class="kpi ld"><div class="kt">Meses pendientes</div><div class="kv">${pendientes.length}</div><div class="ks">JUN–DIC sin datos</div></div>`;
+
+  // ── TABLA CONSOLIDADA (ambos negocios juntos) ──
+  const thCons = `<thead><tr>
+    <th>MES</th>
+    <th>Ingreso USA</th><th>Costo USA</th><th>Util USA</th><th>% USA</th>
+    <th>Ingreso Masa</th><th>Costo Masa</th><th>Util Masa</th><th>% Masa</th>
+    <th>INGRESO TOTAL</th><th>COSTO TOTAL</th><th>UTILIDAD TOTAL</th><th>% TOTAL</th>
+  </tr></thead>`;
+
+  let rowsCons = '';
+  DA.forEach(d=>{
+    const vtot=d.vusa+d.vmasa, etot=d.eusa+d.emasa, utot=d.uusa+d.umasa;
+    const ptot=vtot>0?utot/vtot*100:0;
+    const sinDatos = d.vusa===0&&d.vmasa===0;
+    if(sinDatos){
+      rowsCons+=`<tr style="opacity:.45">
+        <td><strong>${d.mes}</strong></td>
+        <td class="num" colspan="12" style="text-align:center;color:var(--muted)">⏳ Pendiente de capturar</td>
+      </tr>`;
+      return;
+    }
+    const cls = utot<0?'tr-lose':ptot>=30?'tr-win':'';
+    rowsCons+=`<tr class="${cls}">
+      <td><strong>${d.mes}</strong></td>
+      <td class="num pos">${fm(d.vusa)}</td>
+      <td class="num neg">${fm(d.eusa)}</td>
+      <td class="num ${d.uusa>=0?'pos':'neg'}">${d.uusa>=0?'+':''}${fm(d.uusa)}</td>
+      <td class="num ${d.pusa>=20?'pos':d.pusa<0?'neg':''}">${fp(d.pusa)}</td>
+      <td class="num pos">${fm(d.vmasa)}</td>
+      <td class="num neg">${fm(d.emasa)}</td>
+      <td class="num ${d.umasa>=0?'pos':'neg'}">${d.umasa>=0?'+':''}${fm(d.umasa)}</td>
+      <td class="num ${d.pmasa>=20?'pos':d.pmasa<0?'neg':''}">${fp(d.pmasa)}</td>
+      <td class="num pos">${fm(vtot)}</td>
+      <td class="num neg">${fm(etot)}</td>
+      <td class="num ${utot>=0?'pos':'neg'}"><strong>${utot>=0?'+':''}${fm(utot)}</strong></td>
+      <td class="num ${ptot>=20?'pos':ptot<0?'neg':''}">${fp(ptot)}</td>
+    </tr>`;
+  });
+  rowsCons+=`<tr class="tr-tot">
+    <td><strong>TOTAL</strong></td>
+    <td class="num">${fm(totVusa)}</td><td class="num">${fm(totEusa)}</td>
+    <td class="num">+${fm(totUusa)}</td><td class="num">${fp(totVusa>0?totUusa/totVusa*100:0)}</td>
+    <td class="num">${fm(totVmasa)}</td><td class="num">${fm(totEmasa)}</td>
+    <td class="num">+${fm(totUmasa)}</td><td class="num">${fp(totVmasa>0?totUmasa/totVmasa*100:0)}</td>
+    <td class="num">${fm(totVtot)}</td><td class="num">${fm(totEtot)}</td>
+    <td class="num"><strong>+${fm(totUtot)}</strong></td><td class="num"><strong>${fp(totPtot)}</strong></td>
+  </tr>`;
+  document.getElementById('edr-tabla').innerHTML=`<table>${thCons}<tbody>${rowsCons}</tbody></table>`;
+
+  // ── TABLA DETALLE USA ──
+  const thUSA=`<thead><tr><th>MES</th><th>Ventas MXN</th><th>Costo Mercancía</th><th>Utilidad Bruta</th><th>% Bruto</th><th>TC Prom.</th><th>Ventas USD</th></tr></thead>`;
+  let rowsUSA='';
+  DA.forEach(d=>{
+    if(d.vusa===0){rowsUSA+=`<tr style="opacity:.4"><td><strong>${d.mes}</strong></td><td class="num" colspan="6" style="text-align:center;color:var(--muted)">⏳ Pendiente</td></tr>`;return;}
+    const viajesMes = VIAJES.filter(v=>v.mes===d.mes&&v.venta>0);
+    const tcProm = viajesMes.length>0 ? (viajesMes.reduce((a,v)=>a+v.tc,0)/viajesMes.length).toFixed(2) : '—';
+    const ventaUSD = tcProm!=='—' ? (d.vusa/parseFloat(tcProm)).toFixed(0) : '—';
+    const cls=d.uusa<0?'tr-lose':d.pusa>=30?'tr-win':'';
+    rowsUSA+=`<tr class="${cls}">
+      <td><strong>${d.mes}</strong></td>
+      <td class="num pos">${fm(d.vusa)}</td>
+      <td class="num neg">${fm(d.eusa)}</td>
+      <td class="num ${d.uusa>=0?'pos':'neg'}">${d.uusa>=0?'+':''}${fm(d.uusa)}</td>
+      <td class="num ${d.pusa>=20?'pos':d.pusa<0?'neg':''}">${fp(d.pusa)}</td>
+      <td class="num">$${tcProm}</td>
+      <td class="num pos">$${ventaUSD}</td>
+    </tr>`;
+  });
+  rowsUSA+=`<tr class="tr-tot"><td>TOTAL</td><td class="num">${fm(totVusa)}</td><td class="num">${fm(totEusa)}</td><td class="num">+${fm(totUusa)}</td><td class="num">${fp(totVusa>0?totUusa/totVusa*100:0)}</td><td colspan="2"></td></tr>`;
+  document.getElementById('edr-usa-tabla').innerHTML=`<table>${thUSA}<tbody>${rowsUSA}</tbody></table>`;
+
+  // ── TABLA DETALLE MASA ──
+  const thMASA=`<thead><tr><th>MES</th><th>Ventas MXN</th><th>Costo Operación</th><th>Utilidad</th><th>% Margen</th><th>Categoría</th></tr></thead>`;
+  let rowsMASA='';
+  DA.forEach(d=>{
+    if(d.vmasa===0){rowsMASA+=`<tr style="opacity:.4"><td><strong>${d.mes}</strong></td><td class="num" colspan="5" style="text-align:center;color:var(--muted)">⏳ Pendiente</td></tr>`;return;}
+    const cls=d.umasa<0?'tr-lose':d.pmasa>=30?'tr-win':'';
+    const estado=d.pmasa>=35?'🟢 Excelente':d.pmasa>=20?'🟡 Bueno':d.pmasa>=10?'🟠 Bajo':'🔴 Pérdida';
+    rowsMASA+=`<tr class="${cls}">
+      <td><strong>${d.mes}</strong></td>
+      <td class="num pos">${fm(d.vmasa)}</td>
+      <td class="num neg">${fm(d.emasa)}</td>
+      <td class="num ${d.umasa>=0?'pos':'neg'}">${d.umasa>=0?'+':''}${fm(d.umasa)}</td>
+      <td class="num ${d.pmasa>=20?'pos':d.pmasa<0?'neg':''}">${fp(d.pmasa)}</td>
+      <td>${estado}</td>
+    </tr>`;
+  });
+  rowsMASA+=`<tr class="tr-tot"><td>TOTAL</td><td class="num">${fm(totVmasa)}</td><td class="num">${fm(totEmasa)}</td><td class="num">+${fm(totUmasa)}</td><td class="num">${fp(totVmasa>0?totUmasa/totVmasa*100:0)}</td><td></td></tr>`;
+  document.getElementById('edr-masa-tabla').innerHTML=`<table>${thMASA}<tbody>${rowsMASA}</tbody></table>`;
+
+  // ── Alertas inteligentes ──
+  const mejorMesU = mesesActivos.reduce((a,b)=>(a.uusa+a.umasa)>(b.uusa+b.umasa)?a:b);
+  const peorMesU  = mesesActivos.reduce((a,b)=>(a.uusa+a.umasa)<(b.uusa+b.umasa)?a:b);
+  document.getElementById('edr-alertas').innerHTML=`
+    <div class="alert g"><strong>🏆 Mejor mes: ${mejorMesU.mes}</strong>
+      USA: +${fm(mejorMesU.uusa)} · Masa: +${fm(mejorMesU.umasa)} · Total: +${fm(mejorMesU.uusa+mejorMesU.umasa)} · Margen combinado: ${fp(mejorMesU.vusa+mejorMesU.vmasa>0?(mejorMesU.uusa+mejorMesU.umasa)/(mejorMesU.vusa+mejorMesU.vmasa)*100:0)}</div>
+    <div class="alert r"><strong>⚠️ Mes más difícil: ${peorMesU.mes}</strong>
+      USA: ${fm(peorMesU.uusa)} · Masa: ${fm(peorMesU.umasa)} · Total: ${fm(peorMesU.uusa+peorMesU.umasa)}</div>
+    <div class="alert b"><strong>📊 Promedio mensual (${mesesActivos.length} meses)</strong>
+      Ingreso prom: ${fm(totVtot/mesesActivos.length)} · Utilidad prom: +${fm(totUtot/mesesActivos.length)} · Margen prom: ${fp(totPtot)}</div>
+    <div class="alert d"><strong>📅 ${pendientes.length} meses por capturar (JUN–DIC)</strong>
+      Si mantienes el promedio actual: utilidad proyectada año completo = +${fm(totUtot/mesesActivos.length*12)} MXN</div>`;
+}
+
+inicioSetup();
+filtrarClientes();
+calcCostos();
+
+function cv(id){return parseFloat(document.getElementById(id).value)||0;}
+
+function calcCostos(){
+  const docMX   = cv('co-doc');       // $55 MXN — 1 docena = 1.2 kg grano
+  const granoKg = docMX / 1.2;        // costo real kg grano = docena ÷ 1.2
+  // Auto-actualizar el campo visual
+  const granoEl = document.getElementById('co-grano');
+  if(granoEl) granoEl.value = granoKg.toFixed(2);
+  const bolsa2g = cv('co-bolsa2g');   // USD por paquete 2 gal (10 bolsas)
+  const bolsa1g = cv('co-bolsa1g');   // USD por paquete 1 gal (60 bolsas)
+  const etiqMX  = cv('co-etiq');      // $4.50 MXN etiqueta
+  const gasUSD  = cv('co-gas');
+  const comUSD  = cv('co-com');
+  const permMX  = cv('co-perm');
+  const sienMX  = cv('co-sienna');
+  const ncost   = cv('co-ncost');
+  const rentaMX = cv('co-renta');
+  const luzMX   = cv('co-luz');
+  const nomSem  = cv('co-nom');
+  const tc      = cv('co-tc');
+
+  // Costo c/u de bolsa en USD
+  const c1bolsa2g_usd = bolsa2g / 10;   // 1 bolsa 2 gal = paquete÷10
+  const c1bolsa1g_usd = bolsa1g / 60;   // 1 bolsa 1 gal = paquete÷60
+
+  // Fijos Nogales prorrateados por día
+  const fijoDia = (rentaMX + luzMX) / 24 + nomSem / 6;
+
+  // Transporte por costal (8 viajes/mes)
+  const gasMX      = gasUSD * tc;
+  const comMX      = comUSD * tc;
+  const viajeTotal = gasMX + comMX + permMX + (sienMX / 8);
+  const transp1c   = ncost > 0 ? viajeTotal / ncost : 0;
+
+  // ── DOCENA TUCSON ──
+  // 1 costal = 3 docenas; 1 docena → 1.2 kg de grano
+  const c_doc_mat   = docMX;                    // $55 MXN compra
+  const c_doc_etiq  = etiqMX / 3;              // etiqueta costal ÷ 3 doc
+  const c_doc_transp= transp1c / 3;            // transporte ÷ 3 doc
+  const c_doc_total = c_doc_mat + c_doc_etiq + c_doc_transp;
+  const c_doc_usd   = c_doc_total / tc;
+  const p_doc_may=6, p_doc_cli=7, p_doc_pub=8;
+  const mg_doc_may=((p_doc_may-c_doc_usd)/p_doc_may*100);
+  const mg_doc_cli=((p_doc_cli-c_doc_usd)/p_doc_cli*100);
+  const mg_doc_pub=((p_doc_pub-c_doc_usd)/p_doc_pub*100);
+
+  // ── BOLSA 5 KG (usa bolsa 2 gal) ──
+  // 5 kg grano = 5÷1.2 = 4.17 docenas de elote
+  const doc_x_5kg   = 5 / 1.2;
+  const c_5kg_mat   = doc_x_5kg * docMX;        // costo elote para 5 kg
+  const c_5kg_bolsa = c1bolsa2g_usd * tc;        // 1 bolsa 2 gal en MXN
+  const c_5kg_etiq  = etiqMX;
+  const c_5kg_transp= transp1c / 3;
+  const c_5kg_total = c_5kg_mat + c_5kg_bolsa + c_5kg_etiq + c_5kg_transp;
+  const c_5kg_usd   = c_5kg_total / tc;
+  const p_5kg_may=20, p_5kg_cli=25, p_5kg_pub=30;
+  const mg_5kg_may=((p_5kg_may-c_5kg_usd)/p_5kg_may*100);
+  const mg_5kg_cli=((p_5kg_cli-c_5kg_usd)/p_5kg_cli*100);
+  const mg_5kg_pub=((p_5kg_pub-c_5kg_usd)/p_5kg_pub*100);
+
+  // ── BOLSA 5 LB (~2.27 kg, usa bolsa 1 gal) ──
+  const doc_x_5lb   = 2.27 / 1.2;
+  const c_5lb_mat   = doc_x_5lb * docMX;
+  const c_5lb_bolsa = c1bolsa1g_usd * tc;        // 1 bolsa 1 gal en MXN
+  const c_5lb_etiq  = etiqMX;
+  const c_5lb_transp= transp1c / 3;
+  const c_5lb_total = c_5lb_mat + c_5lb_bolsa + c_5lb_etiq + c_5lb_transp;
+  const c_5lb_usd   = c_5lb_total / tc;
+  const p_5lb_may=12, p_5lb_cli=15, p_5lb_pub=17;
+  const mg_5lb_may=((p_5lb_may-c_5lb_usd)/p_5lb_may*100);
+  const mg_5lb_cli=((p_5lb_cli-c_5lb_usd)/p_5lb_cli*100);
+  const mg_5lb_pub=((p_5lb_pub-c_5lb_usd)/p_5lb_pub*100);
+
+  // ── MASA kg NOGALES ──
+  const c_masa_mat  = 18;  // elote fresco
+  const c_masa_mo   = fijoDia / 15;
+  const c_masa_emp  = 2;
+  const c_masa_total= c_masa_mat + c_masa_mo + c_masa_emp;  // sin gas ni luz (no aplica)
+  const p_masa_neg=80, p_masa_pub=90;
+  const mg_masa_neg=((p_masa_neg-c_masa_total)/p_masa_neg*100);
+  const mg_masa_pub_=((p_masa_pub-c_masa_total)/p_masa_pub*100);
+
+  // ── DOCENA NOGALES local ──
+  const c_docnog_mat  = docMX;
+  const c_docnog_mo   = fijoDia / 10;
+  const c_docnog_total= c_docnog_mat + c_docnog_mo;
+  const p_docnog_neg=65, p_docnog_pub=75;
+  const mg_docnog_neg=((p_docnog_neg-c_docnog_total)/p_docnog_neg*100);
+  const mg_docnog_pub=((p_docnog_pub-c_docnog_total)/p_docnog_pub*100);
+
+  const mColor = m => m >= 50 ? '#1a5c2e' : m >= 30 ? '#2e7d32' : m >= 15 ? '#f59f00' : '#e03131';
+  const mEmoji = m => m >= 50 ? '🟢' : m >= 30 ? '🟡' : m >= 15 ? '🟠' : '🔴';
+
+  const pbox = (titulo, filas, margen_principal) => `
+    <div style="background:#fff;border-radius:14px;padding:18px;margin-bottom:12px;box-shadow:var(--shadow);border-left:5px solid ${mColor(margen_principal)}">
+      <div style="font-weight:800;font-size:14px;color:var(--v);margin-bottom:12px">${titulo}</div>
+      ${filas.map(f=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed #e5e7eb;font-size:12.5px">
+        <span style="color:#374151">${f[0]}</span>
+        <span style="font-weight:600;color:${f[2]||'#374151'}">${f[1]}</span>
+      </div>`).join('')}
+    </div>`;
+
+  document.getElementById('res-costos').innerHTML = `
+    <div class="sec-head" style="margin-top:8px">
+      <div class="sec-icon">📊</div>
+      <div><div class="sec-title">Resultado con TC = $${tc} MXN/USD</div>
+      <div class="sec-sub">Cambia el TC o los costos arriba y se actualiza automáticamente</div></div>
+    </div>
+
+    ${pbox('🌽 Docena de Elote — Tucson, AZ (1 docena = 1.2 kg grano)',[
+      ['Compra mayoreo', `$${docMX.toFixed(2)} MXN`, '#374151'],
+      ['Etiqueta costal ÷ 3 docenas', `$${c_doc_etiq.toFixed(2)} MXN`, '#374151'],
+      ['Transporte por docena', `$${c_doc_transp.toFixed(2)} MXN`, '#374151'],
+      ['── COSTO REAL / DOCENA ──', `$${c_doc_total.toFixed(2)} MXN = $${c_doc_usd.toFixed(2)} USD`, '#e03131'],
+      [`${mEmoji(mg_doc_may)} Mayoreo $${p_doc_may} USD → margen`, `${mg_doc_may.toFixed(1)}%`, mColor(mg_doc_may)],
+      [`${mEmoji(mg_doc_cli)} Cliente $${p_doc_cli} USD → margen`, `${mg_doc_cli.toFixed(1)}%`, mColor(mg_doc_cli)],
+      [`${mEmoji(mg_doc_pub)} Público $${p_doc_pub} USD → margen`, `${mg_doc_pub.toFixed(1)}%`, mColor(mg_doc_pub)],
+    ], mg_doc_cli)}
+
+    ${pbox(`📦 Bolsa 5 KG — Tucson (Great Value 2 gal, paq×10 = $${bolsa2g.toFixed(2)} USD → $${c1bolsa2g_usd.toFixed(3)} USD c/u)`,[
+      [`Elote para 5 kg (${doc_x_5kg.toFixed(2)} doc × $${docMX} MXN)`, `$${c_5kg_mat.toFixed(2)} MXN`, '#374151'],
+      [`Bolsa 2 gal (1 c/u)`, `$${c1bolsa2g_usd.toFixed(3)} USD = $${c_5kg_bolsa.toFixed(2)} MXN`, '#374151'],
+      [`Etiqueta`, `$${c_5kg_etiq.toFixed(2)} MXN`, '#374151'],
+      [`Transporte proporcional`, `$${c_5kg_transp.toFixed(2)} MXN`, '#374151'],
+      ['── COSTO REAL / BOLSA ──', `$${c_5kg_total.toFixed(2)} MXN = $${c_5kg_usd.toFixed(2)} USD`, '#e03131'],
+      [`${mEmoji(mg_5kg_may)} Mayoreo $${p_5kg_may} USD → margen`, `${mg_5kg_may.toFixed(1)}%`, mColor(mg_5kg_may)],
+      [`${mEmoji(mg_5kg_cli)} Cliente $${p_5kg_cli} USD → margen`, `${mg_5kg_cli.toFixed(1)}%`, mColor(mg_5kg_cli)],
+      [`${mEmoji(mg_5kg_pub)} Público $${p_5kg_pub} USD → margen`, `${mg_5kg_pub.toFixed(1)}%`, mColor(mg_5kg_pub)],
+    ], mg_5kg_cli)}
+
+    ${pbox(`📦 Bolsa 5 LB ~2.27 kg — Tucson (Great Value 1 gal, paq×60 = $${bolsa1g.toFixed(2)} USD → $${c1bolsa1g_usd.toFixed(3)} USD c/u)`,[
+      [`Elote para 2.27 kg (${doc_x_5lb.toFixed(2)} doc × $${docMX} MXN)`, `$${c_5lb_mat.toFixed(2)} MXN`, '#374151'],
+      [`Bolsa 1 gal (1 c/u)`, `$${c1bolsa1g_usd.toFixed(3)} USD = $${c_5lb_bolsa.toFixed(2)} MXN`, '#374151'],
+      [`Etiqueta`, `$${c_5lb_etiq.toFixed(2)} MXN`, '#374151'],
+      [`Transporte proporcional`, `$${c_5lb_transp.toFixed(2)} MXN`, '#374151'],
+      ['── COSTO REAL / BOLSA ──', `$${c_5lb_total.toFixed(2)} MXN = $${c_5lb_usd.toFixed(2)} USD`, '#e03131'],
+      [`${mEmoji(mg_5lb_may)} Mayoreo $${p_5lb_may} USD → margen`, `${mg_5lb_may.toFixed(1)}%`, mColor(mg_5lb_may)],
+      [`${mEmoji(mg_5lb_cli)} Cliente $${p_5lb_cli} USD → margen`, `${mg_5lb_cli.toFixed(1)}%`, mColor(mg_5lb_cli)],
+      [`${mEmoji(mg_5lb_pub)} Público $${p_5lb_pub} USD → margen`, `${mg_5lb_pub.toFixed(1)}%`, mColor(mg_5lb_pub)],
+    ], mg_5lb_cli)}
+
+    ${pbox('🫙 Kg de Masa — Nogales',[
+      ['Materia prima (elote fresco)', `~$18.00 MXN`, '#374151'],
+      ['Nómina proporcional (~15 kg/día)', `~$${c_masa_mo.toFixed(2)} MXN`, '#374151'],
+      ['Empaque / bolsa', `~$2.00 MXN`, '#374151'],
+      ['── COSTO REAL / KG ──', `~$${c_masa_total.toFixed(2)} MXN`, '#e03131'],
+      [`${mEmoji(mg_masa_neg)} Negocios $${p_masa_neg} MXN → margen`, `${mg_masa_neg.toFixed(1)}%`, mColor(mg_masa_neg)],
+      [`${mEmoji(mg_masa_pub_)} Público General $${p_masa_pub} MXN → margen`, `${mg_masa_pub_.toFixed(1)}%`, mColor(mg_masa_pub_)],
+    ], mg_masa_neg)}
+
+    ${pbox('🌽 Docena — Venta local Nogales',[
+      ['Compra mayoreo', `$${docMX.toFixed(2)} MXN`, '#374151'],
+      ['Nómina proporcional (~10 doc/día)', `$${c_docnog_mo.toFixed(2)} MXN`, '#374151'],
+      ['── COSTO REAL / DOCENA ──', `~$${c_docnog_total.toFixed(2)} MXN`, '#e03131'],
+      [`${mEmoji(mg_docnog_neg)} Negocios pelada $${p_docnog_neg} MXN → margen`, `${mg_docnog_neg.toFixed(1)}%`, mColor(mg_docnog_neg)],
+      [`${mEmoji(mg_docnog_pub)} Público $${p_docnog_pub} MXN → margen`, `${mg_docnog_pub.toFixed(1)}%`, mColor(mg_docnog_pub)],
+    ], mg_docnog_neg)}
+
+    <div class="alert d" style="margin-top:8px">
+      <strong>⚡ Impacto del tipo de cambio en tus márgenes</strong>
+      Con TC $${tc}: costo docena Tucson = $${c_doc_usd.toFixed(2)} USD ·
+      Si sube a $${(tc+1).toFixed(0)}: baja a $${(c_doc_total/(tc+1)).toFixed(2)} USD ✅ ·
+      Si baja a $${(tc-1).toFixed(0)}: sube a $${(c_doc_total/(tc-1)).toFixed(2)} USD ⚠️
+    </div>
+    <div class="alert g">
+      <strong>🏆 Ranking de rentabilidad (precio cliente/negocios)</strong>
+      1° Bolsas 5KG — ${mg_5kg_cli.toFixed(0)}% · 
+      2° Bolsas 5LB — ${mg_5lb_cli.toFixed(0)}% · 
+      3° Masa kg negocios — ${mg_masa_neg.toFixed(0)}% · 
+      4° Docena Tucson cliente — ${mg_doc_cli.toFixed(0)}%
+    </div>`;
+}
+</script>
+</body>
+</html>
